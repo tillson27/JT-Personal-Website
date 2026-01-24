@@ -35,10 +35,10 @@ const SoundWave = () => {
             ],
           }}
           transition={{
-            duration: 3.5 + (i % 5) * 0.4,
+            duration: 2.5 + (i % 5) * 0.4,
             repeat: Infinity,
             ease: "easeInOut",
-            delay: i * 0.08,
+            delay: i * 0.05,
           }}
         />
       ))}
