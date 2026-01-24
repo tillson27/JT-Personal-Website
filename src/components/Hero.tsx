@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, ArrowDown } from "lucide-react";
-import headshot from "@/assets/headshot.png";
 
 const Hero = () => {
   return (
@@ -11,11 +10,6 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <img
-            src={headshot}
-            alt="Josh Tillson"
-            className="w-20 h-20 rounded-full object-cover mb-8"
-          />
           <p className="text-muted-foreground text-sm tracking-wide mb-4 font-mono">
             Calgary, Canada
           </p>
