@@ -20,9 +20,11 @@ const SoundWave = () => {
       {Array.from({ length: bars }).map((_, i) => (
         <motion.div
           key={i}
-          className={`w-[2px] rounded-full transition-colors duration-300 ${
-            activeBar === i ? "bg-purple-500" : "bg-foreground/60"
-          }`}
+          className="w-[2px] rounded-full transition-all duration-300"
+          style={{
+            backgroundColor: activeBar === i ? "rgb(168, 85, 247)" : "hsl(var(--foreground) / 0.6)",
+            boxShadow: activeBar === i ? "0 0 8px 2px rgba(168, 85, 247, 0.6)" : "none",
+          }}
           animate={{
             height: [
               `${12 + Math.sin(i * 0.5) * 8}px`,
@@ -33,10 +35,10 @@ const SoundWave = () => {
             ],
           }}
           transition={{
-            duration: 2 + (i % 5) * 0.3,
+            duration: 3.5 + (i % 5) * 0.4,
             repeat: Infinity,
             ease: "easeInOut",
-            delay: i * 0.05,
+            delay: i * 0.08,
           }}
         />
       ))}
