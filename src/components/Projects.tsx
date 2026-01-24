@@ -5,13 +5,13 @@ const projects = [
   {
     title: "emlyai",
     description:
-      "AI-powered platform helping real estate professionals create compelling property listings and marketing materials. Currently applying to Y Combinator.",
+      "AI-powered platform helping real estate professionals create compelling property listings and marketing materials.",
     link: "https://emlyai.ca",
   },
   {
     title: "Unbreakable Run",
     description:
-      "Founded a community event that raised $20k+ and created Northern Ontario's first youth mental wellness programs. Secured partnerships with RBC, Running Room, and CMHA.",
+      "Community event that raised $20k+ and created Northern Ontario's first youth mental wellness programs.",
     link: null,
   },
   {
@@ -24,25 +24,25 @@ const projects = [
 
 const Projects = () => {
   return (
-    <section id="projects" className="px-6 md:px-12 lg:px-24 py-24 md:py-32">
-      <div className="max-w-4xl">
+    <section id="projects" className="px-6 md:px-12 lg:px-24 py-20 md:py-28">
+      <div className="max-w-3xl">
         <motion.h2
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="text-3xl md:text-4xl font-serif mb-12 text-foreground"
+          className="text-2xl md:text-3xl font-medium mb-10 text-foreground"
         >
           Projects
         </motion.h2>
 
-        <div className="space-y-10">
+        <div className="space-y-6">
           {projects.map((project, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+              transition={{ duration: 0.5, delay: index * 0.05, ease: "easeOut" }}
               viewport={{ once: true }}
             >
               {project.link ? (
@@ -52,25 +52,25 @@ const Projects = () => {
                   rel="noopener noreferrer"
                   className="group block"
                 >
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="text-xl font-medium text-foreground group-hover:text-accent transition-colors">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <h3 className="text-foreground font-medium group-hover:text-accent transition-colors">
                       {project.title}
                     </h3>
                     <ArrowUpRight
-                      size={18}
+                      size={16}
                       className="text-muted-foreground group-hover:text-accent transition-colors"
                     />
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-muted-foreground text-sm leading-relaxed">
                     {project.description}
                   </p>
                 </a>
               ) : (
                 <div>
-                  <h3 className="text-xl font-medium text-foreground mb-2">
+                  <h3 className="text-foreground font-medium mb-1">
                     {project.title}
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-muted-foreground text-sm leading-relaxed">
                     {project.description}
                   </p>
                 </div>

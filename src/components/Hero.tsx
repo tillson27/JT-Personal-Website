@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, ArrowDown } from "lucide-react";
+import headshot from "@/assets/headshot.png";
 
 const Hero = () => {
   return (
@@ -8,48 +9,58 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="flex flex-col-reverse md:flex-row md:items-start md:gap-12 mb-8"
         >
-          <p className="text-muted-foreground text-sm md:text-base tracking-wide mb-4">
-            Calgary, Canada
-          </p>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif leading-[1.1] mb-6">
-            Josh Tillson
-          </h1>
+          <div className="flex-1">
+            <p className="text-muted-foreground text-sm tracking-wide mb-4 font-mono">
+              Calgary, Canada
+            </p>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium leading-tight mb-6">
+              Josh Tillson
+            </h1>
+            <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
+              Product Manager at{" "}
+              <a
+                href="https://caylent.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground hover:text-accent transition-colors"
+              >
+                Caylent
+              </a>{" "}
+              and Founder at{" "}
+              <a
+                href="https://emlyai.ca"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground hover:text-accent transition-colors"
+              >
+                emlyai
+              </a>
+              . I help companies build and modernize technology systems, and I'm building AI tools for real estate.
+            </p>
+          </div>
+          
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            className="mb-6 md:mb-0"
+          >
+            <img
+              src={headshot}
+              alt="Josh Tillson"
+              className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+            />
+          </motion.div>
         </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-8 leading-relaxed"
-        >
-          Product Manager at{" "}
-          <a
-            href="https://caylent.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-foreground hover:text-accent transition-colors underline underline-offset-4"
-          >
-            Caylent
-          </a>{" "}
-          and Founder at{" "}
-          <a
-            href="https://emlyai.ca"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-foreground hover:text-accent transition-colors underline underline-offset-4"
-          >
-            emlyai
-          </a>
-          . I help companies build and modernize technology systems, and I'm building AI tools for real estate.
-        </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-          className="flex items-center gap-6"
+          transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+          className="flex items-center gap-5"
         >
           <a
             href="https://www.linkedin.com/in/joshtillson/"
@@ -58,7 +69,7 @@ const Hero = () => {
             className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="LinkedIn"
           >
-            <Linkedin size={22} />
+            <Linkedin size={20} />
           </a>
           <a
             href="https://github.com/tillson27"
@@ -67,14 +78,14 @@ const Hero = () => {
             className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="GitHub"
           >
-            <Github size={22} />
+            <Github size={20} />
           </a>
           <a
             href="mailto:tillson27@gmail.com"
             className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="Email"
           >
-            <Mail size={22} />
+            <Mail size={20} />
           </a>
         </motion.div>
       </div>
@@ -82,7 +93,7 @@ const Hero = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1 }}
+        transition={{ duration: 1, delay: 0.8 }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2"
       >
         <a
@@ -90,7 +101,7 @@ const Hero = () => {
           className="text-muted-foreground hover:text-foreground transition-colors"
           aria-label="Scroll down"
         >
-          <ArrowDown size={20} className="animate-bounce" />
+          <ArrowDown size={18} className="animate-bounce" />
         </a>
       </motion.div>
     </section>
