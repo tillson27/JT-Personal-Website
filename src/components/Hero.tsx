@@ -1,5 +1,6 @@
 import { motion, Easing } from "framer-motion";
 import { Github, Linkedin, Mail, ChevronDown } from "lucide-react";
+import SoundWave from "./SoundWave";
 
 const Hero = () => {
   const easeOut: Easing = [0.16, 1, 0.3, 1];
@@ -27,7 +28,8 @@ const Hero = () => {
   const name = "Josh Tillson";
 
   return (
-    <section id="hero" className="min-h-screen flex flex-col px-6 md:px-12 lg:px-24 pt-24 pb-8">
+    <section id="hero" className="min-h-screen flex flex-col px-6 md:px-12 lg:px-24 pt-24 pb-8 relative overflow-hidden">
+      <SoundWave />
       <div className="flex-1 flex flex-col justify-center mt-[15vh]">
         <motion.div
           className="max-w-3xl"
