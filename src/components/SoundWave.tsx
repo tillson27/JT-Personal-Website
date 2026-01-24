@@ -1,30 +1,14 @@
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
 
 const SoundWave = () => {
-  const bars = 16;
-  const [activeBar, setActiveBar] = useState<number | null>(null);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      // Randomly pick a bar to highlight, or none (null)
-      const shouldHighlight = Math.random() > 0.3;
-      setActiveBar(shouldHighlight ? Math.floor(Math.random() * bars) : null);
-    }, 800);
-
-    return () => clearInterval(interval);
-  }, []);
-
+  const bars = 24;
+  
   return (
     <div className="flex items-center gap-[3px] h-12 opacity-50 mb-6">
       {Array.from({ length: bars }).map((_, i) => (
         <motion.div
           key={i}
-          className="w-[2px] rounded-full transition-all duration-300"
-          style={{
-            backgroundColor: activeBar === i ? "rgb(168, 85, 247)" : "hsl(var(--foreground) / 0.6)",
-            boxShadow: activeBar === i ? "0 0 8px 2px rgba(168, 85, 247, 0.6)" : "none",
-          }}
+          className="w-[2px] bg-foreground/60 rounded-full"
           animate={{
             height: [
               `${12 + Math.sin(i * 0.5) * 8}px`,
@@ -35,7 +19,7 @@ const SoundWave = () => {
             ],
           }}
           transition={{
-            duration: 2.5 + (i % 5) * 0.4,
+            duration: 2 + (i % 5) * 0.3,
             repeat: Infinity,
             ease: "easeInOut",
             delay: i * 0.05,
