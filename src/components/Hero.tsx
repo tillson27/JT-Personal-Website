@@ -83,7 +83,7 @@ const Hero = () => {
           >
             emlyai
           </a>
-          . I help companies build and modernize technology systems, and I'm building AI tools for real estate.
+          . I help companies build and modernize technology systems, and I'm building AI voice receptionists for service businesses.
         </motion.p>
 
         <motion.div

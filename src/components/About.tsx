@@ -35,8 +35,9 @@ const About = () => {
               >
                 emlyai
               </a>
-              —AI tools that help real estate professionals create better listings and marketing 
-              materials.
+              —an AI voice receptionist platform now serving 50+ businesses across real estate, 
+              home services, and healthcare. It handles 24/7 inbound calls with appointment booking, 
+              CRM integration, and intelligent call routing.
             </p>
           </div>
         </motion.div>
