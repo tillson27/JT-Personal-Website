@@ -28,8 +28,7 @@ const Hero = () => {
   const name = "Josh Tillson";
 
   return (
-    <section id="hero" className="min-h-screen flex flex-col px-6 md:px-12 lg:px-24 pt-24 pb-8 relative overflow-hidden">
-      <SoundWave />
+    <section id="hero" className="min-h-screen flex flex-col px-6 md:px-12 lg:px-24 pt-24 pb-8 overflow-hidden">
       <div className="flex-1 flex flex-col justify-center mt-[15vh]">
         <motion.div
           className="max-w-3xl"
@@ -37,6 +36,7 @@ const Hero = () => {
           initial="hidden"
           animate="visible"
         >
+        <SoundWave />
         <motion.p
           variants={itemVariants}
           className="text-muted-foreground text-sm tracking-wide mb-4 font-mono"

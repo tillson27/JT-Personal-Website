@@ -4,7 +4,7 @@ const SoundWave = () => {
   const bars = 24;
   
   return (
-    <div className="absolute top-1/2 -translate-y-1/2 right-6 md:right-12 lg:right-24 flex items-center gap-[3px] h-20 opacity-40">
+    <div className="flex items-center gap-[3px] h-12 opacity-50 mb-6">
       {Array.from({ length: bars }).map((_, i) => (
         <motion.div
           key={i}
