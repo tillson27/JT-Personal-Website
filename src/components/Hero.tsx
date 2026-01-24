@@ -5,62 +5,51 @@ import headshot from "@/assets/headshot.png";
 const Hero = () => {
   return (
     <section className="min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 py-24">
-      <div className="max-w-4xl">
+      <div className="max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="flex flex-col-reverse md:flex-row md:items-start md:gap-12 mb-8"
         >
-          <div className="flex-1">
-            <p className="text-muted-foreground text-sm tracking-wide mb-4 font-mono">
-              Calgary, Canada
-            </p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium leading-tight mb-6">
-              Josh Tillson
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
-              Product Manager at{" "}
-              <a
-                href="https://caylent.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-foreground hover:text-accent transition-colors"
-              >
-                Caylent
-              </a>{" "}
-              and Founder at{" "}
-              <a
-                href="https://emlyai.ca"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-foreground hover:text-accent transition-colors"
-              >
-                emlyai
-              </a>
-              . I help companies build and modernize technology systems, and I'm building AI tools for real estate.
-            </p>
-          </div>
-          
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-            className="mb-6 md:mb-0"
-          >
-            <img
-              src={headshot}
-              alt="Josh Tillson"
-              className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
-            />
-          </motion.div>
+          <img
+            src={headshot}
+            alt="Josh Tillson"
+            className="w-20 h-20 rounded-full object-cover mb-8"
+          />
+          <p className="text-muted-foreground text-sm tracking-wide mb-4 font-mono">
+            Calgary, Canada
+          </p>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium leading-tight mb-6">
+            Josh Tillson
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
+            Product Manager at{" "}
+            <a
+              href="https://caylent.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-foreground hover:text-accent transition-colors"
+            >
+              Caylent
+            </a>{" "}
+            and Founder at{" "}
+            <a
+              href="https://emlyai.ca"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-foreground hover:text-accent transition-colors"
+            >
+              emlyai
+            </a>
+            . I help companies build and modernize technology systems, and I'm building AI tools for real estate.
+          </p>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-          className="flex items-center gap-5"
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+          className="flex items-center gap-5 mt-8"
         >
           <a
             href="https://www.linkedin.com/in/joshtillson/"
