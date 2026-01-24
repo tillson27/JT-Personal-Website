@@ -1,14 +1,26 @@
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 
 const SoundWave = () => {
   const bars = 24;
+  const [purpleBarIndex, setPurpleBarIndex] = useState(() => Math.floor(Math.random() * bars));
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPurpleBarIndex(Math.floor(Math.random() * bars));
+    }, 2000 + Math.random() * 2000);
+    
+    return () => clearInterval(interval);
+  }, []);
   
   return (
     <div className="flex items-center gap-[3px] h-12 opacity-50 mb-6">
       {Array.from({ length: bars }).map((_, i) => (
         <motion.div
           key={i}
-          className="w-[2px] bg-foreground/60 rounded-full"
+          className={`w-[2px] rounded-full transition-colors duration-500 ${
+            i === purpleBarIndex ? "bg-purple-500" : "bg-foreground/60"
+          }`}
           animate={{
             height: [
               `${12 + Math.sin(i * 0.5) * 8}px`,
@@ -19,7 +31,7 @@ const SoundWave = () => {
             ],
           }}
           transition={{
-            duration: 2 + (i % 5) * 0.3,
+            duration: 3.5 + (i % 5) * 0.4,
             repeat: Infinity,
             ease: "easeInOut",
             delay: i * 0.05,
