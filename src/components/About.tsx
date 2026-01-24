@@ -21,7 +21,7 @@ const About = () => {
               and build roadmaps that actually get executed.
             </p>
             <p>
-              Currently, I'm a Product Manager at Caylent, where I lead a team of 20 building 
+              Currently, I'm a Product Manager at Caylent, where I lead the development of 
               an integration platform for a $100B+ mortgage servicer commercializing their 
               loan servicing software into a multi-tenant SaaS product.
             </p>
