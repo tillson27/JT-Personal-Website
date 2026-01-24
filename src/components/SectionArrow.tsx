@@ -12,7 +12,7 @@ const SectionArrow = ({ targetId }: SectionArrowProps) => {
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
-      className="flex justify-center py-8"
+      className="flex justify-center py-2"
     >
       <a
         href={`#${targetId}`}
