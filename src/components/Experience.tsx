@@ -6,14 +6,14 @@ const experiences = [
     role: "Product Manager",
     company: "Caylent",
     description:
-      "Leading a team of 20 to build an integration interface for a $100B+ mortgage servicer commercializing their loan servicing platform into a multi-tenant SaaS product.",
+      "Leading development of an integration interface for a $100B+ mortgage servicer commercializing their loan servicing platform into a multi-tenant SaaS product.",
   },
   {
     period: "2026 — Present",
     role: "Founder",
     company: "emlyai",
     description:
-      "Building AI-powered tools for real estate professionals to create better property listings and marketing materials.",
+      "Building an AI voice receptionist platform serving 50+ businesses across real estate, home services, and healthcare with 24/7 call handling and CRM integration.",
   },
   {
     period: "2024 — 2025",
