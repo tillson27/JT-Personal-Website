@@ -27,13 +27,14 @@ const Hero = () => {
   const name = "Josh Tillson";
 
   return (
-    <section id="hero" className="min-h-screen flex flex-col justify-between px-6 md:px-12 lg:px-24 py-24 pb-8">
-      <motion.div
-        className="max-w-3xl"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
+    <section id="hero" className="min-h-screen flex flex-col px-6 md:px-12 lg:px-24 pt-24 pb-8">
+      <div className="flex-1 flex flex-col justify-center mt-[15vh]">
+        <motion.div
+          className="max-w-3xl"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
         <motion.p
           variants={itemVariants}
           className="text-muted-foreground text-sm tracking-wide mb-4 font-mono"
@@ -121,7 +122,8 @@ const Hero = () => {
             <Mail size={20} />
           </motion.a>
         </motion.div>
-      </motion.div>
+        </motion.div>
+      </div>
       
       <motion.a
         href="#about"
