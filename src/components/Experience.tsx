@@ -20,57 +20,57 @@ const experiences = [
     role: "Technology Strategy Consultant",
     company: "Accenture",
     description:
-      "Led technology strategy engagements for Fortune 500 clients across retail, mining, and energy. Built global system architectures and roadmaps while originating $600k+ in follow-on work.",
+      "Led technology strategy engagements for Fortune 500 clients across retail, mining, and energy. Built global system architectures and roadmaps.",
   },
   {
     period: "2023 — 2024",
-    role: "Senior Systems Analyst & Product Owner",
+    role: "Senior Systems Analyst",
     company: "Fraser Health",
     description:
-      "Drove digital transformation for a major Canadian health authority, leading application rationalization across AWS and Azure environments.",
+      "Drove digital transformation for a major Canadian health authority, leading application rationalization across AWS and Azure.",
   },
   {
     period: "2022 — 2023",
-    role: "Cybersecurity Technical Specialist",
+    role: "Technical Specialist",
     company: "Microsoft",
     description:
-      "Helped enterprise customers adopt cloud identity and endpoint security solutions. Built internal optimization tools using Power Platform.",
+      "Helped enterprise customers adopt cloud identity and endpoint security solutions.",
   },
 ];
 
 const Experience = () => {
   return (
-    <section id="experience" className="px-6 md:px-12 lg:px-24 py-24 md:py-32 bg-card">
-      <div className="max-w-4xl">
+    <section id="experience" className="px-6 md:px-12 lg:px-24 py-20 md:py-28 bg-card">
+      <div className="max-w-3xl">
         <motion.h2
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="text-3xl md:text-4xl font-serif mb-12 text-foreground"
+          className="text-2xl md:text-3xl font-medium mb-10 text-foreground"
         >
           Experience
         </motion.h2>
 
-        <div className="space-y-12">
+        <div className="space-y-8">
           {experiences.map((exp, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+              transition={{ duration: 0.5, delay: index * 0.05, ease: "easeOut" }}
               viewport={{ once: true }}
-              className="grid md:grid-cols-[180px_1fr] gap-4 md:gap-8"
+              className="grid md:grid-cols-[140px_1fr] gap-2 md:gap-6"
             >
-              <p className="text-sm text-muted-foreground font-medium tracking-wide">
+              <p className="text-sm text-muted-foreground font-mono">
                 {exp.period}
               </p>
               <div>
-                <h3 className="text-lg font-medium text-foreground mb-1">
+                <h3 className="text-foreground font-medium">
                   {exp.role}
                 </h3>
-                <p className="text-muted-foreground mb-3">{exp.company}</p>
-                <p className="text-muted-foreground leading-relaxed text-sm">
+                <p className="text-muted-foreground text-sm mb-2">{exp.company}</p>
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   {exp.description}
                 </p>
               </div>
