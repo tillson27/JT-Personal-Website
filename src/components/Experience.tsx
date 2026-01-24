@@ -9,7 +9,7 @@ const experiences = [
       "Leading a team of 20 to build an integration interface for a $100B+ mortgage servicer commercializing their loan servicing platform into a multi-tenant SaaS product.",
   },
   {
-    period: "2024 — Present",
+    period: "2026 — Present",
     role: "Founder",
     company: "emlyai",
     description:
