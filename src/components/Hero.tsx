@@ -1,5 +1,5 @@
 import { motion, Easing } from "framer-motion";
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, Mail, ChevronDown } from "lucide-react";
 
 const Hero = () => {
   const easeOut: Easing = [0.16, 1, 0.3, 1];
@@ -27,7 +27,7 @@ const Hero = () => {
   const name = "Josh Tillson";
 
   return (
-    <section id="hero" className="min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 py-24">
+    <section id="hero" className="min-h-screen flex flex-col justify-between px-6 md:px-12 lg:px-24 py-24 pb-8">
       <motion.div
         className="max-w-3xl"
         variants={containerVariants}
@@ -122,6 +122,17 @@ const Hero = () => {
           </motion.a>
         </motion.div>
       </motion.div>
+      
+      <motion.a
+        href="#about"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 0.5 }}
+        className="flex justify-center pb-4"
+        aria-label="Navigate to about"
+      >
+        <ChevronDown size={24} className="text-muted-foreground hover:text-foreground transition-colors animate-bounce" />
+      </motion.a>
     </section>
   );
 };
