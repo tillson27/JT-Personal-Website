@@ -53,7 +53,7 @@ export const coverSlide: Slide = {
           </FadeUp>
 
           <FadeUp>
-            <h1 className="mt-8 text-[92px] font-semibold leading-[0.9] tracking-[-0.03em] text-white">
+            <h1 className="mt-8 text-[96px] font-semibold leading-[0.9] tracking-[-0.03em] text-white">
               A case
               <br />
               <span className="italic">study.</span>
@@ -61,19 +61,20 @@ export const coverSlide: Slide = {
           </FadeUp>
 
           <FadeUp>
-            <p className="mt-8 max-w-lg text-[19px] leading-snug text-white/70">
-              How <GradientText>AI turns the messiest decision</GradientText> in reverse logistics,
-              apparel disposition at the moment of return, into a step-change in recovery.
+            <p className="mt-8 max-w-xl text-[19px] leading-snug text-white/70">
+              Applying AI to <GradientText>apparel returns disposition</GradientText> — the
+              single, repeated decision quietly costing retailers more than the stockouts
+              making headlines.
             </p>
           </FadeUp>
 
           <FadeUp>
             <div className="mt-10 flex items-center gap-4 text-[12px] text-white/60">
               <span className="rounded-full border border-white/15 bg-white/[0.04] px-3 py-1 font-mono">
-                14 slides
+                Prepared by Josh Tillson
               </span>
               <span className="rounded-full border border-white/15 bg-white/[0.04] px-3 py-1 font-mono">
-                ~7 minutes
+                For Casper Studios
               </span>
               <span className="rounded-full border border-purple-400/40 bg-purple-500/15 px-3 py-1 font-semibold uppercase tracking-[0.22em] text-purple-200">
                 <ArrowRight className="mr-1 inline-block h-3 w-3" aria-hidden />
@@ -99,23 +100,24 @@ export const coverSlide: Slide = {
           <div className="relative w-[320px] rounded-3xl border border-purple-400/40 bg-gradient-to-br from-white/[0.06] to-purple-500/[0.08] p-6 shadow-[0_30px_80px_-20px_rgba(147,51,234,0.6)] backdrop-blur">
             <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-purple-200">
               <Sparkles className="h-3 w-3" aria-hidden />
-              The number that started this
+              The number behind the case
             </div>
             <div className="mt-5 flex items-baseline gap-1">
               <CountUp
-                to={48}
+                to={52}
                 suffix="%"
                 duration={2.2}
                 className="text-[92px] font-semibold leading-none tracking-[-0.03em] text-white"
               />
             </div>
             <p className="mt-4 text-[13px] leading-snug text-white/75">
-              of returned apparel is resold at full price today. The other 52% is where the case
-              lives, and where AI has room to move.
+              of returned apparel is <span className="font-semibold text-white">not</span> resold
+              at full price. That gap is measured in billions — and it's the gap this case aims
+              at.
             </p>
             <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4 text-[10px] uppercase tracking-[0.22em] text-white/40">
-              <span>Recovery today</span>
-              <span className="text-purple-300">source · Eightx</span>
+              <span>Recovery gap</span>
+              <span className="text-purple-300">Eightx · NRF · 2025</span>
             </div>
           </div>
         </motion.div>

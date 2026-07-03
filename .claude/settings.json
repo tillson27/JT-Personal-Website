@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(aws lambda help*)",
+      "Bash(npm run lint)",
+      "Bash(npm run type-check)",
+      "Bash(aws sts get-caller-identity*)",
+      "mcp__claude_ai_Linear__get_issue"
+    ]
+  }
+}

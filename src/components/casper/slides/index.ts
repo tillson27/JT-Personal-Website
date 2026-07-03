@@ -6,12 +6,14 @@ import { statsSlide } from "./04-stats";
 import { currentStateSlide } from "./05-current-state";
 import { frictionSlide } from "./06-friction";
 import { aiSolutionSlide } from "./07-ai-solution";
+import { howItWorksSlide } from "./08b-how-it-works";
 import { prdSlide } from "./08-prd";
 import { metricsSlide } from "./09-metrics";
 import { aiEvalSlide } from "./10-ai-eval";
 import { ticketsSlide } from "./11-tickets";
 import { wireframeSlide } from "./12-wireframe";
 import { risksSlide } from "./13-risks";
+import { gettingStartedSlide } from "./13b-getting-started";
 import { closeSlide } from "./14-close";
 
 export const slides: ReadonlyArray<Slide> = [
@@ -22,11 +24,13 @@ export const slides: ReadonlyArray<Slide> = [
   currentStateSlide,
   frictionSlide,
   aiSolutionSlide,
+  howItWorksSlide,
   prdSlide,
   metricsSlide,
   aiEvalSlide,
   ticketsSlide,
   wireframeSlide,
   risksSlide,
+  gettingStartedSlide,
   closeSlide,
 ];

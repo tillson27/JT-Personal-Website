@@ -33,6 +33,12 @@ const FUN_FACTS: ReadonlyArray<string> = [
   "Outside of work: running, XC skiing, and being a proud plant dad",
 ];
 
+const CURRENT_FOCUS: ReadonlyArray<{ label: string; value: string }> = [
+  { label: "Currently shipping", value: "AI-first product work with retail + energy clients" },
+  { label: "Currently building", value: "emlyai — AI tooling for enterprise data teams" },
+  { label: "Currently learning", value: "How reverse logistics economics actually add up" },
+];
+
 function PhotoTile({
   src,
   alt,
@@ -120,12 +126,12 @@ export const introSlide: Slide = {
 
       {/* Body: 3 columns */}
       <div className="relative grid flex-1 grid-cols-[1fr_1.05fr_1fr] gap-5 px-12 pb-8 pt-2">
-        {/* Column 1: Intro + Fun facts */}
+        {/* Column 1: Intro + Fun facts + Currently */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.25 }}
-          className="flex flex-col gap-4"
+          className="flex flex-col gap-3"
         >
           <div className="rounded-2xl border border-purple-400/25 bg-gradient-to-br from-purple-500/10 to-transparent p-3.5">
             <SectionLabel>Intro</SectionLabel>
@@ -161,6 +167,26 @@ export const introSlide: Slide = {
                 </motion.li>
               ))}
             </ul>
+          </div>
+
+          <div className="mt-auto rounded-2xl border border-white/10 bg-white/[0.03] p-3.5">
+            <SectionLabel>Currently</SectionLabel>
+            <div className="space-y-1.5">
+              {CURRENT_FOCUS.map((c, i) => (
+                <motion.div
+                  key={c.label}
+                  initial={{ opacity: 0, x: -6 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: 0.75 + i * 0.06 }}
+                  className="flex gap-2 text-[11px] leading-snug"
+                >
+                  <span className="w-[92px] flex-shrink-0 font-mono text-[9.5px] uppercase tracking-[0.16em] text-purple-300/70">
+                    {c.label}
+                  </span>
+                  <span className="text-white/85">{c.value}</span>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </motion.div>
 
