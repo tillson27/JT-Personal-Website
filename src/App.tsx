@@ -4,6 +4,12 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
+import Casper from "./pages/Casper";
+import CasperDeck from "./components/casper/CasperDeck";
+import Hub from "./components/casper/Hub";
+import PromptShowcase from "./components/casper/PromptShowcase";
+import McpShowcase from "./components/casper/McpShowcase";
+import Profile from "./components/casper/Profile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -16,6 +22,13 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/casper" element={<Casper />}>
+            <Route index element={<Hub />} />
+            <Route path="deck" element={<CasperDeck />} />
+            <Route path="prompt" element={<PromptShowcase />} />
+            <Route path="mcp" element={<McpShowcase />} />
+            <Route path="profile" element={<Profile />} />
+          </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
