@@ -67,6 +67,27 @@ const RECENT_ROLES: ReadonlyArray<{
     detail:
       "Helped enterprise customers adopt cloud identity and endpoint security solutions.",
   },
+  {
+    period: "2021 – 22",
+    role: "Technology Strategy Consultant",
+    org: "KPMG",
+    detail:
+      "Technology-strategy work across financial-services and public-sector clients.",
+  },
+  {
+    period: "2021",
+    role: "Product Manager",
+    org: "RBC",
+    detail:
+      "Product management on internal digital-banking platforms.",
+  },
+  {
+    period: "2016 – 20",
+    role: "Founder",
+    org: "Unbreakable Run",
+    detail:
+      "Founded and ran a community running brand: coaching, group events, and audience building on social.",
+  },
 ];
 
 export default function Profile() {

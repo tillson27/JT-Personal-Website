@@ -36,6 +36,27 @@ const experiences = [
     description:
       "Helped enterprise customers adopt cloud identity and endpoint security solutions.",
   },
+  {
+    period: "2021 — 2022",
+    role: "Technology Strategy Consultant",
+    company: "KPMG",
+    description:
+      "Technology strategy consulting engagements across financial services and public sector clients.",
+  },
+  {
+    period: "2021",
+    role: "Product Manager",
+    company: "RBC",
+    description:
+      "Product management on internal digital banking platforms.",
+  },
+  {
+    period: "2016 — 2020",
+    role: "Founder",
+    company: "Unbreakable Run",
+    description:
+      "Founded and grew a community running brand: coaching, group events, and building an audience across social media.",
+  },
 ];
 
 const Experience = () => {
