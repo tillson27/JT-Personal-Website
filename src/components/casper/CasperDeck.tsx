@@ -1,18 +1,19 @@
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  CheckCircle2,
   ChevronLeft,
   ChevronRight,
   ClipboardList,
   FileDown,
+  Flag,
+  Handshake,
   Home,
   Lightbulb,
   ListTree,
   Maximize2,
   Minimize2,
-  PackageSearch,
   RotateCcw,
-  Truck,
+  Search,
+  Wrench,
   X,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -274,7 +275,7 @@ function Deck({
           <ChevronLeft className="h-6 w-6" />
         </button>
 
-        <div className="relative w-full max-w-[min(100%,calc((100dvh-13rem)*16/9))] lg:max-w-[min(1280px,calc((100dvh-14rem)*16/9))]">
+        <div className="relative w-full max-w-[min(100%,calc((100dvh-11rem)*16/9))] lg:max-w-[min(1280px,calc((100dvh-13rem)*16/9))]">
           <SlideCanvas activeSlide={activeSlide} direction={direction} />
           <MobilePortraitHint />
         </div>
@@ -506,20 +507,24 @@ function MobilePortraitHint() {
 
 const SECTION_ICONS: Record<SlideSectionKey, LucideIcon> = {
   intro: Home,
-  discovery: PackageSearch,
+  discovery: Search,
   solution: Lightbulb,
   prd: ClipboardList,
-  execution: Truck,
-  close: CheckCircle2,
+  execution: Wrench,
+  close: Flag,
 };
 
 const SECTION_SHORT: Record<SlideSectionKey, string> = {
-  intro: "Intake",
-  discovery: "Sort",
-  solution: "Route",
-  prd: "Pack",
-  execution: "Ship",
-  close: "Deliver",
+  intro: "Kickoff",
+  discovery: "Problem",
+  solution: "Solution",
+  prd: "The Plan",
+  execution: "Build",
+  close: "Next Steps",
+};
+
+const SECTION_ACTIVE_ICONS: Partial<Record<SlideSectionKey, LucideIcon>> = {
+  close: Handshake,
 };
 
 function SupplyChainBreadcrumb({
@@ -555,6 +560,7 @@ function SupplyChainBreadcrumb({
           label: section.label,
           short: SECTION_SHORT[section.key],
           icon: SECTION_ICONS[section.key],
+          activeIcon: SECTION_ACTIVE_ICONS[section.key],
           start,
           end,
           count,
@@ -568,12 +574,13 @@ function SupplyChainBreadcrumb({
   return (
     <nav
       aria-label="Deck progress"
-      className="mx-auto flex w-full max-w-4xl items-center gap-1.5 rounded-full border border-white/10 bg-black/40 px-3 py-2 backdrop-blur sm:gap-2"
+      className="mx-auto flex w-full max-w-3xl items-center gap-1.5 sm:gap-2"
     >
       {stops.map((stop, idx) => {
         const isActive = stop.state === "active";
         const isPast = stop.state === "past";
-        const Icon = stop.icon;
+        const IconToRender =
+          isActive && stop.activeIcon ? stop.activeIcon : stop.icon;
         const isLast = idx === stops.length - 1;
         return (
           <div
@@ -585,26 +592,25 @@ function SupplyChainBreadcrumb({
               onClick={() => onSelect(stop.start)}
               aria-label={`Jump to ${stop.label} section`}
               aria-current={isActive ? "true" : undefined}
-              className="group relative flex flex-shrink-0 flex-col items-center gap-0.5"
+              className="group flex flex-shrink-0 items-center gap-1.5 outline-none"
             >
-              <span
-                className={
-                  isActive
-                    ? "flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-fuchsia-500 text-white shadow-[0_0_16px_rgba(217,70,239,0.6)] transition sm:h-8 sm:w-8"
-                    : isPast
-                      ? "flex h-7 w-7 items-center justify-center rounded-full border border-purple-400/40 bg-purple-500/25 text-purple-100 transition group-hover:bg-purple-500/40 sm:h-8 sm:w-8"
-                      : "flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/50 transition group-hover:border-white/25 group-hover:text-white/80 sm:h-8 sm:w-8"
-                }
-              >
-                <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" aria-hidden />
-              </span>
-              <span
-                className={`hidden text-[8.5px] font-semibold uppercase tracking-[0.16em] transition sm:block ${
+              <IconToRender
+                className={`h-3.5 w-3.5 transition ${
                   isActive
                     ? "text-fuchsia-200"
                     : isPast
                       ? "text-purple-300/80"
-                      : "text-white/40"
+                      : "text-white/35 group-hover:text-white/70"
+                }`}
+                aria-hidden
+              />
+              <span
+                className={`hidden text-[9.5px] font-medium uppercase tracking-[0.18em] transition sm:inline ${
+                  isActive
+                    ? "text-fuchsia-200"
+                    : isPast
+                      ? "text-purple-300/70"
+                      : "text-white/40 group-hover:text-white/70"
                 }`}
               >
                 {stop.short}
@@ -612,9 +618,9 @@ function SupplyChainBreadcrumb({
             </button>
 
             {isLast ? null : (
-              <div className="relative h-[3px] flex-1 overflow-hidden rounded-full bg-white/10">
+              <div className="relative h-px flex-1 overflow-hidden bg-white/10">
                 <motion.div
-                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-purple-400 to-fuchsia-400"
+                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-purple-400/80 to-fuchsia-400/80"
                   initial={false}
                   animate={{ width: `${stop.localProgress * 100}%` }}
                   transition={{ duration: 0.4, ease: "easeOut" }}
