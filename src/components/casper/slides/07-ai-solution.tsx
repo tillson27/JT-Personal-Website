@@ -50,7 +50,7 @@ function Signal({
 
 export const aiSolutionSlide: Slide = {
   id: "ai-solution",
-  title: "The AI step-change",
+  title: "What AI actually changes",
   section: "solution",
   render: () => (
     <SlideShell eyebrow="Solution · A recommendation, not a report">
@@ -58,15 +58,18 @@ export const aiSolutionSlide: Slide = {
         <FadeUp>
           <h2 className="text-[34px] font-semibold leading-[1.1] tracking-tight text-white">
             The recommendation starts the moment the customer{" "}
-            <GradientText>hits "return"</GradientText> — not when the box arrives.
+            <GradientText>hits "return",</GradientText> not when the box arrives at
+            the warehouse.
           </h2>
         </FadeUp>
 
         <FadeUp>
           <p className="mt-2 max-w-4xl text-[13.5px] text-white/65">
-            A preliminary disposition is computed from the customer's return-form data.
-            It's refined at the inspection station with condition + live channel signals.
-            An associate confirms or overrides. Overrides train the model.
+            The moment a customer starts a return online, we make a first-pass
+            recommendation using what they entered. When the item lands at the warehouse,
+            we sharpen that recommendation using the actual condition and the latest
+            channel numbers. The worker confirms or overrides. Overrides teach the
+            model what to do next time.
           </p>
         </FadeUp>
 
@@ -86,38 +89,38 @@ export const aiSolutionSlide: Slide = {
                 </span>
                 <div>
                   <p className="text-[9.5px] font-semibold uppercase tracking-[0.24em] text-purple-300/80">
-                    Phase 1 · At return initiation
+                    Step 1 · When the customer starts the return
                   </p>
                   <p className="text-[13px] font-semibold text-white">
-                    Preliminary rec, before the box ships
+                    First-pass recommendation, before the box ships
                   </p>
                 </div>
               </div>
               <span className="rounded-full border border-purple-400/40 bg-purple-500/15 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.16em] text-purple-200">
-                Days ahead of DC
+                Days before it arrives
               </span>
             </div>
 
             <p className="mt-3 text-[11.5px] leading-snug text-white/65">
-              We already know a lot before the item is in transit. The return form gives us
-              the reason, the customer, and the SKU history. That's enough for a strong
-              first-pass call.
+              We already know a lot before the box is in transit. The return form tells us
+              the reason, the customer, and the item's history. That is enough for a
+              solid first guess.
             </p>
 
             <div className="mt-3 space-y-1.5">
-              <Signal icon={MessageSquare} label="Return reason (customer stated)" delay={0.55} />
-              <Signal icon={Camera} label="Photo attached in return flow" delay={0.65} />
-              <Signal icon={User} label="Customer segment + return history" delay={0.75} />
-              <Signal icon={TrendingUp} label="Live demand + assortment status" delay={0.85} />
+              <Signal icon={MessageSquare} label="Reason the customer gave" delay={0.55} />
+              <Signal icon={Camera} label="Photo attached to the return" delay={0.65} />
+              <Signal icon={User} label="Customer type and return history" delay={0.75} />
+              <Signal icon={TrendingUp} label="How the item is selling right now" delay={0.85} />
             </div>
 
             <div className="mt-auto pt-3">
               <div className="flex items-center gap-2 rounded-lg border border-purple-400/40 bg-purple-500/15 px-3 py-2">
                 <Sparkles className="h-3.5 w-3.5 text-purple-200" aria-hidden />
                 <p className="text-[11.5px] leading-tight text-white">
-                  <span className="font-semibold text-purple-200">Preliminary rec:</span>{" "}
+                  <span className="font-semibold text-purple-200">First guess:</span>{" "}
                   <span className="font-mono">
-                    "Likely outlet · 0.71 conf. · pending inspection"
+                    "Likely outlet · 71% confident · pending inspection"
                   </span>
                 </p>
               </div>
@@ -138,10 +141,10 @@ export const aiSolutionSlide: Slide = {
                 </span>
                 <div>
                   <p className="text-[9.5px] font-semibold uppercase tracking-[0.24em] text-fuchsia-200">
-                    Phase 2 · At the inspection station
+                    Step 2 · When it arrives at the warehouse
                   </p>
                   <p className="text-[13px] font-semibold text-white">
-                    Final rec, refined with condition + channel state
+                    Final call, sharpened with the item's condition and the latest channel numbers
                   </p>
                 </div>
               </div>
@@ -154,13 +157,13 @@ export const aiSolutionSlide: Slide = {
               {/* Live signals in */}
               <div>
                 <p className="mb-1.5 text-[9px] font-semibold uppercase tracking-[0.22em] text-fuchsia-200/80">
-                  Live signals added
+                  Added at the warehouse
                 </p>
                 <div className="space-y-1.5">
-                  <Signal icon={Camera} label="Confirmed condition grade" delay={0.7} tone="fuchsia" />
-                  <Signal icon={DollarSign} label="Per-channel recovery value" delay={0.78} tone="fuchsia" />
-                  <Signal icon={Warehouse} label="Channel capacity + backlog" delay={0.86} tone="fuchsia" />
-                  <Signal icon={Leaf} label="Sustainability constraints" delay={0.94} tone="fuchsia" />
+                  <Signal icon={Camera} label="Confirmed condition" delay={0.7} tone="fuchsia" />
+                  <Signal icon={DollarSign} label="What each channel would pay" delay={0.78} tone="fuchsia" />
+                  <Signal icon={Warehouse} label="How busy each channel is" delay={0.86} tone="fuchsia" />
+                  <Signal icon={Leaf} label="Sustainability rules that apply" delay={0.94} tone="fuchsia" />
                 </div>
               </div>
 
@@ -190,22 +193,22 @@ export const aiSolutionSlide: Slide = {
               {/* Output */}
               <div>
                 <p className="mb-1.5 text-[9px] font-semibold uppercase tracking-[0.22em] text-fuchsia-200/80">
-                  Ranked rec + rationale
+                  Ranked recommendation + reason
                 </p>
                 <div className="space-y-1.5">
                   <div className="rounded-lg border border-white/15 bg-black/30 px-2.5 py-1.5">
                     <p className="text-[9px] uppercase tracking-[0.18em] text-white/45">
                       Recommended
                     </p>
-                    <p className="text-[12.5px] font-semibold text-white">Route to outlet</p>
+                    <p className="text-[12.5px] font-semibold text-white">Send to outlet</p>
                     <p className="mt-0.5 text-[9.5px] text-white/55">
-                      Confidence 0.87 · Est. $34 recovered
+                      87% confident · about $34 recovered
                     </p>
                   </div>
                   <div className="flex items-center gap-2 rounded-lg border border-emerald-400/40 bg-emerald-500/10 px-2.5 py-1.5">
                     <CheckCircle2 className="h-3.5 w-3.5 text-emerald-300" aria-hidden />
                     <span className="text-[11px] font-medium text-white">
-                      Human confirms or overrides
+                      Worker confirms or overrides
                     </span>
                   </div>
                 </div>
@@ -215,8 +218,8 @@ export const aiSolutionSlide: Slide = {
             <div className="mt-3 flex items-center gap-3 rounded-lg border border-white/10 bg-black/25 px-3 py-2">
               <Truck className="h-3.5 w-3.5 text-purple-300" aria-hidden />
               <p className="text-[11px] leading-tight text-white/70">
-                Between phases, the box is in transit. The rec is already staged — the
-                associate isn't waiting on a cold model call at scan time.
+                While the box is in transit, we prepare the recommendation. When the
+                worker scans, the answer is already there. No waiting.
               </p>
             </div>
           </motion.div>
@@ -225,9 +228,9 @@ export const aiSolutionSlide: Slide = {
         <FadeUp>
           <div className="mt-3 rounded-xl border border-purple-400/30 bg-purple-500/10 px-4 py-2.5">
             <p className="text-[12.5px] leading-snug text-white/85">
-              <span className="font-semibold text-purple-200">The associate is not replaced.</span>{" "}
-              They are the final call. Overrides are the primary training signal — a feature, not a
-              failure.
+              <span className="font-semibold text-purple-200">The worker is not replaced.</span>{" "}
+              They make the final call. When they override us, we learn from it. That is
+              how the model gets better every week.
             </p>
           </div>
         </FadeUp>

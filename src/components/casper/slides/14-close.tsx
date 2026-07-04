@@ -54,16 +54,24 @@ export const closeSlide: Slide = {
 
           <FadeUp>
             <h1 className="text-[54px] font-semibold leading-[1.05] tracking-tight text-white">
-              Front-end stockouts made the headlines.
+              Empty shelves made the headlines.
               <br />
-              <GradientText>The back end is where the money lives,</GradientText>
+              <GradientText>Returns are where the money is,</GradientText>
               <br />
-              and it's the more solvable half.
+              and they are the easier half to fix.
             </h1>
           </FadeUp>
 
           <FadeUp>
-            <div className="mt-8 flex items-center justify-center gap-6">
+            <p className="mt-4 max-w-2xl text-[14px] leading-snug text-white/70">
+              Five points of extra recovery is $5 more back on every $100 item. At the
+              scale of a mid-size apparel retailer, that is around $25M a year, without
+              touching marketing spend or stockout risk.
+            </p>
+          </FadeUp>
+
+          <FadeUp>
+            <div className="mt-6 flex items-center justify-center gap-6">
               <motion.div
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -71,7 +79,7 @@ export const closeSlide: Slide = {
                 className="rounded-2xl border border-purple-400/40 bg-purple-500/10 px-5 py-3 backdrop-blur"
               >
                 <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-purple-300">
-                  North star
+                  What we move
                 </p>
                 <p className="mt-1 text-[18px] font-semibold text-white">Recovery rate</p>
               </motion.div>
@@ -82,9 +90,9 @@ export const closeSlide: Slide = {
                 className="rounded-2xl border border-fuchsia-400/40 bg-fuchsia-500/10 px-5 py-3 backdrop-blur"
               >
                 <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-fuchsia-200">
-                  MVP
+                  What we ship
                 </p>
-                <p className="mt-1 text-[18px] font-semibold text-white">Recommend & confirm</p>
+                <p className="mt-1 text-[18px] font-semibold text-white">Recommend, worker confirms</p>
               </motion.div>
               <motion.div
                 initial={{ scale: 0, opacity: 0 }}
@@ -93,7 +101,7 @@ export const closeSlide: Slide = {
                 className="rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 backdrop-blur"
               >
                 <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/60">
-                  Feedback loop
+                  How it gets better
                 </p>
                 <p className="mt-1 text-[18px] font-semibold text-white">Overrides train it</p>
               </motion.div>

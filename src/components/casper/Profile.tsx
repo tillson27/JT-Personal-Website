@@ -72,7 +72,7 @@ const RECENT_ROLES: ReadonlyArray<{
 export default function Profile() {
   return (
     <SubPageShell eyebrow="Meet Josh · The longer version" chip="Bonus track">
-      {/* Hero — balanced 2 cols */}
+      {/* Hero : balanced 2 cols */}
       <section className="mt-4 grid grid-cols-1 gap-6 lg:grid-cols-[1.05fr_0.95fr]">
         {/* Left */}
         <motion.div
@@ -81,23 +81,23 @@ export default function Profile() {
           transition={{ duration: 0.6 }}
           className="flex flex-col"
         >
-          <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-purple-300/80">
+          <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-purple-300/80 sm:text-[11px] sm:tracking-[0.24em]">
             <Sparkles className="h-3.5 w-3.5" aria-hidden /> Product Manager · AI-first builder
           </div>
-          <h1 className="mt-3 text-[52px] font-semibold leading-[1] tracking-tight text-white sm:text-[64px]">
+          <h1 className="mt-2 text-[40px] font-semibold leading-[1] tracking-tight text-white sm:mt-3 sm:text-[52px] lg:text-[64px]">
             Josh Tillson
           </h1>
-          <p className="mt-3 max-w-xl text-[15px] leading-snug text-white/70">
+          <p className="mt-3 max-w-xl text-[13.5px] leading-snug text-white/70 sm:text-[15px]">
             I sit at the intersection of business and technology, building AI products and helping
             large clients rationalize enterprise software while designing what comes next.
           </p>
 
-          <div className="mt-5 grid grid-cols-3 gap-2.5">
+          <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-2.5">
             <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-3">
-              <div className="flex items-center gap-1.5 text-[9.5px] font-semibold uppercase tracking-[0.22em] text-purple-300/80">
+              <div className="flex items-center gap-1.5 text-[9px] font-semibold uppercase tracking-[0.22em] text-purple-300/80 sm:text-[9.5px]">
                 <Briefcase className="h-3 w-3" aria-hidden /> Now
               </div>
-              <p className="mt-1 text-[12.5px] font-semibold text-white">
+              <p className="mt-1 text-[12px] font-semibold text-white sm:text-[12.5px]">
                 Product Manager @ Caylent
               </p>
               <p className="mt-0.5 text-[10.5px] text-white/50">
@@ -105,17 +105,17 @@ export default function Profile() {
               </p>
             </div>
             <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-3">
-              <div className="flex items-center gap-1.5 text-[9.5px] font-semibold uppercase tracking-[0.22em] text-purple-300/80">
+              <div className="flex items-center gap-1.5 text-[9px] font-semibold uppercase tracking-[0.22em] text-purple-300/80 sm:text-[9.5px]">
                 <GraduationCap className="h-3 w-3" aria-hidden /> Education
               </div>
-              <p className="mt-1 text-[12.5px] font-semibold text-white">CS + Business</p>
+              <p className="mt-1 text-[12px] font-semibold text-white sm:text-[12.5px]">CS + Business</p>
               <p className="mt-0.5 text-[10.5px] text-white/50">UBC · Vancouver</p>
             </div>
             <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-3">
-              <div className="flex items-center gap-1.5 text-[9.5px] font-semibold uppercase tracking-[0.22em] text-purple-300/80">
+              <div className="flex items-center gap-1.5 text-[9px] font-semibold uppercase tracking-[0.22em] text-purple-300/80 sm:text-[9.5px]">
                 <MapPin className="h-3 w-3" aria-hidden /> Base
               </div>
-              <p className="mt-1 text-[12.5px] font-semibold text-white">Calgary, AB</p>
+              <p className="mt-1 text-[12px] font-semibold text-white sm:text-[12.5px]">Calgary, AB</p>
               <p className="mt-0.5 text-[10.5px] text-white/50">Sudbury-born</p>
             </div>
           </div>
@@ -145,7 +145,7 @@ export default function Profile() {
             </a>
           </div>
 
-          {/* Style bullets — the "thriving at intersection" content */}
+          {/* Style bullets : the "thriving at intersection" content */}
           <div className="mt-6 rounded-2xl border border-purple-400/25 bg-gradient-to-br from-purple-500/10 to-transparent p-4">
             <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-purple-200">
               What I bring
@@ -181,12 +181,12 @@ export default function Profile() {
           </div>
         </motion.div>
 
-        {/* Right — compact photo grid, matches left column height */}
+        {/* Right : compact photo grid, matches left column height */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="grid grid-cols-2 grid-rows-2 gap-3"
+          className="grid grid-cols-2 grid-rows-2 gap-2 sm:gap-3"
         >
           {PHOTOS.map((p, i) => (
             <motion.figure
@@ -194,7 +194,7 @@ export default function Profile() {
               initial={{ opacity: 0, scale: 0.94 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 + i * 0.08 }}
-              className="relative h-full min-h-[220px] overflow-hidden rounded-2xl border border-purple-400/20 shadow-[0_18px_50px_-18px_rgba(147,51,234,0.45)]"
+              className="relative h-full min-h-[140px] overflow-hidden rounded-2xl border border-purple-400/20 shadow-[0_18px_50px_-18px_rgba(147,51,234,0.45)] sm:min-h-[220px]"
             >
               <img src={p.src} alt={p.alt} className="h-full w-full object-cover" />
               <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10" />
@@ -203,8 +203,8 @@ export default function Profile() {
         </motion.div>
       </section>
 
-      {/* Experience + supporting cards — 2 cols so no full-width scroll gap */}
-      <section className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+      {/* Experience + supporting cards : 2 cols so no full-width scroll gap */}
+      <section className="mt-8 grid grid-cols-1 gap-6 sm:mt-10 lg:grid-cols-[1.2fr_0.8fr]">
         {/* Recent experience timeline */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -229,7 +229,7 @@ export default function Profile() {
                   initial={{ opacity: 0, x: -6 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 + i * 0.06 }}
-                  className="relative grid grid-cols-[130px_1fr] gap-5"
+                  className="relative grid grid-cols-[86px_1fr] gap-3 sm:grid-cols-[130px_1fr] sm:gap-5"
                 >
                   <span
                     className={
@@ -238,20 +238,20 @@ export default function Profile() {
                         : "absolute -left-[17px] top-2 h-1.5 w-1.5 rounded-full bg-white/35"
                     }
                   />
-                  <p className="font-mono text-[10.5px] uppercase tracking-[0.16em] text-white/45">
+                  <p className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-white/45 sm:text-[10.5px] sm:tracking-[0.16em]">
                     {r.period}
                   </p>
                   <div>
-                    <div className="flex flex-wrap items-baseline gap-2">
-                      <h3 className="text-[14px] font-semibold text-white">{r.role}</h3>
-                      <p className="text-[12.5px] text-purple-200/80">· {r.org}</p>
+                    <div className="flex flex-wrap items-baseline gap-1.5 sm:gap-2">
+                      <h3 className="text-[13px] font-semibold text-white sm:text-[14px]">{r.role}</h3>
+                      <p className="text-[11.5px] text-purple-200/80 sm:text-[12.5px]">· {r.org}</p>
                       {r.now ? (
                         <span className="rounded-full border border-fuchsia-300/40 bg-fuchsia-500/15 px-1.5 py-[1px] text-[8.5px] font-semibold uppercase tracking-[0.2em] text-fuchsia-200">
                           Now
                         </span>
                       ) : null}
                     </div>
-                    <p className="mt-1 text-[11.5px] leading-relaxed text-white/60">
+                    <p className="mt-1 text-[11px] leading-relaxed text-white/60 sm:text-[11.5px]">
                       {r.detail}
                     </p>
                   </div>

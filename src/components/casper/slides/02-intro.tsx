@@ -35,8 +35,8 @@ const FUN_FACTS: ReadonlyArray<string> = [
 
 const CURRENT_FOCUS: ReadonlyArray<{ label: string; value: string }> = [
   { label: "Currently shipping", value: "AI-first product work with retail + energy clients" },
-  { label: "Currently building", value: "emlyai — AI tooling for enterprise data teams" },
-  { label: "Currently learning", value: "How reverse logistics economics actually add up" },
+  { label: "Currently building", value: "emlyai, AI tooling for enterprise data teams" },
+  { label: "Currently learning", value: "How the money actually adds up on returned inventory" },
 ];
 
 function PhotoTile({

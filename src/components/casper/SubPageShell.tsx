@@ -25,7 +25,7 @@ export default function SubPageShell({
         initial={{ opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="relative z-10 flex flex-wrap items-center justify-between gap-3 px-6 pt-6 sm:px-10 sm:pt-8 lg:px-16"
+        className="relative z-10 flex flex-wrap items-center justify-between gap-2 px-4 pt-5 sm:gap-3 sm:px-10 sm:pt-8 lg:px-16"
       >
         <div className="flex items-center gap-3">
           <Link
@@ -39,7 +39,7 @@ export default function SubPageShell({
             </span>
           </Link>
           <CasperMark size="sm" className="hidden sm:inline-block" />
-          <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-purple-300/80">
+          <p className="text-[9.5px] font-semibold uppercase tracking-[0.2em] text-purple-300/80 sm:text-[11px] sm:tracking-[0.24em]">
             {eyebrow}
           </p>
         </div>
@@ -50,7 +50,7 @@ export default function SubPageShell({
         ) : null}
       </motion.header>
 
-      <main className="relative z-0 mx-auto w-full max-w-6xl px-6 pb-16 pt-8 sm:px-10 lg:px-12">
+      <main className="relative z-0 mx-auto w-full max-w-6xl px-4 pb-12 pt-6 sm:px-10 sm:pb-16 sm:pt-8 lg:px-12">
         {children}
       </main>
     </div>

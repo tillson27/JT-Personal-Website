@@ -16,29 +16,29 @@ const SUPPORTING: ReadonlyArray<Supporting> = [
   {
     label: "Quality",
     metric: "% resold at full price",
-    definition: "Units restocked as A-stock at MSRP within 30 days.",
-    target: "+3 pts vs. baseline",
+    definition: "Items put back on the shelf and sold at full price within 30 days.",
+    target: "+3 points vs. today",
     delay: 0.4,
   },
   {
     label: "Speed",
-    metric: "Dispositioning cycle time",
-    definition: "Seconds from scan to a confirmed disposition action.",
-    target: "≤ current, don't regress",
+    metric: "Seconds per item",
+    definition: "How long it takes from scanning an item to confirming where it goes.",
+    target: "No slower than today",
     delay: 0.5,
   },
   {
     label: "Trust",
     metric: "Override rate",
-    definition: "% of recs the associate overrides. Segmented by grade + category.",
-    target: "Stable ≤ 25%, trending down",
+    definition: "How often the worker picks a different option than the one we suggest.",
+    target: "Stays at or under 25% and trends down",
     delay: 0.6,
   },
   {
-    label: "Ops",
-    metric: "Throughput (units / hr)",
-    definition: "Units dispositioned per associate-hour.",
-    target: "≥ current, +5% stretch",
+    label: "Throughput",
+    metric: "Items per hour, per worker",
+    definition: "How many items a worker handles in an hour.",
+    target: "Same or better, up to 5% higher",
     delay: 0.7,
   },
 ];
@@ -52,9 +52,17 @@ export const metricsSlide: Slide = {
       <Stagger gap={0.08}>
         <FadeUp>
           <h2 className="text-[36px] font-semibold leading-[1.1] tracking-tight text-white">
-            <GradientText>Recovery rate</GradientText> is the north star.
-            Everything else supports or protects it.
+            <GradientText>Recovery rate</GradientText> is the number we're moving.
+            Everything else either supports it or protects it.
           </h2>
+        </FadeUp>
+
+        <FadeUp>
+          <p className="mt-2 max-w-4xl text-[13px] leading-snug text-white/60">
+            Recovery rate is how much of the item's original price we get back after a
+            return, no matter which channel it ended up in. It rolls up quality, speed,
+            and where the item went, into one number.
+          </p>
         </FadeUp>
 
         <div className="mt-4 grid flex-1 grid-cols-[1.15fr_1fr] gap-4">
@@ -69,28 +77,28 @@ export const metricsSlide: Slide = {
                     <div className="flex items-center gap-2">
                       <Star className="h-4 w-4 text-purple-200" aria-hidden />
                       <p className="text-[10.5px] font-semibold uppercase tracking-[0.24em] text-purple-200">
-                        North star
+                        Main metric
                       </p>
                     </div>
                     <p className="mt-1.5 text-[26px] font-semibold leading-tight text-white">
                       Recovery rate
                     </p>
                     <p className="mt-1 font-mono text-[11.5px] text-white/70">
-                      = value recovered ÷ original retail value
+                      = value recovered ÷ original retail price
                     </p>
                     <p className="mt-2 max-w-md text-[11.5px] leading-snug text-white/70">
-                      The one number that captures whether we made the right call on this
-                      unit — regardless of which channel it went to.
+                      The one number that tells us whether we made the right call on this
+                      item, no matter where it ended up.
                     </p>
                   </div>
                   <div className="rounded-xl border border-purple-400/50 bg-black/30 px-4 py-3 text-center">
                     <p className="text-[9px] font-semibold uppercase tracking-[0.22em] text-purple-200/80">
-                      MVP goal
+                      First-version goal
                     </p>
                     <p className="mt-1 font-mono text-[22px] font-semibold text-white">
                       +5 pts
                     </p>
-                    <p className="text-[9.5px] text-white/50">at 90 days post-launch</p>
+                    <p className="text-[9.5px] text-white/50">90 days after launch</p>
                   </div>
                 </div>
               </div>
@@ -136,13 +144,13 @@ export const metricsSlide: Slide = {
               <div className="mb-2 flex items-center gap-2">
                 <TrendingUp className="h-4 w-4 text-fuchsia-200" aria-hidden />
                 <p className="text-[10.5px] font-semibold uppercase tracking-[0.24em] text-fuchsia-200">
-                  Value logic · a representative $100 unit
+                  What the math looks like · a $100 item
                 </p>
               </div>
 
               <p className="text-[11.5px] leading-snug text-white/65">
-                A returned apparel item today vs. with the agent. This is why a "few points
-                of recovery" is not a rounding error.
+                A returned $100 apparel item today, and with the agent. This is why a
+                few points of recovery is not a rounding error.
               </p>
 
               <div className="mt-3 space-y-2.5">
@@ -162,7 +170,7 @@ export const metricsSlide: Slide = {
                       </span>
                     </div>
                     <p className="mt-0.5 text-[10px] text-white/50">
-                      48% resold full · 30% eaten by reverse logistics · rest markdown.
+                      48% resold at full price · 30% eaten by return-processing costs · rest markdown.
                     </p>
                   </div>
                 </div>
@@ -187,7 +195,7 @@ export const metricsSlide: Slide = {
                       With agent
                     </span>
                     <span className="font-mono text-purple-200">
-                      +5 pts recovery lift
+                      +5 pts recovery
                     </span>
                   </div>
                   <div className="rounded-lg border border-purple-400/50 bg-gradient-to-br from-purple-500/20 to-fuchsia-500/20 p-2.5">
@@ -198,7 +206,7 @@ export const metricsSlide: Slide = {
                       </span>
                     </div>
                     <p className="mt-0.5 text-[10px] text-purple-200/80">
-                      +$5 per unit × millions of units per year = the ask.
+                      +$5 per item, times millions of items a year. That is the prize.
                     </p>
                   </div>
                 </div>
@@ -207,11 +215,11 @@ export const metricsSlide: Slide = {
               <div className="mt-auto pt-3">
                 <div className="rounded-lg border border-white/10 bg-black/20 p-3">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/50">
-                    Scale check · at 5M units / yr
+                    At the scale of 5M items a year
                   </p>
                   <p className="mt-1 text-[13px] leading-tight text-white">
-                    <span className="font-semibold text-purple-200">$25M annualized</span>{" "}
-                    recovery lift, before any surge or margin-mix effects.
+                    <span className="font-semibold text-purple-200">$25M a year</span>{" "}
+                    in extra recovered value. Before any seasonal or mix effects on top.
                   </p>
                 </div>
               </div>

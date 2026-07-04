@@ -1,14 +1,21 @@
 import { AnimatePresence, motion } from "framer-motion";
 import {
+  CheckCircle2,
   ChevronLeft,
   ChevronRight,
+  ClipboardList,
   FileDown,
   Home,
+  Lightbulb,
   ListTree,
   Maximize2,
   Minimize2,
+  PackageSearch,
+  RotateCcw,
+  Truck,
   X,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import CasperMark from "./CasperMark";
 import {
   useCallback,
@@ -18,6 +25,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import type { Slide, SlideSectionKey } from "./_shell";
 import { CANVAS_HEIGHT, CANVAS_WIDTH, slideSections } from "./_shell";
@@ -53,12 +61,11 @@ function Deck({
 
   const handleExportPdf = useCallback(() => {
     setIsPrinting(true);
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        window.print();
-        setTimeout(() => setIsPrinting(false), 250);
-      });
-    });
+    // Let the portal mount + framer-motion enter animations settle before printing.
+    window.setTimeout(() => {
+      window.print();
+      window.setTimeout(() => setIsPrinting(false), 400);
+    }, 1600);
   }, []);
 
   useEffect(() => {
@@ -233,10 +240,13 @@ function Deck({
             type="button"
             onClick={handleExportPdf}
             aria-label="Export deck to PDF"
-            className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-1.5 text-xs font-medium text-white/85 backdrop-blur transition hover:bg-white/10"
+            disabled={isPrinting}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-1.5 text-xs font-medium text-white/85 backdrop-blur transition hover:bg-white/10 disabled:pointer-events-none disabled:opacity-60"
           >
-            <FileDown className="h-4 w-4" aria-hidden />
-            <span className="hidden lg:inline">Export PDF</span>
+            <FileDown className={`h-4 w-4 ${isPrinting ? "animate-pulse" : ""}`} aria-hidden />
+            <span className="hidden lg:inline">
+              {isPrinting ? "Preparing…" : "Export PDF"}
+            </span>
           </button>
           <button
             type="button"
@@ -264,8 +274,9 @@ function Deck({
           <ChevronLeft className="h-6 w-6" />
         </button>
 
-        <div className="relative w-full max-w-[min(100%,calc((100dvh-10rem)*16/9))] lg:max-w-[min(1280px,calc((100dvh-12rem)*16/9))]">
+        <div className="relative w-full max-w-[min(100%,calc((100dvh-13rem)*16/9))] lg:max-w-[min(1280px,calc((100dvh-14rem)*16/9))]">
           <SlideCanvas activeSlide={activeSlide} direction={direction} />
+          <MobilePortraitHint />
         </div>
 
         <button
@@ -279,37 +290,41 @@ function Deck({
         </button>
       </main>
 
-      <footer className="relative z-20 flex items-center justify-center gap-2 px-4 pb-5 sm:px-8 lg:justify-between lg:px-12">
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={goPrev}
-            disabled={activeIndex === 0}
-            aria-label="Previous slide"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/85 backdrop-blur transition hover:bg-white/10 disabled:pointer-events-none disabled:opacity-30 lg:hidden"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
+      <footer className="relative z-20 flex flex-col items-stretch gap-2 px-4 pb-4 sm:px-8 lg:px-12">
+        <SupplyChainBreadcrumb
+          slides={slides}
+          sections={sections}
+          activeIndex={activeIndex}
+          onSelect={goTo}
+        />
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 lg:hidden">
+            <button
+              type="button"
+              onClick={goPrev}
+              disabled={activeIndex === 0}
+              aria-label="Previous slide"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/85 backdrop-blur transition hover:bg-white/10 disabled:pointer-events-none disabled:opacity-30"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              onClick={goNext}
+              disabled={activeIndex === total - 1}
+              aria-label="Next slide"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/85 backdrop-blur transition hover:bg-white/10 disabled:pointer-events-none disabled:opacity-30"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
 
-          <SlideIndicator
-            total={total}
-            active={activeIndex}
-            onSelect={goTo}
-          />
-
-          <button
-            type="button"
-            onClick={goNext}
-            disabled={activeIndex === total - 1}
-            aria-label="Next slide"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/85 backdrop-blur transition hover:bg-white/10 disabled:pointer-events-none disabled:opacity-30 lg:hidden"
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
-        </div>
-
-        <div className="hidden text-[11px] uppercase tracking-[0.24em] text-white/40 lg:block">
-          {activeSlide.title}
+          <div className="hidden flex-1 truncate text-[11px] uppercase tracking-[0.24em] text-white/40 lg:block">
+            {activeSlide.title}
+          </div>
+          <div className="hidden text-[11px] tabular-nums text-white/50 lg:block">
+            {String(activeIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+          </div>
         </div>
       </footer>
 
@@ -324,21 +339,23 @@ function Deck({
         }}
       />
 
-      {isPrinting ? <PrintDeck slides={slides} /> : null}
+      {isPrinting ? <PrintDeckPortal slides={slides} /> : null}
       <PrintStyles />
     </div>
   );
 }
 
-function PrintDeck({ slides }: { slides: ReadonlyArray<Slide> }) {
-  return (
+function PrintDeckPortal({ slides }: { slides: ReadonlyArray<Slide> }) {
+  if (typeof document === "undefined") return null;
+  return createPortal(
     <div className="deck-print" aria-hidden>
       {slides.map((slide) => (
         <div key={slide.id} className="deck-print-page">
-          {slide.render()}
+          <div className="deck-print-canvas">{slide.render()}</div>
         </div>
       ))}
-    </div>
+    </div>,
+    document.body,
   );
 }
 
@@ -347,21 +364,45 @@ function PrintStyles() {
     <style>{`
       .deck-print { display: none; }
       @media print {
-        @page { size: 1280px 720px; margin: 0; }
-        html, body { background: #05030b !important; margin: 0 !important; padding: 0 !important; }
-        .deck-live { display: none !important; }
-        .deck-print { display: block !important; }
+        @page { size: 13.333in 7.5in; margin: 0; }
+        html, body {
+          background: #05030b !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          color-adjust: exact !important;
+        }
+        body > *:not(.deck-print) { display: none !important; }
+        .deck-print {
+          display: block !important;
+          position: static !important;
+          background: #05030b !important;
+        }
+        .deck-print * {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          color-adjust: exact !important;
+        }
         .deck-print-page {
-          width: 1280px;
-          height: 720px;
+          width: 13.333in;
+          height: 7.5in;
           overflow: hidden;
           page-break-after: always;
           break-after: page;
           background: #05030b;
+          position: relative;
         }
         .deck-print-page:last-child {
           page-break-after: auto;
           break-after: auto;
+        }
+        .deck-print-canvas {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
         }
       }
     `}</style>
@@ -431,35 +472,159 @@ function SlideCanvas({
   );
 }
 
-function SlideIndicator({
-  total,
-  active,
+function MobilePortraitHint() {
+  const [dismissed, setDismissed] = useState(false);
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 640px) and (orientation: portrait)");
+    const update = () => setShow(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  if (!show || dismissed) return null;
+
+  return (
+    <div className="pointer-events-none absolute inset-x-2 -bottom-2 z-20 flex translate-y-full justify-center">
+      <div className="pointer-events-auto flex items-center gap-2 rounded-full border border-purple-400/40 bg-[#12081e]/95 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-purple-100 shadow-[0_10px_30px_-8px_rgba(147,51,234,0.6)] backdrop-blur">
+        <RotateCcw className="h-3 w-3" aria-hidden />
+        <span>Rotate for a bigger view</span>
+        <button
+          type="button"
+          onClick={() => setDismissed(true)}
+          aria-label="Dismiss"
+          className="ml-1 rounded-full p-0.5 text-purple-200/70 transition hover:bg-white/10 hover:text-white"
+        >
+          <X className="h-3 w-3" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+const SECTION_ICONS: Record<SlideSectionKey, LucideIcon> = {
+  intro: Home,
+  discovery: PackageSearch,
+  solution: Lightbulb,
+  prd: ClipboardList,
+  execution: Truck,
+  close: CheckCircle2,
+};
+
+const SECTION_SHORT: Record<SlideSectionKey, string> = {
+  intro: "Intake",
+  discovery: "Sort",
+  solution: "Route",
+  prd: "Pack",
+  execution: "Ship",
+  close: "Deliver",
+};
+
+function SupplyChainBreadcrumb({
+  slides,
+  sections,
+  activeIndex,
   onSelect,
 }: {
-  total: number;
-  active: number;
+  slides: ReadonlyArray<Slide>;
+  sections: ReadonlyArray<{ key: SlideSectionKey; label: string }>;
+  activeIndex: number;
   onSelect: (i: number) => void;
 }) {
+  const stops = useMemo(() => {
+    return sections
+      .map((section) => {
+        const start = slides.findIndex((s) => s.section === section.key);
+        if (start === -1) return null;
+        let end = start;
+        for (let i = start; i < slides.length; i++) {
+          if (slides[i].section === section.key) end = i;
+        }
+        const count = end - start + 1;
+        const inSection = activeIndex >= start && activeIndex <= end;
+        const past = activeIndex > end;
+        const localProgress = inSection
+          ? (activeIndex - start + 1) / count
+          : past
+            ? 1
+            : 0;
+        return {
+          key: section.key,
+          label: section.label,
+          short: SECTION_SHORT[section.key],
+          icon: SECTION_ICONS[section.key],
+          start,
+          end,
+          count,
+          state: past ? "past" : inSection ? "active" : "future",
+          localProgress,
+        } as const;
+      })
+      .filter(<T,>(x: T | null): x is T => x !== null);
+  }, [slides, sections, activeIndex]);
+
   return (
-    <div className="flex flex-wrap items-center justify-center gap-1.5 rounded-full border border-white/10 bg-black/40 px-2.5 py-1.5 backdrop-blur">
-      {Array.from({ length: total }).map((_, i) => {
-        const isActive = i === active;
+    <nav
+      aria-label="Deck progress"
+      className="mx-auto flex w-full max-w-4xl items-center gap-1.5 rounded-full border border-white/10 bg-black/40 px-3 py-2 backdrop-blur sm:gap-2"
+    >
+      {stops.map((stop, idx) => {
+        const isActive = stop.state === "active";
+        const isPast = stop.state === "past";
+        const Icon = stop.icon;
+        const isLast = idx === stops.length - 1;
         return (
-          <button
-            key={i}
-            type="button"
-            onClick={() => onSelect(i)}
-            aria-label={`Go to slide ${i + 1}`}
-            aria-current={isActive ? "true" : undefined}
-            className={
-              isActive
-                ? "h-1.5 w-6 rounded-full bg-gradient-to-r from-purple-400 to-fuchsia-400 transition-all"
-                : "h-1.5 w-1.5 rounded-full bg-white/25 transition-all hover:bg-white/60"
-            }
-          />
+          <div
+            key={stop.key}
+            className={`flex items-center gap-1.5 sm:gap-2 ${isLast ? "" : "flex-1"}`}
+          >
+            <button
+              type="button"
+              onClick={() => onSelect(stop.start)}
+              aria-label={`Jump to ${stop.label} section`}
+              aria-current={isActive ? "true" : undefined}
+              className="group relative flex flex-shrink-0 flex-col items-center gap-0.5"
+            >
+              <span
+                className={
+                  isActive
+                    ? "flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-fuchsia-500 text-white shadow-[0_0_16px_rgba(217,70,239,0.6)] transition sm:h-8 sm:w-8"
+                    : isPast
+                      ? "flex h-7 w-7 items-center justify-center rounded-full border border-purple-400/40 bg-purple-500/25 text-purple-100 transition group-hover:bg-purple-500/40 sm:h-8 sm:w-8"
+                      : "flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/50 transition group-hover:border-white/25 group-hover:text-white/80 sm:h-8 sm:w-8"
+                }
+              >
+                <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" aria-hidden />
+              </span>
+              <span
+                className={`hidden text-[8.5px] font-semibold uppercase tracking-[0.16em] transition sm:block ${
+                  isActive
+                    ? "text-fuchsia-200"
+                    : isPast
+                      ? "text-purple-300/80"
+                      : "text-white/40"
+                }`}
+              >
+                {stop.short}
+              </span>
+            </button>
+
+            {isLast ? null : (
+              <div className="relative h-[3px] flex-1 overflow-hidden rounded-full bg-white/10">
+                <motion.div
+                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-purple-400 to-fuchsia-400"
+                  initial={false}
+                  animate={{ width: `${stop.localProgress * 100}%` }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                />
+              </div>
+            )}
+          </div>
         );
       })}
-    </div>
+    </nav>
   );
 }
 

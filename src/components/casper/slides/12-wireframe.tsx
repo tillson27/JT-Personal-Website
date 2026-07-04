@@ -71,17 +71,17 @@ function WireframeView() {
   const [showDashboard, setShowDashboard] = useState(false);
 
   return (
-    <SlideShell eyebrow="Wireframes · Low-fi flow states + real-time dashboard">
-      <Stagger gap={0.08}>
+    <SlideShell eyebrow="Wireframes · Screens the worker sees, and the live dashboard">
+      <Stagger gap={0.08} fill>
         <FadeUp>
           <div className="flex items-start justify-between gap-4">
             <div>
               <h2 className="text-[32px] font-semibold leading-[1.1] tracking-tight text-white">
-                One screen, <GradientText>four states</GradientText>. That's the flow.
+                One screen, <GradientText>four moments.</GradientText> That is the whole flow.
               </h2>
               <p className="mt-2 max-w-3xl text-[12.5px] text-white/60">
-                Low-fi frames below cover the state graph. Click the button on the right for
-                a live-fidelity mockup of the associate dashboard.
+                Rough frames below show what the worker sees at each moment. Click the button
+                on the right for a higher-fidelity mockup of the live dashboard.
               </p>
             </div>
             <motion.button
@@ -93,17 +93,17 @@ function WireframeView() {
               className="group inline-flex flex-shrink-0 items-center gap-2 rounded-xl border border-fuchsia-400/50 bg-gradient-to-br from-fuchsia-500/25 to-purple-500/20 px-4 py-2.5 text-[12px] font-semibold uppercase tracking-[0.18em] text-fuchsia-100 shadow-[0_12px_40px_-14px_rgba(217,70,239,0.6)] transition hover:brightness-110"
             >
               <Maximize2 className="h-4 w-4" aria-hidden />
-              See the live dashboard mockup
+              See the live dashboard
             </motion.button>
           </div>
         </FadeUp>
 
-        <div className="mt-4 grid flex-1 grid-cols-4 gap-3">
+        <div className="mt-4 grid min-h-0 flex-1 grid-cols-4 gap-3">
           {/* State 1: Loading */}
           <Frame index="01" label="Loading" delay={0.3}>
             <div className="flex h-full flex-col gap-2">
               <div className="rounded-lg border border-white/10 bg-black/30 p-2">
-                <p className="mb-1 text-[9px] uppercase tracking-widest text-white/40">SKU</p>
+                <p className="mb-1 text-[9px] uppercase tracking-widest text-white/40">Item</p>
                 <Bar w="80%" tone="line" />
               </div>
               <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-black/30 p-2">
@@ -119,7 +119,7 @@ function WireframeView() {
                     >
                       <Loader2 className="h-5 w-5 text-purple-300" />
                     </motion.div>
-                    <p className="text-[10px]">Checking live channel signals…</p>
+                    <p className="text-[10px]">Checking the latest channel numbers…</p>
                   </div>
                 </div>
               </div>
@@ -135,7 +135,7 @@ function WireframeView() {
             <div className="flex h-full flex-col gap-2">
               <div className="rounded-lg border border-white/10 bg-black/30 p-2">
                 <p className="mb-1 text-[9px] uppercase tracking-widest text-white/40">
-                  SKU · 7734911
+                  Item · 7734911
                 </p>
                 <p className="font-mono text-[10px] text-white/80">
                   Grade B · photo attached
@@ -148,22 +148,22 @@ function WireframeView() {
                     Recommended
                   </p>
                 </div>
-                <p className="mt-1 text-[13px] font-semibold text-white">Route to outlet</p>
+                <p className="mt-1 text-[13px] font-semibold text-white">Send to outlet</p>
                 <div className="mt-2 space-y-1">
                   <Bar w="100%" tone="accent" />
-                  <p className="font-mono text-[9px] text-purple-200">confidence 0.87</p>
+                  <p className="font-mono text-[9px] text-purple-200">87% confident</p>
                 </div>
                 <p className="mt-2 text-[9px] leading-tight text-white/70">
-                  Outlet demand +18% · refurb cost high · A-stock capacity full
+                  Outlet demand up 18% · refurbish is expensive · main store full
                 </p>
               </div>
               <div className="rounded-md border border-white/10 bg-black/20 p-1.5">
                 <p className="text-[8px] uppercase tracking-widest text-white/40">
-                  Alternatives
+                  Other options
                 </p>
                 <div className="mt-1 flex gap-1">
                   <div className="flex-1 rounded bg-white/[0.06] px-1.5 py-1 text-[9px] text-white/70">
-                    Refurb · $28
+                    Refurbish · $28
                   </div>
                   <div className="flex-1 rounded bg-white/[0.06] px-1.5 py-1 text-[9px] text-white/70">
                     Liquidate · $12
@@ -186,7 +186,7 @@ function WireframeView() {
             <div className="flex h-full flex-col gap-2">
               <div className="rounded-lg border border-white/10 bg-black/30 p-2">
                 <p className="mb-1 text-[9px] uppercase tracking-widest text-white/40">
-                  SKU · 4429021
+                  Item · 4429021
                 </p>
                 <p className="font-mono text-[10px] text-white/80">
                   Grade C · unusual pattern
@@ -196,23 +196,23 @@ function WireframeView() {
                 <div className="flex items-center gap-1.5">
                   <AlertTriangle className="h-3 w-3 text-amber-200" />
                   <p className="text-[9px] font-semibold uppercase tracking-widest text-amber-200">
-                    Defer to human
+                    Ask a person
                   </p>
                 </div>
                 <p className="mt-1 text-[13px] font-semibold text-white">
-                  Tentative: refurbish
+                  Best guess: refurbish
                 </p>
                 <div className="mt-2 space-y-1">
                   <Bar w="45%" tone="accent" />
                   <p className="font-mono text-[9px] text-amber-200">
-                    confidence 0.42 · below 0.6
+                    42% confident · below our 60% line
                   </p>
                 </div>
                 <p className="mt-2 text-[9px] leading-tight text-white/75">
-                  Missing signal: refurb cost stale (4h old)
+                  Missing data: refurbish cost is 4 hours old
                 </p>
                 <div className="mt-2 rounded-md border border-white/15 bg-black/30 p-1.5 text-[9px] text-white/70">
-                  Alternatives expanded by default →
+                  Other options shown by default →
                 </div>
               </div>
               <div className="flex gap-1.5">
@@ -239,7 +239,7 @@ function WireframeView() {
                 <div className="flex items-center gap-1.5">
                   <CheckCircle2 className="h-3 w-3 text-fuchsia-300" />
                   <p className="text-[9px] font-semibold uppercase tracking-widest text-fuchsia-200">
-                    Override · pick reason
+                    Override · pick a reason
                   </p>
                 </div>
                 <p className="mt-2 text-[10.5px] leading-tight text-white/80">
@@ -249,9 +249,9 @@ function WireframeView() {
                 </p>
                 <div className="mt-2 space-y-1">
                   {[
-                    "Visible defect not in condition grade",
-                    "Local demand different from model",
-                    "SKU flagged for jobber contract",
+                    "Visible defect the grade missed",
+                    "Local demand looks different than the model thinks",
+                    "This item is under a bulk-sale contract",
                     "Other · free text",
                   ].map((r, i) => (
                     <div
@@ -281,8 +281,8 @@ function WireframeView() {
 
         <FadeUp>
           <div className="mt-3 text-center text-[11px] uppercase tracking-[0.28em] text-white/40">
-            Loading → Recommendation → Low confidence → Override capture · loops back to
-            feedback
+            Loading → recommendation → low confidence → override reason · loops back into
+            training
           </div>
         </FadeUp>
       </Stagger>
@@ -318,7 +318,7 @@ function DashboardMock({ onClose }: { onClose: () => void }) {
             <div className="h-2 w-2 rounded-full bg-amber-300/70" />
             <div className="h-2 w-2 rounded-full bg-emerald-400/70" />
             <span className="ml-2 text-[10px] font-semibold uppercase tracking-widest text-white/50">
-              Disposition Console · Live
+              Returns Console · Live
             </span>
           </div>
           <button
@@ -342,11 +342,11 @@ function DashboardMock({ onClose }: { onClose: () => void }) {
             <p className="font-mono text-white">14:22 · 3h 41m in</p>
           </div>
           <div>
-            <p className="uppercase tracking-widest text-white/40">Units today</p>
-            <p className="font-mono text-white">247 · 96% conf.</p>
+            <p className="uppercase tracking-widest text-white/40">Items today</p>
+            <p className="font-mono text-white">247 · 96% confidence</p>
           </div>
           <div>
-            <p className="uppercase tracking-widest text-white/40">Est. recovery</p>
+            <p className="uppercase tracking-widest text-white/40">Value recovered</p>
             <p className="font-mono text-emerald-300">$8,142 · +6.1 pts</p>
           </div>
         </div>
@@ -366,7 +366,7 @@ function DashboardMock({ onClose }: { onClose: () => void }) {
             <p className="mt-2 text-[11px] font-semibold text-white">
               SS26 Tee · Black · M
             </p>
-            <p className="text-[9.5px] font-mono text-white/50">SKU 7734911 · $100 MSRP</p>
+            <p className="text-[9.5px] font-mono text-white/50">Item 7734911 · $100 retail</p>
             <div className="mt-2 space-y-1 text-[10px]">
               <div className="flex justify-between text-white/70">
                 <span>Grade</span>
@@ -389,20 +389,20 @@ function DashboardMock({ onClose }: { onClose: () => void }) {
               <div className="flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-purple-200" aria-hidden />
                 <p className="text-[10px] font-semibold uppercase tracking-widest text-purple-200">
-                  Disposition rec
+                  Recommendation
                 </p>
               </div>
               <span className="rounded-full border border-emerald-400/40 bg-emerald-500/15 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-widest text-emerald-200">
                 High confidence
               </span>
             </div>
-            <p className="mt-2 text-[24px] font-semibold text-white">Route to outlet</p>
+            <p className="mt-2 text-[24px] font-semibold text-white">Send to outlet</p>
             <div className="mt-1 flex items-center gap-3 text-[10.5px]">
-              <span className="font-mono text-purple-200">conf. 0.87</span>
+              <span className="font-mono text-purple-200">87% confident</span>
               <span className="text-white/40">·</span>
               <span className="font-mono text-emerald-300">+$34 recovered</span>
               <span className="text-white/40">·</span>
-              <span className="text-white/60">vs. $12 liquidate baseline</span>
+              <span className="text-white/60">vs. $12 if we liquidated</span>
             </div>
 
             <div className="mt-3 rounded-lg border border-white/10 bg-black/30 p-2">
@@ -410,20 +410,20 @@ function DashboardMock({ onClose }: { onClose: () => void }) {
                 Why
               </p>
               <ul className="mt-1 space-y-0.5 text-[10.5px] text-white/85">
-                <li>• Outlet demand +18% w/w for this category</li>
-                <li>• A-stock in-assortment but capacity full at this DC</li>
-                <li>• Refurb cost $22 exceeds outlet margin uplift</li>
+                <li>• Outlet demand up 18% this week for this category</li>
+                <li>• Item is still in the current lineup, but the main store is full</li>
+                <li>• Refurbishing costs $22, more than we would gain</li>
               </ul>
             </div>
 
             <div className="mt-3">
               <p className="text-[9px] font-semibold uppercase tracking-widest text-white/50">
-                Alternatives
+                Other options
               </p>
               <div className="mt-1 grid grid-cols-4 gap-1.5">
                 {[
                   { l: "Refurbish", v: "$28" },
-                  { l: "A-stock", v: "$40·q" },
+                  { l: "Resell as new", v: "$40·q" },
                   { l: "Liquidate", v: "$12" },
                   { l: "Donate", v: "$0" },
                 ].map((a) => (
@@ -454,16 +454,16 @@ function DashboardMock({ onClose }: { onClose: () => void }) {
               <div className="mb-2 flex items-center gap-1.5">
                 <TrendingUp className="h-3 w-3 text-purple-300" aria-hidden />
                 <p className="text-[9px] font-semibold uppercase tracking-widest text-purple-300/80">
-                  Live signals
+                  Latest numbers
                 </p>
               </div>
               <div className="space-y-1.5 text-[10px]">
                 {[
-                  { l: "Outlet demand", v: "+18% w/w", tone: "text-emerald-300" },
-                  { l: "A-stock capacity", v: "full", tone: "text-amber-300" },
-                  { l: "Refurb cost", v: "$22 (high)", tone: "text-amber-300" },
-                  { l: "Jobber contract", v: "none", tone: "text-white/60" },
-                  { l: "Sustainability", v: "OK · resell", tone: "text-emerald-300" },
+                  { l: "Outlet demand", v: "up 18% this week", tone: "text-emerald-300" },
+                  { l: "Main store capacity", v: "full", tone: "text-amber-300" },
+                  { l: "Refurbish cost", v: "$22 (high)", tone: "text-amber-300" },
+                  { l: "Bulk-sale contract", v: "none", tone: "text-white/60" },
+                  { l: "Sustainability", v: "OK to resell", tone: "text-emerald-300" },
                 ].map((s) => (
                   <div key={s.l} className="flex justify-between">
                     <span className="text-white/70">{s.l}</span>
@@ -486,7 +486,7 @@ function DashboardMock({ onClose }: { onClose: () => void }) {
                   { t: "14:17", act: "Refurbish · override", tone: "text-fuchsia-300" },
                   { t: "14:14", act: "Outlet · confirmed", tone: "text-emerald-300" },
                   { t: "14:12", act: "Liquidate · confirmed", tone: "text-emerald-300" },
-                  { t: "14:10", act: "A-stock · override", tone: "text-fuchsia-300" },
+                  { t: "14:10", act: "Resell as new · override", tone: "text-fuchsia-300" },
                 ].map((r, i) => (
                   <div key={i} className="flex gap-2">
                     <span className="font-mono text-white/40">{r.t}</span>
@@ -499,7 +499,7 @@ function DashboardMock({ onClose }: { onClose: () => void }) {
         </div>
 
         <div className="border-t border-white/10 bg-white/[0.02] px-4 py-2 text-center text-[10px] uppercase tracking-[0.24em] text-white/40">
-          Mid-fi mockup · not production styling · click X to return to wireframes
+          Mid-fidelity mockup · not final styling · click X to go back to the wireframes
         </div>
       </motion.div>
     </motion.div>

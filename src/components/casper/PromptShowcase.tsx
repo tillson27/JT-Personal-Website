@@ -163,7 +163,7 @@ function CommandLine({ cmd, index }: { cmd: Command; index: number }) {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-      className="rounded-xl border border-white/10 bg-black/50 p-3.5 font-mono text-[12px] leading-relaxed shadow-[0_10px_30px_-10px_rgba(147,51,234,0.35)]"
+      className="overflow-x-auto rounded-xl border border-white/10 bg-black/50 p-3 font-mono text-[10.5px] leading-relaxed shadow-[0_10px_30px_-10px_rgba(147,51,234,0.35)] sm:p-3.5 sm:text-[12px]"
     >
       <p className="mb-1.5 text-[10px] uppercase tracking-[0.2em] text-white/40">
         {cmd.comment}
@@ -234,18 +234,18 @@ export default function PromptShowcase() {
         transition={{ duration: 0.6 }}
         className="mt-4"
       >
-        <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-purple-300/80">
+        <div className="flex flex-wrap items-center gap-1.5 text-[9.5px] font-semibold uppercase tracking-[0.2em] text-purple-300/80 sm:gap-2 sm:text-[11px] sm:tracking-[0.24em]">
           <Terminal className="h-3.5 w-3.5" aria-hidden />
           CLI · Node-style
           <span className="text-white/25">·</span>
           <span className="text-fuchsia-200">Scoped, built & shipped on client engagements</span>
         </div>
-        <h1 className="mt-3 text-[42px] font-semibold leading-[1.05] tracking-tight text-white sm:text-[52px]">
+        <h1 className="mt-2 text-[30px] font-semibold leading-[1.05] tracking-tight text-white sm:mt-3 sm:text-[42px] lg:text-[52px]">
           <span className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-400 bg-clip-text text-transparent">
             Prompt
           </span>{":"} an npm for AI skills.
         </h1>
-        <p className="mt-4 max-w-3xl text-[15px] leading-snug text-white/70 sm:text-[17px]">
+        <p className="mt-3 max-w-3xl text-[13.5px] leading-snug text-white/70 sm:mt-4 sm:text-[15px] lg:text-[17px]">
           A recent AI-native product I owned end-to-end as an AI Forward Deployed Product
           Manager. From spotting the "everyone's on different skills" problem, to writing the PRD,
           to shipping a Node-style CLI that installs, versions, publishes, and distributes AI
@@ -265,28 +265,28 @@ export default function PromptShowcase() {
       </motion.section>
 
       {/* Features */}
-      <section className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-4">
+      <section className="mt-8 grid grid-cols-1 gap-3 sm:mt-10 sm:grid-cols-2 sm:gap-4 md:grid-cols-4">
         {FEATURES.map((f, i) => (
           <motion.div
             key={f.title}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.15 + i * 0.08 }}
-            className="rounded-2xl border border-white/10 bg-white/[0.03] p-4"
+            className="rounded-2xl border border-white/10 bg-white/[0.03] p-3.5 sm:p-4"
           >
-            <span className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-purple-500/20 text-purple-200">
+            <span className="mb-2.5 flex h-8 w-8 items-center justify-center rounded-lg bg-purple-500/20 text-purple-200 sm:mb-3 sm:h-9 sm:w-9">
               <f.icon className="h-4 w-4" aria-hidden />
             </span>
-            <p className="text-[13px] font-semibold text-white">{f.title}</p>
-            <p className="mt-1.5 text-[12px] leading-snug text-white/60">{f.detail}</p>
+            <p className="text-[12.5px] font-semibold text-white sm:text-[13px]">{f.title}</p>
+            <p className="mt-1 text-[11.5px] leading-snug text-white/60 sm:mt-1.5 sm:text-[12px]">{f.detail}</p>
           </motion.div>
         ))}
       </section>
 
       {/* Terminal + Registry */}
-      <section className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+      <section className="mt-8 grid grid-cols-1 gap-5 sm:mt-10 sm:gap-6 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-white/60">
+          <p className="mb-2.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/60 sm:mb-3 sm:text-[11px] sm:tracking-[0.24em]">
             The full loop, in a terminal
           </p>
           <div className="space-y-2.5">
@@ -425,12 +425,12 @@ export default function PromptShowcase() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.8 }}
-        className="mt-10 rounded-2xl border border-purple-400/30 bg-gradient-to-br from-purple-500/12 to-fuchsia-500/8 p-5"
+        className="mt-8 rounded-2xl border border-purple-400/30 bg-gradient-to-br from-purple-500/12 to-fuchsia-500/8 p-4 sm:mt-10 sm:p-5"
       >
-        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-purple-200">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-purple-200 sm:text-[11px] sm:tracking-[0.22em]">
           The distribution loop
         </p>
-        <div className="mt-4 flex flex-wrap items-center gap-2 text-[12px] text-white/85">
+        <div className="mt-3 flex flex-wrap items-center gap-1.5 text-[11px] text-white/85 sm:mt-4 sm:gap-2 sm:text-[12px]">
           <span className="rounded-lg border border-white/10 bg-black/40 px-2.5 py-1.5 font-mono">
             someone builds a skill
           </span>
@@ -459,14 +459,14 @@ export default function PromptShowcase() {
       </motion.section>
 
       {/* Impact tiles */}
-      <section className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+      <section className="mt-6 grid grid-cols-1 gap-3 sm:mt-8 sm:gap-4 md:grid-cols-3">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.9 }}
-          className="rounded-2xl border border-purple-400/30 bg-gradient-to-br from-purple-500/15 to-transparent p-5"
+          className="rounded-2xl border border-purple-400/30 bg-gradient-to-br from-purple-500/15 to-transparent p-4 sm:p-5"
         >
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-purple-200">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-purple-200 sm:text-[11px] sm:tracking-[0.22em]">
             Real impact · shipped by me as PM
           </p>
           <p className="mt-2 text-[13.5px] leading-snug text-white/80">
@@ -478,9 +478,9 @@ export default function PromptShowcase() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 1.0 }}
-          className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+          className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:p-5"
         >
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/60">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/60 sm:text-[11px] sm:tracking-[0.22em]">
             What it manages
           </p>
           <ul className="mt-2 space-y-1 text-[12.5px] text-white/80">
@@ -494,9 +494,9 @@ export default function PromptShowcase() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 1.1 }}
-          className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+          className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:p-5"
         >
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/60">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/60 sm:text-[11px] sm:tracking-[0.22em]">
             Where it's headed
           </p>
           <ul className="mt-2 space-y-1 text-[12.5px] text-white/80">

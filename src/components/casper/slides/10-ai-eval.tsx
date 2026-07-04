@@ -85,30 +85,30 @@ type Improvement = {
 const IMPROVEMENTS: ReadonlyArray<Improvement> = [
   {
     when: "Weekly",
-    action: "Override taxonomy review",
+    action: "Review the overrides",
     detail:
-      "Segment overrides by reason code + category. Anything above 30% weekly override triggers a retrain candidate.",
+      "Sort overrides by reason and by product category. Any category with more than 30% overrides in a week goes on the retrain shortlist.",
     delay: 0.85,
   },
   {
-    when: "Bi-weekly",
-    action: "Feature-importance audit",
+    when: "Every two weeks",
+    action: "Check which signals matter",
     detail:
-      "Which signals are actually moving the rec? Prune stale features; promote high-lift ones (e.g. photo signal) from research to production.",
+      "Which pieces of information are actually changing the recommendation? Drop the ones that no longer help, and add the ones that do.",
     delay: 0.95,
   },
   {
     when: "Monthly",
-    action: "Active-learning batch",
+    action: "Learn from the hard ones",
     detail:
-      "Route low-confidence (<0.6) items to a labeling queue. Human-annotated hard cases become the next training set.",
+      "Send low-confidence items to a review queue. A human labels them, and those become the training set for the next round.",
     delay: 1.05,
   },
   {
     when: "Quarterly",
-    action: "Segment retrain + A/B",
+    action: "Retrain and test",
     detail:
-      "Retrain per-category models on the latest 90 days. Ship behind a hold-out split; only promote if recovery lift is significant.",
+      "Retrain a fresh model on the last 90 days of data. Run it side by side with the current one. Only ship the new one if it clearly does better.",
     delay: 1.15,
   },
 ];
@@ -118,19 +118,20 @@ export const aiEvalSlide: Slide = {
   title: "AI evaluation plan",
   section: "prd",
   render: () => (
-    <SlideShell eyebrow="AI evaluation · Ship the model, ship the feedback loop">
+    <SlideShell eyebrow="Evaluation · How we ship it, and keep it good">
       <Stagger gap={0.08}>
         <FadeUp>
           <h2 className="text-[32px] font-semibold leading-[1.1] tracking-tight text-white">
-            How we know it's working — and{" "}
-            <GradientText>how we make it better</GradientText> on a schedule.
+            How we know it is working, and{" "}
+            <GradientText>how we make it better</GradientText> on a set rhythm.
           </h2>
         </FadeUp>
 
         <FadeUp>
           <p className="mt-2 max-w-4xl text-[13px] text-white/60">
-            Every AI product decays without a feedback loop. Below: what we measure before,
-            at, and after launch — and the specific cadence we use to tune it.
+            An AI product gets worse over time if no one is watching it. Here is what we
+            measure before we launch, right when we launch, and every week after. And the
+            rhythm we use to keep improving it.
           </p>
         </FadeUp>
 
@@ -138,23 +139,23 @@ export const aiEvalSlide: Slide = {
         <div className="mt-4 grid grid-cols-4 gap-3">
           <EvalCard
             icon={Database}
-            tag="Pre-launch"
-            title="Offline eval"
+            tag="Before we launch"
+            title="Test against past data"
             bullets={[
-              "Golden set: 6 months of returns with realized outcomes",
-              "Compare rec vs. realized-optimal disposition",
-              "Baseline vs. current human decisions on same items",
+              "Take six months of past returns where we know how they ended up",
+              "Ask the model to make the call, then compare with what actually happened",
+              "Also compare against the calls the workers made at the time",
             ]}
             delay={0.3}
           />
           <EvalCard
             icon={BeakerIcon}
             tag="At launch"
-            title="Online A/B"
+            title="Live side-by-side test"
             bullets={[
-              "50/50 split: agent-suggested vs. no-agent control",
-              "Primary: recovery-rate lift (pts)",
-              "Guardrails: cycle time + throughput must not regress",
+              "Half the items get the recommendation, half do not",
+              "The number we watch: recovery rate lift",
+              "The line we cannot cross: speed and volume cannot get worse",
             ]}
             delay={0.4}
             accent
@@ -162,22 +163,22 @@ export const aiEvalSlide: Slide = {
           <EvalCard
             icon={Activity}
             tag="Ongoing"
-            title="Continuous quality"
+            title="Watch it every day"
             bullets={[
-              "Override rate + reason codes per segment",
-              "Predicted vs. actual recovery calibration",
-              "Slice by category, condition grade, DC",
+              "How often workers override, and why",
+              "Did we predict the right recovery amount for each item?",
+              "Break it out by category, condition, and warehouse",
             ]}
             delay={0.5}
           />
           <EvalCard
             icon={ShieldAlert}
             tag="Safety net"
-            title="Guardrails & drift"
+            title="Catch the bad calls"
             bullets={[
-              "Alert on value-destroying recs (destroy when resell viable)",
-              "Sustainability-constraint violation catch",
-              "Seasonal + category drift, auto-retrain triggers",
+              "Alert if we ever recommend destroying an item we could sell",
+              "Catch anything that would break sustainability rules",
+              "Watch for changes over time and retrain automatically",
             ]}
             delay={0.6}
           />
@@ -189,7 +190,7 @@ export const aiEvalSlide: Slide = {
             <div className="mb-2 flex items-center gap-2">
               <Wrench className="h-4 w-4 text-purple-300" aria-hidden />
               <p className="text-[10.5px] font-semibold uppercase tracking-[0.24em] text-purple-300">
-                Specific ways we make it better on a schedule
+                The rhythm for making it better
               </p>
             </div>
             <div className="grid grid-cols-4 gap-3">
@@ -223,10 +224,11 @@ export const aiEvalSlide: Slide = {
             </span>
             <p className="flex-1 text-[12.5px] leading-snug text-white/90">
               <span className="font-semibold text-purple-200">
-                Overrides are training data.
+                Overrides are our best training data.
               </span>{" "}
-              Every human "no" gets a reason code, feeds the weekly review, and closes the
-              gap between model and reality.
+              Every time a worker says "no", we save the reason. That feeds the weekly
+              review and closes the gap between what the model thinks and what actually
+              works on the floor.
             </p>
           </div>
         </FadeUp>

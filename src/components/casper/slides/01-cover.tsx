@@ -62,9 +62,10 @@ export const coverSlide: Slide = {
 
           <FadeUp>
             <p className="mt-8 max-w-xl text-[19px] leading-snug text-white/70">
-              Applying AI to <GradientText>apparel returns disposition</GradientText> — the
-              single, repeated decision quietly costing retailers more than the stockouts
-              making headlines.
+              Using AI to help retailers decide{" "}
+              <GradientText>where each returned item should go.</GradientText> It is
+              the one repeated call costing them more than the stockouts making
+              headlines.
             </p>
           </FadeUp>
 
@@ -112,8 +113,8 @@ export const coverSlide: Slide = {
             </div>
             <p className="mt-4 text-[13px] leading-snug text-white/75">
               of returned apparel is <span className="font-semibold text-white">not</span> resold
-              at full price. That gap is measured in billions — and it's the gap this case aims
-              at.
+              at full price. That gap is worth billions each year, and it is the gap this
+              case aims at.
             </p>
             <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4 text-[10px] uppercase tracking-[0.22em] text-white/40">
               <span>Recovery gap</span>

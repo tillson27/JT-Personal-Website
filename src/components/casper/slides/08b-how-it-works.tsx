@@ -50,24 +50,24 @@ export const howItWorksSlide: Slide = {
   title: "How it works in practice",
   section: "solution",
   render: () => (
-    <SlideShell eyebrow="Solution · How this actually shows up at the inspection station">
-      <Stagger gap={0.08}>
+    <SlideShell eyebrow="Solution · What this looks like on the warehouse floor">
+      <Stagger gap={0.08} fill>
         <FadeUp>
           <h2 className="text-[34px] font-semibold leading-[1.1] tracking-tight text-white">
             No new hardware.{" "}
-            <GradientText>An existing monitor, an existing shift.</GradientText>
+            <GradientText>Same monitor, same shift.</GradientText>
           </h2>
         </FadeUp>
 
         <FadeUp>
           <p className="mt-2 max-w-4xl text-[13px] text-white/60">
-            Signals feed into a service. The associate sees a ranked rec on the monitor
-            they already have. One tap to confirm, one tap to override. The associate is
-            still the decision-maker.
+            The system pulls in the information it needs and shows the worker a ranked
+            recommendation on the monitor they already use. One tap to confirm, one tap to
+            override. The worker still makes the call.
           </p>
         </FadeUp>
 
-        <div className="mt-4 grid flex-1 grid-cols-[0.9fr_1.4fr_0.9fr] gap-3">
+        <div className="mt-5 grid min-h-0 flex-1 grid-cols-[0.9fr_1.4fr_0.9fr] gap-3">
           {/* Left: data feeding in */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
@@ -78,7 +78,7 @@ export const howItWorksSlide: Slide = {
             <div className="mb-2 flex items-center gap-2">
               <Database className="h-4 w-4 text-purple-300" aria-hidden />
               <p className="text-[10.5px] font-semibold uppercase tracking-[0.24em] text-purple-300/80">
-                What the service sees
+                What the system pulls in
               </p>
             </div>
             <div className="flex flex-1 flex-col gap-1.5">
@@ -90,38 +90,38 @@ export const howItWorksSlide: Slide = {
               />
               <DataChip
                 icon={Boxes}
-                label="SKU + variant"
-                value="SS26 tee · black · M"
+                label="Item and variant"
+                value="SS26 tee · black · size M"
                 delay={0.58}
               />
               <DataChip
                 icon={Database}
-                label="Live channel value"
-                value="Outlet $34 · Refurb $28"
+                label="What each channel would pay"
+                value="Outlet $34 · Refurbish $28"
                 delay={0.66}
               />
               <DataChip
                 icon={Database}
-                label="A-stock demand"
-                value="+18% w/w · in-assortment"
+                label="Current demand"
+                value="Up 18% this week"
                 delay={0.74}
               />
               <DataChip
                 icon={ShieldCheck}
-                label="Condition (entered)"
-                value="Grade B · tags on"
+                label="Condition (worker checks)"
+                value="Grade B · tags still on"
                 delay={0.82}
               />
               <DataChip
                 icon={Database}
                 label="Channel capacity"
-                value="Outlet OK · A-stock full"
+                value="Outlet OK · main store full"
                 delay={0.9}
               />
             </div>
             <p className="mt-3 text-[10px] italic leading-snug text-white/40">
-              First 4 arrive with the return form. Last 2 arrive when the associate scans
-              the tag.
+              The first four arrive with the online return. The last two arrive when the
+              worker scans the tag.
             </p>
           </motion.div>
 
@@ -136,7 +136,7 @@ export const howItWorksSlide: Slide = {
               <div className="flex items-center gap-2">
                 <Monitor className="h-4 w-4 text-fuchsia-200" aria-hidden />
                 <p className="text-[10.5px] font-semibold uppercase tracking-[0.24em] text-fuchsia-200">
-                  What the associate sees on-screen
+                  What the worker sees on screen
                 </p>
               </div>
               <span className="rounded-full border border-fuchsia-300/40 bg-fuchsia-500/15 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.16em] text-fuchsia-100">
@@ -153,7 +153,7 @@ export const howItWorksSlide: Slide = {
                   <div className="h-1.5 w-1.5 rounded-full bg-amber-300/70" />
                   <div className="h-1.5 w-1.5 rounded-full bg-emerald-400/70" />
                   <span className="ml-2 text-[9px] uppercase tracking-widest text-white/40">
-                    Disposition Console · SKU 7734911
+                    Returns Console · Item 7734911
                   </span>
                 </div>
                 <span className="text-[9px] uppercase tracking-widest text-white/40">
@@ -172,28 +172,28 @@ export const howItWorksSlide: Slide = {
                     </p>
                   </div>
                   <p className="mt-1 text-[15px] font-semibold text-white">
-                    Route to outlet
+                    Send to outlet
                   </p>
                   <div className="mt-1.5 flex items-center gap-2 text-[9.5px] text-white/70">
-                    <span className="font-mono text-purple-200">conf. 0.87</span>
+                    <span className="font-mono text-purple-200">87% confident</span>
                     <span>·</span>
-                    <span>est. $34 recovered</span>
+                    <span>about $34 recovered</span>
                   </div>
                   <p className="mt-2 text-[9.5px] leading-tight text-white/70">
-                    Outlet demand +18% w/w · refurb cost high · A-stock capacity full.
+                    Outlet demand up 18% this week · refurbish is expensive · main store shelves full.
                   </p>
                 </div>
 
                 {/* Alternatives */}
                 <div className="flex flex-col gap-1.5">
                   <p className="text-[9px] font-semibold uppercase tracking-widest text-white/45">
-                    Alternatives
+                    Other options
                   </p>
                   {[
                     { label: "Refurbish", value: "$28", tone: "text-white/85" },
-                    { label: "A-stock", value: "$40 · queued", tone: "text-white/50" },
+                    { label: "Resell as new", value: "$40 · queue", tone: "text-white/50" },
                     { label: "Liquidate", value: "$12", tone: "text-white/85" },
-                    { label: "Donate", value: "$0 · tax cred.", tone: "text-white/85" },
+                    { label: "Donate", value: "$0 · tax credit", tone: "text-white/85" },
                   ].map((a) => (
                     <div
                       key={a.label}
@@ -230,43 +230,44 @@ export const howItWorksSlide: Slide = {
             <div className="mb-2 flex items-center gap-2">
               <ShieldCheck className="h-4 w-4 text-purple-300" aria-hidden />
               <p className="text-[10.5px] font-semibold uppercase tracking-[0.24em] text-purple-300/80">
-                What we're not doing
+                What we are not doing
               </p>
             </div>
             <ul className="space-y-2 text-[11.5px] leading-snug text-white/85">
               <li className="flex gap-2">
                 <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-purple-300" />
                 <span>
-                  <span className="font-semibold text-white">No physical scanning
-                  hardware.</span> The associate uses their existing scanner + keyboard.
+                  <span className="font-semibold text-white">No new hardware.</span> The
+                  worker uses the scanner and keyboard they already have.
                 </span>
               </li>
               <li className="flex gap-2">
                 <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-purple-300" />
                 <span>
-                  <span className="font-semibold text-white">No auto-actioning.</span>{" "}
-                  The system suggests; the associate confirms.
+                  <span className="font-semibold text-white">No auto-action.</span>{" "}
+                  The system suggests, the worker confirms.
                 </span>
               </li>
               <li className="flex gap-2">
                 <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-purple-300" />
                 <span>
-                  <span className="font-semibold text-white">No AI-only condition
-                  grading in v1.</span> Condition is entered by the associate; a photo
-                  can inform but does not decide.
+                  <span className="font-semibold text-white">No condition grading by
+                  AI alone in version one.</span> The worker enters the condition. A
+                  photo can help, but does not decide.
                 </span>
               </li>
               <li className="flex gap-2">
                 <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-purple-300" />
                 <span>
-                  <span className="font-semibold text-white">No job displacement.</span>{" "}
-                  This tool exists to remove judgement cost, not to remove the associate.
+                  <span className="font-semibold text-white">No layoffs.</span>{" "}
+                  This tool takes the guesswork out of the call. The worker still
+                  runs the floor.
                 </span>
               </li>
             </ul>
             <p className="mt-auto pt-3 text-[10px] italic leading-snug text-white/40">
-              Every override is captured with a reason code — the primary training signal
-              for v2.
+              Every override is saved with a reason. That is the main way the model
+              gets smarter for version two.
             </p>
           </motion.div>
         </div>

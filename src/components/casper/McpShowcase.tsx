@@ -92,20 +92,20 @@ export default function McpShowcase() {
         transition={{ duration: 0.6 }}
         className="mt-4"
       >
-        <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-purple-300/80">
+        <div className="flex flex-wrap items-center gap-1.5 text-[9.5px] font-semibold uppercase tracking-[0.2em] text-purple-300/80 sm:gap-2 sm:text-[11px] sm:tracking-[0.24em]">
           <Blocks className="h-3.5 w-3.5" aria-hidden />
           Model Context Protocol
           <span className="text-white/25">·</span>
           <span className="text-fuchsia-200">Scoped, built & shipped on a client engagement</span>
         </div>
-        <h1 className="mt-3 text-[42px] font-semibold leading-[1.05] tracking-tight text-white sm:text-[52px]">
+        <h1 className="mt-2 text-[30px] font-semibold leading-[1.05] tracking-tight text-white sm:mt-3 sm:text-[42px] lg:text-[52px]">
           A{" "}
           <span className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-400 bg-clip-text text-transparent">
             translation layer
           </span>{" "}
           that builds itself.
         </h1>
-        <p className="mt-4 max-w-3xl text-[15px] leading-snug text-white/70 sm:text-[17px]">
+        <p className="mt-3 max-w-3xl text-[13.5px] leading-snug text-white/70 sm:mt-4 sm:text-[15px] lg:text-[17px]">
           A recent AI product I owned end-to-end as an AI Forward Deployed Product Manager. A
           mortgage-servicer client was translating a proprietary loan-origination data model to{" "}
           <span className="font-semibold text-white">MISMO v3.5</span>, with thousands of fields
@@ -127,17 +127,17 @@ export default function McpShowcase() {
       </motion.section>
 
       {/* Before / After */}
-      <section className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
+      <section className="mt-8 grid grid-cols-1 gap-3 sm:mt-10 sm:gap-4 md:grid-cols-2">
         <motion.div
           initial={{ opacity: 0, x: -12 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+          className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:p-5"
         >
-          <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-red-300/80">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-red-300/80 sm:text-[11px] sm:tracking-[0.24em]">
             Before the MCP
           </p>
-          <ul className="mt-3 space-y-1.5 text-[13px] leading-snug text-white/80">
+          <ul className="mt-2 space-y-1.5 text-[12px] leading-snug text-white/80 sm:mt-3 sm:text-[13px]">
             <li>· Engineer opens the MISMO reference Excel, again</li>
             <li>· Greps the source schema, finds three plausible candidates</li>
             <li>· Guesses the transform, ships it, waits for QA</li>
@@ -148,12 +148,12 @@ export default function McpShowcase() {
           initial={{ opacity: 0, x: 12 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.25 }}
-          className="rounded-2xl border border-purple-400/40 bg-gradient-to-br from-purple-500/15 to-fuchsia-500/10 p-5"
+          className="rounded-2xl border border-purple-400/40 bg-gradient-to-br from-purple-500/15 to-fuchsia-500/10 p-4 sm:p-5"
         >
-          <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-purple-200">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-purple-200 sm:text-[11px] sm:tracking-[0.24em]">
             With the MCP
           </p>
-          <ul className="mt-3 space-y-1.5 text-[13px] leading-snug text-white/90">
+          <ul className="mt-2 space-y-1.5 text-[12px] leading-snug text-white/90 sm:mt-3 sm:text-[13px]">
             <li>· Agent asks the MCP for the source model, gets typed fields + docs</li>
             <li>· Filters existing mappings with a JSONPath query, avoids duplicates</li>
             <li>· Requests a suggestion for the unmapped one, gets a MISMO path + transform + confidence</li>
@@ -163,39 +163,39 @@ export default function McpShowcase() {
       </section>
 
       {/* Tools */}
-      <section className="mt-12">
-        <div className="mb-4 flex items-center gap-2">
+      <section className="mt-10 sm:mt-12">
+        <div className="mb-3 flex items-center gap-2 sm:mb-4">
           <Zap className="h-4 w-4 text-fuchsia-300" aria-hidden />
-          <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-fuchsia-200">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-fuchsia-200 sm:text-[11px] sm:tracking-[0.24em]">
             MCP tools exposed
           </p>
         </div>
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-2.5 sm:gap-3 md:grid-cols-2 lg:grid-cols-3">
           {TOOLS.map((t, i) => (
             <motion.div
               key={t.name}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.15 + i * 0.08 }}
-              className="rounded-2xl border border-white/10 bg-white/[0.03] p-4"
+              className="rounded-2xl border border-white/10 bg-white/[0.03] p-3.5 sm:p-4"
             >
-              <div className="mb-3 flex items-center gap-2">
-                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-500/20 text-purple-200">
-                  <t.icon className="h-4 w-4" aria-hidden />
+              <div className="mb-2.5 flex items-center gap-2 sm:mb-3">
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-purple-500/20 text-purple-200 sm:h-8 sm:w-8">
+                  <t.icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" aria-hidden />
                 </span>
-                <p className="font-mono text-[13px] font-semibold text-white">{t.name}</p>
+                <p className="font-mono text-[12px] font-semibold text-white sm:text-[13px]">{t.name}</p>
               </div>
-              <p className="text-[12px] leading-snug text-white/65">{t.desc}</p>
+              <p className="text-[11.5px] leading-snug text-white/65 sm:text-[12px]">{t.desc}</p>
             </motion.div>
           ))}
         </div>
       </section>
 
       {/* Chat + Mapping demo */}
-      <section className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_1.1fr]">
+      <section className="mt-10 grid grid-cols-1 gap-5 sm:mt-12 sm:gap-6 lg:grid-cols-[1fr_1.1fr]">
         {/* Chat */}
         <div>
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-white/60">
+          <p className="mb-2.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/60 sm:mb-3 sm:text-[11px] sm:tracking-[0.24em]">
             How the MCP shows up in agent chat
           </p>
           <div className="space-y-3 rounded-2xl border border-white/10 bg-black/40 p-4">
@@ -269,7 +269,7 @@ export default function McpShowcase() {
 
         {/* Mapping table */}
         <div>
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-white/60">
+          <p className="mb-2.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/60 sm:mb-3 sm:text-[11px] sm:tracking-[0.24em]">
             Sample mappings the MCP returns
           </p>
           <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/40">
@@ -286,15 +286,15 @@ export default function McpShowcase() {
                 transition={{ duration: 0.35, delay: 0.25 + i * 0.1 }}
                 className="border-b border-white/5 px-4 py-3 last:border-b-0"
               >
-                <div className="grid grid-cols-[1fr_auto_1fr] items-start gap-3">
+                <div className="grid grid-cols-[1fr_auto_1fr] items-start gap-2 sm:gap-3">
                   <div>
-                    <p className="font-mono text-[12px] text-white/90">{m.source}</p>
+                    <p className="break-all font-mono text-[10.5px] text-white/90 sm:text-[12px]">{m.source}</p>
                   </div>
                   <div className="pt-0.5">
                     <ArrowRight className="h-3.5 w-3.5 text-purple-300" aria-hidden />
                   </div>
                   <div>
-                    <p className="font-mono text-[12px] text-fuchsia-200">{m.target}</p>
+                    <p className="break-all font-mono text-[10.5px] text-fuchsia-200 sm:text-[12px]">{m.target}</p>
                   </div>
                 </div>
                 <div className="mt-1 flex flex-wrap items-center gap-2 pl-0 text-[10.5px]">
@@ -315,14 +315,14 @@ export default function McpShowcase() {
       </section>
 
       {/* Why it matters */}
-      <section className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
+      <section className="mt-10 grid grid-cols-1 gap-3 sm:mt-12 sm:gap-4 md:grid-cols-3">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="rounded-2xl border border-purple-400/30 bg-gradient-to-br from-purple-500/15 to-transparent p-5"
+          className="rounded-2xl border border-purple-400/30 bg-gradient-to-br from-purple-500/15 to-transparent p-4 sm:p-5"
         >
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-purple-200">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-purple-200 sm:text-[11px] sm:tracking-[0.22em]">
             PM decision · why an MCP, not a script
           </p>
           <p className="mt-2 text-[13px] leading-snug text-white/80">
@@ -335,9 +335,9 @@ export default function McpShowcase() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
-          className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+          className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:p-5"
         >
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/60">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/60 sm:text-[11px] sm:tracking-[0.22em]">
             What it accelerates
           </p>
           <ul className="mt-2 space-y-1 text-[12.5px] text-white/80">
@@ -351,9 +351,9 @@ export default function McpShowcase() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.6 }}
-          className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+          className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:p-5"
         >
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/60">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/60 sm:text-[11px] sm:tracking-[0.22em]">
             Roadmap
           </p>
           <ul className="mt-2 space-y-1 text-[12.5px] text-white/80">

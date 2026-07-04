@@ -36,7 +36,7 @@ const FAILURES: ReadonlyArray<Failure> = [
     location: "Italy · February 2026",
     headline: "Nike bet on Canada gold. Underproduced Team USA.",
     detail:
-      "USA took dual golds. Nike caught flat-footed. Podium-moment demand went unmet across North America — a repeat of the same pattern.",
+      "USA took two golds. Nike was caught flat-footed. Fans looking for gear in that podium moment could not find any across North America. Same pattern, second time this year.",
     tag: "Nike stockout",
     tone: "stockout",
     source: "Reuters · Retail Dive · 2026",
@@ -46,9 +46,9 @@ const FAILURES: ReadonlyArray<Failure> = [
     icon: PackageX,
     event: "ASOS · returns squeeze",
     location: "UK / EU · 2024 – 2025",
-    headline: "Returns quietly wiped out the margin.",
+    headline: "Returns quietly wiped out the profit.",
     detail:
-      "Returns tipped over 30% of orders. ASOS introduced a £3.95 return fee, banned serial returners, and cited returns as a top-three driver of margin compression.",
+      "Over 30% of orders came back. ASOS added a £3.95 return fee, banned serial returners, and told investors returns were one of the top three reasons their profit was shrinking.",
     tag: "Returns pain",
     tone: "returns",
     source: "Reuters · The Guardian · 2024",
@@ -117,17 +117,17 @@ export const hookSlide: Slide = {
       <Stagger gap={0.1}>
         <FadeUp>
           <h2 className="text-[42px] font-semibold leading-[1.05] tracking-tight text-white">
-            Front-end and back-end failures,{" "}
+            Empty shelves and vanishing profit,{" "}
             <GradientText>same root cause:</GradientText>
             <br />
-            static decisions in a live-signal world.
+            big decisions made months in advance without current information.
           </h2>
         </FadeUp>
 
         <FadeUp>
           <p className="mt-3 max-w-3xl text-[14px] text-white/60">
             Two Nike stockouts made the news this year. A quieter one has been running
-            all year at ASOS — and it's the one this case is about.
+            all year at ASOS. That quieter one is what this case is about.
           </p>
         </FadeUp>
 
@@ -140,10 +140,10 @@ export const hookSlide: Slide = {
         <FadeUp>
           <div className="mt-5 rounded-2xl border border-purple-400/40 bg-gradient-to-r from-purple-500/15 via-fuchsia-500/10 to-purple-500/15 px-6 py-3.5">
             <p className="text-[14px] leading-snug text-white">
-              <span className="font-semibold text-purple-200">The connective tissue:</span>{" "}
-              inventory and disposition decisions made statically, in advance, without
-              live demand or channel signals. Stockouts get headlines. Returns quietly
-              take the margin. The rest of this deck focuses on the second one.
+              <span className="font-semibold text-purple-200">Common thread:</span>{" "}
+              inventory calls are locked in months ahead of time, then never adjusted
+              when what customers actually want changes. Stockouts get headlines. Returns
+              quietly take the profit. The rest of this deck focuses on the returns half.
             </p>
           </div>
         </FadeUp>

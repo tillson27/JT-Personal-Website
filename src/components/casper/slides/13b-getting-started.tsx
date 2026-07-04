@@ -27,43 +27,43 @@ const STEPS: ReadonlyArray<Step> = [
     title: "Discovery kickoff",
     icon: Handshake,
     bullets: [
-      "3-day workshop with reverse-logistics + ops + planning",
-      "Current-state map of returns disposition end-to-end",
-      "Confirm north-star metric + baseline recovery today",
+      "Three-day workshop with your returns, operations, and planning leads",
+      "Map how returns actually flow end to end, today",
+      "Agree on the main metric and measure today's recovery rate",
     ],
     delay: 0.35,
     accent: true,
   },
   {
     week: "Week 2",
-    title: "Data + system audit",
+    title: "Data and systems audit",
     icon: Database,
     bullets: [
-      "Data-availability check: per-channel value, capacity, demand",
-      "WMS / ERP integration surface area",
-      "Return-flow instrumentation gaps + fixes",
+      "Confirm which data is available: channel prices, capacity, demand",
+      "Scope the work to connect your warehouse and inventory systems",
+      "Find gaps in the online return form and fix the easy ones",
     ],
     delay: 0.5,
   },
   {
     week: "Week 3",
-    title: "Pilot scope + design",
+    title: "Scope and design the pilot",
     icon: ClipboardCheck,
     bullets: [
-      "Pick pilot DC + category (highest-volume apparel line)",
-      "Design the inspection console with a shift-floor associate",
-      "Sign-off on rec taxonomy + override reason codes",
+      "Pick the pilot warehouse and category (highest-volume apparel line)",
+      "Design the screen with an actual worker from the floor",
+      "Sign off on the list of options and the reasons for override",
     ],
     delay: 0.65,
   },
   {
     week: "Week 4+",
-    title: "Build the MVP",
+    title: "Build the first version",
     icon: Rocket,
     bullets: [
-      "Cycle 1: DIS-100 through DIS-105 (see tickets slide)",
-      "Ship behind an A/B split, agent-suggested vs. control",
-      "Weekly override-review from day one",
+      "Cycle one: the six tickets on the previous slide",
+      "Launch as a side-by-side test: with the tool, and without",
+      "Review every override, every week, from day one",
     ],
     delay: 0.8,
   },
@@ -72,18 +72,18 @@ const STEPS: ReadonlyArray<Step> = [
 const NEEDS: ReadonlyArray<{ icon: LucideIcon; label: string; detail: string }> = [
   {
     icon: Users,
-    label: "One reverse-logistics lead",
-    detail: "Empowered to make pilot-scope calls in the room.",
+    label: "One returns lead",
+    detail: "Someone who can make scope calls in the room, without checking upstairs.",
   },
   {
     icon: Users,
-    label: "One IT/data lead",
-    detail: "Owns WMS/ERP read access + return-flow schema.",
+    label: "One IT and data lead",
+    detail: "Owns access to your warehouse and inventory systems, and the return-form data.",
   },
   {
     icon: Users,
-    label: "One associate volunteer",
-    detail: "Co-designs the inspection console. Shift-floor voice.",
+    label: "One warehouse worker",
+    detail: "Helps design the screen. Brings the voice of the person actually using it.",
   },
 ];
 
@@ -93,7 +93,7 @@ export const gettingStartedSlide: Slide = {
   section: "close",
   render: () => (
     <SlideShell eyebrow="Getting started · The first four weeks">
-      <Stagger gap={0.08}>
+      <Stagger gap={0.08} fill>
         <FadeUp>
           <h2 className="text-[34px] font-semibold leading-[1.1] tracking-tight text-white">
             The first thing we do is{" "}
@@ -103,13 +103,13 @@ export const gettingStartedSlide: Slide = {
 
         <FadeUp>
           <p className="mt-2 max-w-4xl text-[13px] text-white/60">
-            Discovery, then design, then build. Here's the four-week runway from a signed
-            SOW to a shipping MVP.
+            Discovery first, then design, then build. Here is the four-week path from a
+            signed contract to a working first version in your warehouse.
           </p>
         </FadeUp>
 
         {/* Timeline */}
-        <div className="mt-5 grid flex-1 grid-cols-4 gap-3">
+        <div className="mt-5 grid min-h-0 flex-1 grid-cols-4 gap-3">
           {STEPS.map((s) => (
             <motion.div
               key={s.week}
@@ -166,7 +166,7 @@ export const gettingStartedSlide: Slide = {
             <div className="mb-2 flex items-center gap-2">
               <Users className="h-4 w-4 text-fuchsia-200" aria-hidden />
               <p className="text-[10.5px] font-semibold uppercase tracking-[0.24em] text-fuchsia-200">
-                What we'd need on your side for week 1 to work
+                What we would need on your side for week one to work
               </p>
             </div>
             <div className="grid grid-cols-3 gap-3">

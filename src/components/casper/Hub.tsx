@@ -29,7 +29,7 @@ const TOP_ROW: ReadonlyArray<Destination> = [
     label: "The case",
     title: "The Casper PM Challenge deck",
     description:
-      "14 slides, live and interactive. The quieter, more solvable half of the apparel supply-chain story.",
+      "16 slides, live and interactive. The quieter, more solvable half of the apparel supply-chain story.",
     icon: Presentation,
     featured: true,
     chip: "Main event",
@@ -211,7 +211,7 @@ function DestinationCard({
       style={{ perspective: 1000 }}
       className="min-h-0"
     >
-      {/* Link is the outer click target — never wrapped in a transform */}
+      {/* Link is the outer click target : never wrapped in a transform */}
       <Link
         ref={cardRef}
         to={dest.to}
@@ -228,8 +228,8 @@ function DestinationCard({
           style={{ rotateX: rotX, rotateY: rotY, transformStyle: "preserve-3d" }}
           className={
             dest.featured
-              ? `relative flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border bg-gradient-to-br from-purple-500/20 via-fuchsia-500/12 to-transparent shadow-[0_20px_60px_-20px_rgba(147,51,234,0.45)] transition-colors group-hover:border-purple-300/70 ${focused ? "border-fuchsia-300 ring-2 ring-fuchsia-400/60" : "border-purple-400/40"} ${compact ? "p-3.5" : "p-4 xl:p-5"}`
-              : `relative flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border transition-colors group-hover:border-purple-400/50 group-hover:bg-white/[0.055] ${focused ? "border-fuchsia-300 bg-white/[0.06] ring-2 ring-fuchsia-400/60" : "border-white/10 bg-white/[0.035]"} ${compact ? "p-3.5" : "p-4 xl:p-5"}`
+              ? `relative flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border bg-gradient-to-br from-purple-500/20 via-fuchsia-500/12 to-transparent shadow-[0_20px_60px_-20px_rgba(147,51,234,0.45)] transition-colors group-hover:border-purple-300/70 ${focused ? "border-fuchsia-300 ring-2 ring-fuchsia-400/60" : "border-purple-400/40"} ${compact ? "p-3 sm:p-3.5" : "p-3 sm:p-4 xl:p-5"}`
+              : `relative flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border transition-colors group-hover:border-purple-400/50 group-hover:bg-white/[0.055] ${focused ? "border-fuchsia-300 bg-white/[0.06] ring-2 ring-fuchsia-400/60" : "border-white/10 bg-white/[0.035]"} ${compact ? "p-3 sm:p-3.5" : "p-3 sm:p-4 xl:p-5"}`
           }
         >
           {/* Cursor-follow glow */}
@@ -303,10 +303,10 @@ function DestinationCard({
             <h3
               className={
                 compact
-                  ? "mt-0.5 text-[15px] font-semibold leading-tight tracking-tight text-white xl:text-[16px]"
+                  ? "mt-0.5 text-[14px] font-semibold leading-tight tracking-tight text-white sm:text-[15px] xl:text-[16px]"
                   : dest.featured
-                    ? "mt-0.5 text-[22px] font-semibold leading-[1.08] tracking-tight text-white xl:text-[26px]"
-                    : "mt-0.5 text-[17px] font-semibold leading-tight tracking-tight text-white xl:text-[19px]"
+                    ? "mt-0.5 text-[18px] font-semibold leading-[1.08] tracking-tight text-white sm:text-[22px] xl:text-[26px]"
+                    : "mt-0.5 text-[15px] font-semibold leading-tight tracking-tight text-white sm:text-[17px] xl:text-[19px]"
               }
             >
               {dest.title}
@@ -314,10 +314,10 @@ function DestinationCard({
             <p
               className={
                 compact
-                  ? "mt-1 line-clamp-2 text-[11px] leading-snug text-white/60"
+                  ? "mt-1 line-clamp-2 text-[10.5px] leading-snug text-white/60 sm:text-[11px]"
                   : dest.featured
-                    ? "mt-1.5 line-clamp-3 max-w-xl text-[12.5px] leading-snug text-white/75"
-                    : "mt-1 line-clamp-2 text-[11.5px] leading-snug text-white/60"
+                    ? "mt-1.5 line-clamp-2 max-w-xl text-[11.5px] leading-snug text-white/75 sm:line-clamp-3 sm:text-[12.5px]"
+                    : "mt-1 line-clamp-2 text-[11px] leading-snug text-white/60 sm:text-[11.5px]"
               }
             >
               {dest.description}
@@ -471,7 +471,7 @@ export default function Hub() {
   return (
     <div
       ref={containerRef}
-      className="relative flex h-dvh w-full flex-col overflow-hidden px-6 py-4 text-white sm:px-8 sm:py-5 lg:px-10 lg:py-6"
+      className="relative flex min-h-dvh w-full flex-col overflow-y-auto overflow-x-hidden px-4 py-4 text-white sm:h-dvh sm:overflow-hidden sm:px-8 sm:py-5 lg:px-10 lg:py-6"
     >
       <BackgroundLayer mouseX={mouseX} mouseY={mouseY} />
       <BooBurst trigger={burst.n} origin={burst.origin} />
@@ -483,13 +483,13 @@ export default function Hub() {
         transition={{ duration: 0.5 }}
         className="relative z-10 flex items-center justify-between gap-3"
       >
-        <div className="flex items-center gap-2.5">
-          <CasperMark size="md" animated />
-          <div>
-            <p className="text-[9.5px] font-semibold uppercase tracking-[0.28em] text-purple-300">
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          <CasperMark size="sm" animated />
+          <div className="min-w-0">
+            <p className="text-[8.5px] font-semibold uppercase tracking-[0.22em] text-purple-300 sm:text-[9.5px] sm:tracking-[0.28em]">
               Casper Studios · PM Challenge
             </p>
-            <p className="text-[13px] font-semibold text-white">
+            <p className="text-[12px] font-semibold text-white sm:text-[13px]">
               You're in. Pick your adventure.
             </p>
           </div>
@@ -509,7 +509,7 @@ export default function Hub() {
         className="relative z-10 mt-4 flex items-end justify-between gap-6"
       >
         <div>
-          <h1 className="text-[38px] font-semibold leading-[1.02] tracking-tight text-white sm:text-[46px] lg:text-[54px]">
+          <h1 className="text-[30px] font-semibold leading-[1.02] tracking-tight text-white sm:text-[46px] lg:text-[54px]">
             <button
               type="button"
               onClick={handleBoo}
@@ -530,7 +530,7 @@ export default function Hub() {
               You made it.
             </span>
           </h1>
-          <p className="mt-2 max-w-2xl text-[13px] leading-snug text-white/65 sm:text-[14px]">
+          <p className="mt-2 max-w-2xl text-[12px] leading-snug text-white/65 sm:text-[14px]">
             The case is the main event, plus two AI-native products I recently scoped, built, and
             shipped on client engagements as an AI Forward Deployed Product Manager. Case studies
             for the role.
@@ -561,16 +561,16 @@ export default function Hub() {
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.55 }}
-          className="relative z-10 flex items-center gap-3"
+          className="relative z-10 flex items-center gap-2 sm:gap-3"
         >
           <span className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-400/40 to-purple-400/60" />
-          <div className="flex items-center gap-2 rounded-full border border-purple-400/30 bg-purple-500/10 px-3 py-1 shadow-[0_6px_20px_-8px_rgba(168,85,247,0.5)] backdrop-blur">
+          <div className="flex items-center gap-1.5 rounded-full border border-purple-400/30 bg-purple-500/10 px-2 py-0.5 shadow-[0_6px_20px_-8px_rgba(168,85,247,0.5)] backdrop-blur sm:gap-2 sm:px-3 sm:py-1">
             <Sparkles className="h-3 w-3 text-purple-200" aria-hidden />
-            <span className="text-[10px] font-semibold uppercase tracking-[0.24em] text-purple-200">
+            <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-purple-200 sm:text-[10px] sm:tracking-[0.24em]">
               Recent PM case studies
             </span>
-            <span className="text-white/25">·</span>
-            <span className="text-[10px] uppercase tracking-[0.22em] text-white/60">
+            <span className="hidden text-white/25 sm:inline">·</span>
+            <span className="hidden text-[10px] uppercase tracking-[0.22em] text-white/60 sm:inline">
               AI Forward Deployed Product Management
             </span>
           </div>
@@ -597,11 +597,11 @@ export default function Hub() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.8 }}
-        className="relative z-10 mt-3 flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.24em] text-white/40"
+        className="relative z-10 mt-3 flex flex-wrap items-center justify-between gap-2 text-[9px] uppercase tracking-[0.2em] text-white/40 sm:gap-3 sm:text-[10px] sm:tracking-[0.24em]"
       >
         <span>Josh Tillson · 2026 · Calgary</span>
         <span className="hidden sm:inline">tillson27@gmail.com</span>
-        <span className="text-purple-300/70">
+        <span className="hidden text-purple-300/70 sm:inline">
           ← ↑ → ↓ to move · enter or click to open
         </span>
       </motion.footer>

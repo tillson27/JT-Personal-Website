@@ -11,9 +11,9 @@ const LANES: ReadonlyArray<{
   tone: "cyan" | "purple" | "fuchsia" | "amber";
 }> = [
   { icon: User, label: "Customer", tone: "cyan" },
-  { icon: Package, label: "Returns Associate", tone: "purple" },
-  { icon: Zap, label: "Systems · WMS / ERP", tone: "fuchsia" },
-  { icon: Boxes, label: "Disposition Channels", tone: "amber" },
+  { icon: Package, label: "Warehouse worker", tone: "purple" },
+  { icon: Zap, label: "Warehouse + inventory systems", tone: "fuchsia" },
+  { icon: Boxes, label: "Where the item can go", tone: "amber" },
 ];
 
 type Step = {
@@ -24,16 +24,16 @@ type Step = {
 };
 
 const STEPS: ReadonlyArray<Step> = [
-  { lane: 0, label: "Return\ninitiated", x: 6 },
-  { lane: 1, label: "Receive\n& grade", x: 24 },
-  { lane: 2, label: "SKU\nlookup", x: 42 },
+  { lane: 0, label: "Return\nstarted", x: 6 },
+  { lane: 1, label: "Receive\n& inspect", x: 24 },
+  { lane: 2, label: "Look up\nthe item", x: 42 },
   { lane: 1, label: "Manual\ndecision", x: 60, isDecision: true },
-  { lane: 3, label: "Route to\nchannel", x: 78 },
-  { lane: 2, label: "Log\ndisposition", x: 92 },
+  { lane: 3, label: "Send it\nsomewhere", x: 78 },
+  { lane: 2, label: "Log the\ndecision", x: 92 },
 ];
 
 const CHANNEL_TAGS: ReadonlyArray<string> = [
-  "A-stock",
+  "Resell as new",
   "Outlet",
   "Refurbish",
   "Liquidate",
@@ -75,11 +75,15 @@ export const currentStateSlide: Slide = {
 
         <FadeUp>
           <p className="mt-3 max-w-4xl text-[14px] leading-snug text-white/70">
-            At a distribution centre (DC), a returns associate receives an item and manually
-            chooses a path: restock as A-stock, route to outlet, refurbish, liquidate to a
-            jobber, donate, or destroy. The decision depends on condition grade, active-assortment
-            status, current demand, and per-channel recovery value —{" "}
-            <span className="italic">almost none of which is in front of them.</span>
+            Returned items land at a distribution centre, the large warehouse where a
+            retailer receives and re-routes inventory. A worker picks up each item and
+            chooses one of six paths: put it back on shelf as new, send it to an outlet
+            store, refurbish, sell it in bulk to a liquidator, donate, or destroy. That
+            call, called <span className="font-semibold text-white">returns disposition</span>,
+            is the one this deck is about. It should depend on the item's condition,
+            whether it is still in the current season, how much of it is already selling,
+            and what each channel would pay for it right now.{" "}
+            <span className="italic">Almost none of that is in front of the worker.</span>
           </p>
         </FadeUp>
 
@@ -92,7 +96,7 @@ export const currentStateSlide: Slide = {
               gridTemplateRows: `repeat(${LANE_COUNT}, minmax(0, 1fr))`,
             }}
           >
-            {/* Track column background — spans all rows */}
+            {/* Track column background: spans all rows */}
             <div
               className="pointer-events-none relative rounded-xl"
               style={{
@@ -110,7 +114,7 @@ export const currentStateSlide: Slide = {
                 ))}
               </div>
 
-              {/* Arrows SVG — spans full track */}
+              {/* Arrows SVG: spans full track */}
               <svg
                 aria-hidden
                 viewBox="0 0 100 100"
@@ -201,7 +205,7 @@ export const currentStateSlide: Slide = {
                 </motion.div>
               ))}
 
-              {/* Channel tags — anchored to the disposition channel lane */}
+              {/* Channel tags: anchored to the destinations lane */}
               <div
                 className="absolute right-2 flex flex-wrap justify-end gap-1"
                 style={{
@@ -222,7 +226,7 @@ export const currentStateSlide: Slide = {
               </div>
             </div>
 
-            {/* Lane labels — column 1 */}
+            {/* Lane labels: column 1 */}
             {LANES.map((lane, laneIndex) => (
               <div
                 key={lane.label}
@@ -244,9 +248,10 @@ export const currentStateSlide: Slide = {
         <FadeUp>
           <div className="mt-3 rounded-2xl border border-fuchsia-400/40 bg-gradient-to-r from-fuchsia-500/15 to-purple-500/15 px-5 py-3">
             <p className="text-[13.5px] leading-snug text-white">
-              <span className="font-semibold text-fuchsia-200">The callout:</span> the
-              highest-value decision in the whole flow is the one made on tribal knowledge
-              and static rules, in seconds, under volume pressure.
+              <span className="font-semibold text-fuchsia-200">The takeaway:</span> the
+              highest-value step in this whole flow is the one made by a person in a
+              few seconds, using gut feel and old rules, while more items pile up behind
+              them.
             </p>
           </div>
         </FadeUp>

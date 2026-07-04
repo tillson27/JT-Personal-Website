@@ -20,101 +20,101 @@ type Ticket = {
 const TICKETS: ReadonlyArray<Ticket> = [
   {
     id: "DIS-100",
-    title: "Compute a preliminary rec from the customer's return form",
+    title: "Make a first-guess recommendation from the online return form",
     status: "Todo",
     priority: "Urgent",
     estimate: 5,
     labels: ["backend", "ml", "pre-DC"],
     description:
-      "When a customer initiates a return, the return form already tells us the reason, the SKU, and often a photo. Combine that with account history + live channel value to compute a preliminary disposition rec before the item ever ships. Refined later at inspection. Complexity is in stitching the return-flow event + accounts + planning signals into one call.",
+      "When a customer starts a return, the online form already tells us the reason, the item, and often a photo. Combine that with account history and current channel prices to make a first-guess recommendation before the item even ships. It gets sharpened later at the warehouse. The hard part is pulling the return event, the account, and the planning numbers into one call.",
     ac: [
-      "Given a return-initiation event, when the reason code + SKU are captured, then a preliminary rec is stored on the return record within 30s",
-      "Preliminary rec includes: predicted channel, confidence, estimated recovered value, and a rationale referencing at least one live signal",
-      "Missing signals downgrade confidence rather than fail the call",
-      "Preliminary rec is exposed to the inspection console as the starting point (associate can see it changed at inspection)",
+      "When a return is started with a reason and item, the first-guess recommendation is saved on the return record within 30 seconds",
+      "The first guess includes the predicted channel, confidence, expected recovered value, and a short reason that references at least one data point",
+      "Missing data lowers confidence instead of failing the call",
+      "The worker sees the first guess as a starting point when the item is inspected, and can see how it changed",
     ],
   },
   {
     id: "DIS-101",
-    title: "Inspection station: capture confirmed condition + trigger final rec",
+    title: "At the warehouse: capture the condition and get the final recommendation",
     status: "Todo",
     priority: "High",
     estimate: 3,
     labels: ["frontend", "inspection"],
     description:
-      "The associate scans the SKU at the inspection station, selects a confirmed condition grade (A/B/C/D), and optionally attaches a photo. That combination triggers the final recommendation call, layering condition on top of the preliminary rec.",
+      "The worker scans the item at the inspection station, picks a condition grade (A, B, C, or D), and can attach a photo. That triggers the final recommendation, using the condition on top of the first guess.",
     ac: [
-      "Given a scanned SKU with an existing preliminary rec, when the associate confirms a condition grade, then the final rec call is triggered",
-      "Photo attach is optional in v1; upload is async, non-blocking on the rec call",
-      "Bad scans fall back to manual SKU entry with typo protection + confirm dialog",
-      "If the return record has no preliminary rec (walk-in, no online return), the call still works — condition is the primary signal",
+      "When a scanned item has an existing first guess, and the worker confirms a condition grade, the final recommendation call runs",
+      "Attaching a photo is optional in version one, and the upload does not slow the recommendation down",
+      "If the scan fails, the worker can type the item ID manually, with a confirm dialog to catch typos",
+      "If there is no first guess (a walk-in, or no online return), the call still works. Condition becomes the main signal",
     ],
   },
   {
     id: "DIS-102",
-    title: "Live channel signals service: per-channel value, capacity, demand",
+    title: "The live-data service: what each channel would pay, capacity, and demand",
     status: "Todo",
     priority: "Urgent",
     estimate: 5,
     labels: ["backend", "data", "integration"],
     description:
-      "Aggregate per-channel recovery value, refurb cost, current capacity, and 7-day demand from WMS + planning + finance sources. Expose to the model service as a single signal bundle. SLA-bound because the associate is waiting.",
+      "Pull together, for each channel, what it would pay for the item, what it costs to refurbish, how full it is right now, and the last seven days of demand. Sources: the warehouse system, planning, and finance. Send it to the model as one bundle. Speed matters because the worker is waiting.",
     ac: [
-      "SLA: signal bundle returned in <200ms p95, <500ms p99",
-      "Missing signals degrade gracefully — the response marks which signals are missing and by how much",
-      "Freshness: demand signal must be <15 min old; anything older is flagged stale in the response",
-      "Signal schema is versioned; consumer contracts break the build on incompatible change",
+      "The bundle returns in under 200 milliseconds for 95% of calls, and under 500 milliseconds for 99% of calls",
+      "Missing pieces are shown in the response, so the model can lower confidence instead of failing",
+      "The demand number must be under 15 minutes old, and anything older is flagged",
+      "The shape of the bundle is versioned, so any breaking change to callers fails the build early",
     ],
   },
   {
     id: "DIS-103",
-    title: "Generate ranked disposition recommendation with rationale + confidence",
+    title: "Generate the ranked recommendation with a plain-English reason and confidence",
     status: "Todo",
     priority: "Urgent",
     estimate: 8,
     labels: ["ml", "core"],
     featured: true,
     description:
-      "The core of the MVP. Given a scanned item with a confirmed condition grade + live channel signals, the system returns a ranked disposition (Route to outlet / Refurbish / A-stock / Liquidate / Donate / Destroy) with a rationale and a confidence score. Alternatives are pre-computed so overrides are one tap. Rationale must reference at least two named live signals to build trust with the associate.",
+      "The core of the first version. Given a scanned item, a confirmed condition grade, and the current channel numbers, the system returns a ranked list of options (Send to outlet, Refurbish, Resell as new, Liquidate, Donate, Destroy) with a short reason and a confidence score. The other options are ready in advance so overriding takes one tap. The reason must reference at least two data points, in plain English, so the worker can trust the call.",
     ac: [
-      "Given a scanned item with a confirmed condition grade + live channel signals, when the model is called, then a ranked recommendation is returned with rationale + confidence + $ estimate",
-      "Top rec renders in <400ms p95 end-to-end (scan → visible on monitor)",
-      "Confidence <0.6 shows an amber 'defer to human' state and expands the alternatives list by default",
-      "Rationale references at least 2 named live signals in plain English (e.g. 'outlet demand +18% w/w + refurb cost high')",
-      "Alternatives are pre-computed and cached so override is a client-side interaction, not a second model call",
+      "When the model is called with a scanned item, a condition grade, and current channel numbers, it returns a ranked list with a reason, confidence, and dollar estimate",
+      "The top recommendation shows up on the monitor within 400 milliseconds of the scan, for 95% of calls",
+      "If confidence is under 60%, the screen shows an amber 'ask a person' state, and expands the other options by default",
+      "The reason names at least two data points in plain English, for example: 'outlet demand up 18% this week, and refurbish is expensive'",
+      "The other options are ready in advance, so an override is a click, not a second model call",
     ],
   },
   {
     id: "DIS-104",
-    title: "Confirm or override with reason-code capture",
+    title: "Confirm or override, with a reason we can learn from",
     status: "Todo",
     priority: "High",
     estimate: 3,
     labels: ["frontend", "feedback-loop"],
     description:
-      "The associate confirms the primary recommendation with one tap (Enter), or overrides by picking an alternative. Overrides require selecting a reason code from a fixed taxonomy — this is the primary training signal for the next model. Reason codes are configurable per DC without a deploy.",
+      "The worker confirms the top recommendation with one tap (Enter), or picks a different option. If they pick a different one, they choose a reason from a short list. That reason is our best training data for the next version of the model. Each warehouse can have its own reasons, without a code release.",
     ac: [
-      "One-tap confirm on the primary recommendation (Enter or button)",
-      "Override requires selecting a reason code from a fixed taxonomy (v1: 7 codes)",
-      "Override with a chosen alternative logs both the original rec and the new selection",
-      "Free-text 'Other' reason is allowed but caps at 200 chars and does not train the model unless a reviewer promotes it",
-      "Reason codes are managed via a config service; a per-DC change ships without a deploy",
+      "The worker can confirm the top recommendation with a single tap or the Enter key",
+      "Overrides require picking a reason from a fixed list (7 reasons in version one)",
+      "When they override, we log both the original recommendation and the new choice",
+      "Free-text 'Other' is allowed, capped at 200 characters, and does not train the model unless a reviewer approves it",
+      "Reasons are managed as config, so a warehouse can add or change one without a code deploy",
     ],
   },
   {
     id: "DIS-105",
-    title: "Persist outcome + close the feedback loop into the eval warehouse",
+    title: "Save the outcome and feed it into the review warehouse",
     status: "Todo",
     priority: "Medium",
     estimate: 3,
     labels: ["backend", "analytics"],
     description:
-      "Persist every decision (rec, confirmed action, reason code, condition grade, active signals used). Back-fill the record with realized recovery when the channel settles. Land in the eval warehouse so the weekly retrain candidate + override-taxonomy review has clean data.",
+      "Save every decision: the recommendation, the confirmed action, the reason (if overridden), the condition grade, and the data used at the time. Later, once the item actually sells or gets processed, fill in the money we actually got back. That way the weekly reviews and the retrain candidates work off clean data.",
     ac: [
-      "Every decision is stored with rec, confirmed action, reason code (if overridden), and full signal snapshot",
-      "Realized recovery back-fills the record when the channel settles (async job, retryable)",
-      "Data lands in the eval warehouse within 24h SLO",
-      "Schema supports segmentation by DC, category, condition grade, and reason code out of the box",
+      "Every decision is stored with the recommendation, confirmed action, reason (if overridden), and a snapshot of the data used",
+      "Actual recovery is filled in once the channel finalizes, as an async job that retries on failure",
+      "Data lands in the analytics warehouse within 24 hours",
+      "The shape supports breaking down by warehouse, category, condition, and reason from day one",
     ],
   },
 ];
@@ -188,19 +188,19 @@ function TicketsView() {
   const totalPoints = TICKETS.reduce((sum, t) => sum + t.estimate, 0);
 
   return (
-    <SlideShell eyebrow="Execution · Linear-style tickets · MVP cycle 1">
+    <SlideShell eyebrow="Execution · Tickets · First-release cycle">
       <Stagger gap={0.08}>
         <FadeUp>
           <h2 className="text-[30px] font-semibold leading-[1.1] tracking-tight text-white">
             Feature:{" "}
-            <span className="text-purple-300">Disposition rec — pre-DC + at inspection</span>
+            <span className="text-purple-300">the recommendation, first online, then at the warehouse</span>
           </h2>
         </FadeUp>
 
         <FadeUp>
           <p className="mt-2 max-w-4xl text-[12.5px] text-white/60">
-            Tap any ticket to open it. Each is scoped to be a self-contained cycle 1 issue.
-            The starred one is the core of the MVP.
+            Tap any ticket to open it. Each one is scoped to fit inside a single planning
+            cycle. The starred one is the core of the first release.
           </p>
         </FadeUp>
 
@@ -212,7 +212,7 @@ function TicketsView() {
               <div className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-fuchsia-400" />
                 <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/85">
-                  Disposition · MVP · {TICKETS.length} issues
+                  Returns recommendation · First release · {TICKETS.length} tickets
                 </p>
               </div>
               <p className="text-[10px] text-white/40">Cycle 1 · Josh Tillson</p>

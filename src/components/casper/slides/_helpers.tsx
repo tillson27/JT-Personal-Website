@@ -8,11 +8,18 @@ export function Stagger({
   children,
   delay = 0,
   gap = 0.08,
+  className,
+  fill = false,
 }: {
   children: ReactNode;
   delay?: number;
   gap?: number;
+  className?: string;
+  fill?: boolean;
 }) {
+  const combined = fill
+    ? `flex min-h-0 flex-1 flex-col ${className ?? ""}`
+    : className;
   return (
     <motion.div
       initial="hidden"
@@ -23,6 +30,7 @@ export function Stagger({
           transition: { staggerChildren: gap, delayChildren: delay },
         },
       }}
+      className={combined}
     >
       {children}
     </motion.div>
