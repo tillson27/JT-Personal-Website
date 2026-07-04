@@ -62,7 +62,7 @@ const RECENT_ROLES: ReadonlyArray<{
   },
   {
     period: "2022 – 23",
-    role: "Technical Specialist",
+    role: "Technical Program Manager",
     org: "Microsoft",
     detail:
       "Helped enterprise customers adopt cloud identity and endpoint security solutions.",

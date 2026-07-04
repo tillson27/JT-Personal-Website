@@ -31,7 +31,7 @@ const experiences = [
   },
   {
     period: "2022 — 2023",
-    role: "Technical Specialist",
+    role: "Technical Program Manager",
     company: "Microsoft",
     description:
       "Helped enterprise customers adopt cloud identity and endpoint security solutions.",

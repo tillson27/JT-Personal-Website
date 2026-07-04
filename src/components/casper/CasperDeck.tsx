@@ -275,7 +275,7 @@ function Deck({
           <ChevronLeft className="h-6 w-6" />
         </button>
 
-        <div className="relative w-full max-w-[min(100%,calc((100dvh-9rem)*16/9))] lg:max-w-[min(1280px,calc((100dvh-13rem)*16/9))]">
+        <div className="relative w-full max-w-[min(100%,calc((100dvh-9rem)*16/9))] [@media(min-width:640px)_and_(pointer:fine)]:max-w-[min(1280px,calc((100dvh-13rem)*16/9))]">
           <SlideCanvas activeSlide={activeSlide} direction={direction} />
           <MobilePortraitHint />
         </div>
@@ -292,7 +292,7 @@ function Deck({
       </main>
 
       <footer className="relative z-20 flex flex-col items-stretch gap-2 px-4 pb-4 sm:px-8 lg:px-12">
-        <div className="hidden sm:block">
+        <div className="hidden [@media(min-width:640px)_and_(pointer:fine)]:block">
           <SupplyChainBreadcrumb
             slides={slides}
             sections={sections}

@@ -23,7 +23,7 @@ const RECENT_ROLES: ReadonlyArray<{
   { period: "2025 → now", role: "Product Manager", org: "Caylent", now: true },
   { period: "2024 – 25", role: "Tech Strategy Consultant", org: "Accenture" },
   { period: "2023 – 24", role: "Senior Systems Analyst", org: "Fraser Health" },
-  { period: "2022 – 23", role: "Technical Specialist", org: "Microsoft" },
+  { period: "2022 – 23", role: "Technical Program Manager", org: "Microsoft" },
 ];
 
 const FUN_FACTS: ReadonlyArray<string> = [
