@@ -53,7 +53,7 @@ export const howItWorksSlide: Slide = {
     <SlideShell eyebrow="Solution · What this looks like on the warehouse floor">
       <Stagger gap={0.08} fill>
         <FadeUp>
-          <h2 className="text-[34px] font-semibold leading-[1.1] tracking-tight text-white">
+          <h2 className="text-[36px] font-semibold leading-[1.1] tracking-tight text-white">
             No new hardware.{" "}
             <GradientText>Same monitor, same shift.</GradientText>
           </h2>

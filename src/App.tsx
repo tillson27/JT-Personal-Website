@@ -9,6 +9,7 @@ import CasperDeck from "./components/casper/CasperDeck";
 import Hub from "./components/casper/Hub";
 import PromptShowcase from "./components/casper/PromptShowcase";
 import McpShowcase from "./components/casper/McpShowcase";
+import OracleRmsMockup from "./components/casper/OracleRmsMockup";
 import Profile from "./components/casper/Profile";
 import NotFound from "./pages/NotFound";
 
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="deck" element={<CasperDeck />} />
             <Route path="prompt" element={<PromptShowcase />} />
             <Route path="mcp" element={<McpShowcase />} />
+            <Route path="mockup" element={<OracleRmsMockup />} />
             <Route path="profile" element={<Profile />} />
           </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

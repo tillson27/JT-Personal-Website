@@ -1,17 +1,12 @@
 import { motion } from "framer-motion";
 import {
-  Boxes,
   ChevronRight,
+  FileText,
   FolderTree,
-  GitBranch,
-  GitPullRequest,
-  Package,
-  RefreshCw,
-  Search,
-  Sparkles,
+  GitCommit,
+  Layers,
+  Lock,
   Terminal,
-  Upload,
-  Users,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -25,52 +20,45 @@ type Command = {
 
 const COMMANDS: ReadonlyArray<Command> = [
   {
-    cmd: "prompt search reverse-logistics",
-    comment: "Browse the community registry for packs matching your problem",
+    cmd: "prompt init",
+    comment: "Create the .prompt file — one plain-text file that lists your sources",
     result: [
-      "found 3 packs",
-      "  reverse-logistics-ops    1.2.0  · 84 installs  ★ 4.7",
-      "  disposition-agent        0.6.1  · 41 installs  ★ 4.4",
-      "  wms-integration-kit      0.3.0  · 12 installs  ★ 4.1",
+      "✔ created .prompt",
+      "✔ added .packages/ to .gitignore",
+      "next:  prompt add <git-url>  to register a source",
     ],
   },
   {
-    cmd: "prompt install reverse-logistics-ops",
-    comment: "Install any pack from public or private registries",
+    cmd: "prompt add git@github.com:acme/skill-packs.git ~=1.2.0",
+    comment: "Add a source — any Git repo that hosts a manifest of packs",
     result: [
-      "resolving reverse-logistics-ops@latest…",
-      "  ↳ resolved 1.2.0 (11 skills, 4 rules, 3 prompts)",
-      "✔ installed · linked to .claude/commands + .cursor/rules",
-      "run  prompt list  to see everything you now have",
+      "✔ resolved acme/skill-packs @ 1.2.0",
+      "✔ wrote entry to .prompt",
+      "run  prompt install  to sync",
     ],
   },
   {
-    cmd: "prompt update",
-    comment: "Pull the newest version of every installed pack",
+    cmd: "prompt install",
+    comment: "Reads .prompt, clones every pack at the pinned version, writes .prompt.lock",
     result: [
-      "checking registry…",
-      "  developer                3.2.1 → 3.3.0",
-      "  reverse-logistics-ops    1.2.0 → 1.2.1",
-      "  product                  3.4.0 (up to date)",
-      "✔ 2 packs updated · restart Claude Code to pick them up",
+      "reading .prompt · 3 sources",
+      "  ↳ acme/skill-packs      → 11 packs",
+      "  ↳ internal/rl-toolkit   → 4 packs",
+      "  ↳ you/experiments       → 2 packs",
+      "✔ 17 packs linked into .packages/",
+      "✔ wrote .prompt.lock (commit SHAs pinned)",
     ],
   },
   {
-    cmd: "prompt publish retail-toolkit",
-    comment: "Upload your own toolkit, shareable with the team or the community",
+    cmd: "prompt list",
+    comment: "See everything installed and where it came from",
     result: [
-      "packing 8 skills, 3 rules, 2 prompts…",
-      "→ registry.prompt.dev/retail-toolkit@0.4.0",
-      "✔ published · 12 subscribers will be notified",
-    ],
-  },
-  {
-    cmd: "prompt contribute reverse-logistics-ops",
-    comment: "Fork a public pack, propose changes back to the maintainer",
-    result: [
-      "forking reverse-logistics-ops@1.2.1 → your workspace",
-      "✔ editable copy at ~/.prompt/forks/reverse-logistics-ops",
-      "when ready:  prompt pr  → opens a proposal to the maintainer",
+      "acme/skill-packs @ 1.2.0",
+      "  developer         3.3.0",
+      "  product           3.4.2",
+      "internal/rl-toolkit @ 0.4.0",
+      "  reverse-logistics-ops   1.2.1",
+      "  disposition-agent       0.6.1",
     ],
   },
 ];
@@ -81,68 +69,50 @@ const FEATURES: ReadonlyArray<{
   detail: string;
 }> = [
   {
-    icon: Search,
-    title: "Browse & search",
+    icon: FileText,
+    title: "Declare it once",
     detail:
-      "A public registry of skill packs, searchable by problem, tag, or author. Find the pack someone already built for the job.",
+      "One .prompt file lists the sources your team uses. Commit it alongside your code — it's your source of truth.",
   },
   {
-    icon: Package,
+    icon: Terminal,
     title: "One-command install",
     detail:
-      "Semver, lockfile, private registries: the mental model devs already have from npm and cargo.",
+      "prompt install. Every teammate gets the same packs, same versions, same day. Same mental model as npm install.",
   },
   {
-    icon: Upload,
-    title: "Publish & share",
+    icon: Lock,
+    title: "Lockfile = reproducibility",
     detail:
-      "Ship your own toolkits publicly or to a team-scoped registry. Skill drift across the org drops from weeks to hours.",
+      ".prompt.lock records the exact Git commit for every pack, so installs are byte-identical across the whole team.",
   },
   {
-    icon: GitPullRequest,
-    title: "Contribute back",
+    icon: Layers,
+    title: "Stands on giants",
     detail:
-      "Fork a public pack, iterate locally, and open a proposal to the maintainer. The OSS loop, purpose-built for skills.",
+      "Under the hood: Google's repo tool — the code Android has used to sync hundreds of Git repos since 2008.",
   },
 ];
 
-const REGISTRY_TREE: ReadonlyArray<{
-  label: string;
-  version: string;
-  desc: string;
-  count: number;
-  featured?: boolean;
-  scope?: "public" | "private";
+const PROMPT_FILE_LINES: ReadonlyArray<{
+  text: string;
+  kind: "comment" | "var" | "source";
 }> = [
-  {
-    label: "developer",
-    version: "3.3.0",
-    desc: "Review, debug, plan, commit. The everyday engineering skills.",
-    count: 22,
-    featured: true,
-    scope: "public",
-  },
-  {
-    label: "product",
-    version: "3.4.2",
-    desc: "PM skills: Jira triage, epic summaries, discovery, presentation-builder.",
-    count: 14,
-    scope: "public",
-  },
-  {
-    label: "reverse-logistics-ops",
-    version: "1.2.1",
-    desc: "Community pack · disposition decisions, returns triage, capacity checks.",
-    count: 11,
-    scope: "public",
-  },
-  {
-    label: "retail-toolkit",
-    version: "0.4.0",
-    desc: "Team-scoped · data-model mapping, standards alignment, reverse-log ops.",
-    count: 8,
-    scope: "private",
-  },
+  { text: "# sources your team uses — commit this file", kind: "comment" },
+  { text: "GITBASE=git@github.com:acme", kind: "var" },
+  { text: "skill-packs=${GITBASE}/skill-packs.git @ ~=1.2.0", kind: "source" },
+  { text: "rl-toolkit=git@github.com:internal/rl-toolkit.git @ 0.4.0", kind: "source" },
+  { text: "experiments=git@github.com:you/experiments.git @ main", kind: "source" },
+];
+
+const LOCK_FILE_LINES: ReadonlyArray<{
+  name: string;
+  version: string;
+  sha: string;
+}> = [
+  { name: "acme/skill-packs", version: "1.2.0", sha: "f83c9a4d" },
+  { name: "internal/rl-toolkit", version: "0.4.0", sha: "3f9c2d1e" },
+  { name: "you/experiments", version: "main", sha: "8b2f11c7" },
 ];
 
 function CommandLine({ cmd, index }: { cmd: Command; index: number }) {
@@ -188,39 +158,6 @@ function CommandLine({ cmd, index }: { cmd: Command; index: number }) {
   );
 }
 
-/* --------- Community browse mini-list --------- */
-type PublicPack = {
-  name: string;
-  desc: string;
-  installs: number;
-  stars: number;
-  tags: ReadonlyArray<string>;
-};
-
-const PUBLIC_PACKS: ReadonlyArray<PublicPack> = [
-  {
-    name: "reverse-logistics-ops",
-    desc: "Disposition, returns triage, DC capacity. Battle-tested at a mid-market retailer.",
-    installs: 84,
-    stars: 4.7,
-    tags: ["retail", "ops"],
-  },
-  {
-    name: "mismo-mapping",
-    desc: "MISMO v3.5 mapping helpers + validators. Pairs with the data-model MCP.",
-    installs: 62,
-    stars: 4.6,
-    tags: ["finserv", "data"],
-  },
-  {
-    name: "voice-agent-eval",
-    desc: "Golden-set eval scripts for LLM voice agents: turn quality + latency.",
-    installs: 47,
-    stars: 4.5,
-    tags: ["voice", "eval"],
-  },
-];
-
 export default function PromptShowcase() {
   return (
     <SubPageShell
@@ -236,9 +173,9 @@ export default function PromptShowcase() {
       >
         <div className="flex flex-wrap items-center gap-1.5 text-[9.5px] font-semibold uppercase tracking-[0.2em] text-purple-300/80 sm:gap-2 sm:text-[11px] sm:tracking-[0.24em]">
           <Terminal className="h-3.5 w-3.5" aria-hidden />
-          CLI · Node-style
+          CLI · Git-native · Python
           <span className="text-white/25">·</span>
-          <span className="text-fuchsia-200">Scoped, built & shipped on client engagements</span>
+          <span className="text-fuchsia-200">Shipped on client engagements</span>
         </div>
         <h1 className="mt-2 text-[30px] font-semibold leading-[1.05] tracking-tight text-white sm:mt-3 sm:text-[42px] lg:text-[52px]">
           <span className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-400 bg-clip-text text-transparent">
@@ -248,8 +185,8 @@ export default function PromptShowcase() {
         <p className="mt-3 max-w-3xl text-[13.5px] leading-snug text-white/70 sm:mt-4 sm:text-[15px] lg:text-[17px]">
           A recent AI-native product I owned end-to-end as an AI Forward Deployed Product
           Manager. From spotting the "everyone's on different skills" problem, to writing the PRD,
-          to shipping a Node-style CLI that installs, versions, publishes, and distributes AI
-          skill packs across delivery teams and client engagements.
+          to shipping a Git-native CLI that pins, syncs, and reproduces AI skill packs across
+          delivery teams.
         </p>
         <div className="mt-4 flex flex-wrap gap-2 text-[11px]">
           <span className="rounded-full border border-purple-400/30 bg-purple-500/10 px-2.5 py-1 font-semibold uppercase tracking-[0.2em] text-purple-200">
@@ -283,7 +220,7 @@ export default function PromptShowcase() {
         ))}
       </section>
 
-      {/* Terminal + Registry */}
+      {/* Terminal + Config files */}
       <section className="mt-8 grid grid-cols-1 gap-5 sm:mt-10 sm:gap-6 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
           <p className="mb-2.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/60 sm:mb-3 sm:text-[11px] sm:tracking-[0.24em]">
@@ -297,121 +234,77 @@ export default function PromptShowcase() {
         </div>
 
         <div className="flex flex-col gap-4">
-          {/* Local installed */}
+          {/* .prompt config */}
           <div>
             <div className="mb-3 flex items-center justify-between gap-2">
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/60">
-                Your installed packs
+                .prompt · what your team uses
               </p>
-              <span className="rounded-full border border-amber-400/40 bg-amber-500/10 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.2em] text-amber-200">
-                Illustrative
+              <span className="rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.2em] text-white/60">
+                like requirements.txt
               </span>
             </div>
             <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/40">
               <div className="flex items-center gap-2 border-b border-white/5 bg-white/[0.02] px-4 py-2 text-[11px]">
-                <Boxes className="h-3.5 w-3.5 text-purple-300" aria-hidden />
-                <span className="font-semibold uppercase tracking-[0.2em] text-white/70">
-                  Local registry
-                </span>
-                <span className="ml-auto text-[10px] text-white/40">4 packs · 55 skills</span>
+                <FileText className="h-3.5 w-3.5 text-purple-300" aria-hidden />
+                <span className="font-mono text-white/70">.prompt</span>
+                <span className="ml-auto text-[10px] text-white/40">3 sources</span>
               </div>
-              <ul>
-                {REGISTRY_TREE.map((pkg, i) => (
-                  <motion.li
-                    key={pkg.label}
-                    initial={{ opacity: 0, x: -8 }}
+              <div className="px-4 py-3 font-mono text-[11px] leading-relaxed">
+                {PROMPT_FILE_LINES.map((line, i) => (
+                  <motion.p
+                    key={i}
+                    initial={{ opacity: 0, x: -4 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.35, delay: 0.4 + i * 0.08 }}
+                    transition={{ duration: 0.35, delay: 0.4 + i * 0.06 }}
                     className={
-                      pkg.featured
-                        ? "border-b border-white/5 bg-purple-500/[0.06] px-4 py-2.5"
-                        : "border-b border-white/5 px-4 py-2.5 last:border-b-0"
+                      line.kind === "comment"
+                        ? "text-white/35"
+                        : line.kind === "var"
+                          ? "text-fuchsia-200/80"
+                          : "text-white/80"
                     }
                   >
-                    <div className="flex items-center gap-2">
-                      <Package className="h-3.5 w-3.5 text-purple-300" aria-hidden />
-                      <span className="font-mono text-[12.5px] font-semibold text-white">
-                        {pkg.label}
-                      </span>
-                      <span className="rounded-md border border-white/10 bg-white/[0.04] px-1.5 py-0.5 font-mono text-[10px] text-white/70">
-                        {pkg.version}
-                      </span>
-                      <span
-                        className={
-                          pkg.scope === "public"
-                            ? "rounded-md border border-emerald-400/30 bg-emerald-500/10 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-emerald-200"
-                            : "rounded-md border border-purple-400/30 bg-purple-500/15 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-purple-200"
-                        }
-                      >
-                        {pkg.scope}
-                      </span>
-                      <span className="ml-auto text-[10px] font-mono text-white/40">
-                        {pkg.count} skills
-                      </span>
-                    </div>
-                    <p className="mt-1 pl-5 text-[11px] leading-snug text-white/60">
-                      {pkg.desc}
-                    </p>
-                  </motion.li>
+                    {line.text}
+                  </motion.p>
                 ))}
-              </ul>
-              <div className="flex items-center gap-2 border-t border-white/5 bg-white/[0.02] px-4 py-2 text-[10.5px] text-white/50">
-                <GitBranch className="h-3 w-3" aria-hidden />
-                <span>lockfile · prompt.lock ·</span>
-                <span className="font-mono">3f9c2d1</span>
               </div>
             </div>
           </div>
 
-          {/* Community browse */}
+          {/* .prompt.lock */}
           <div>
             <div className="mb-3 flex items-center justify-between gap-2">
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/60">
-                Community · trending this week
+                .prompt.lock · byte-identical installs
               </p>
-              <span className="rounded-full border border-amber-400/40 bg-amber-500/10 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.2em] text-amber-200">
-                Illustrative
+              <span className="rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.2em] text-white/60">
+                like package-lock.json
               </span>
             </div>
             <div className="relative overflow-hidden rounded-2xl border border-purple-400/30 bg-gradient-to-br from-purple-500/[0.06] to-transparent">
               <div className="flex items-center gap-2 border-b border-white/5 bg-white/[0.02] px-4 py-2 text-[11px]">
-                <Sparkles className="h-3.5 w-3.5 text-purple-300" aria-hidden />
-                <span className="font-semibold uppercase tracking-[0.2em] text-white/70">
-                  registry.prompt.dev
-                </span>
-                <span className="ml-auto text-[10px] text-white/40">1,842 packs total</span>
+                <Lock className="h-3.5 w-3.5 text-purple-300" aria-hidden />
+                <span className="font-mono text-white/70">.prompt.lock</span>
+                <span className="ml-auto text-[10px] text-white/40">exact Git commits</span>
               </div>
               <ul>
-                {PUBLIC_PACKS.map((p, i) => (
+                {LOCK_FILE_LINES.map((row, i) => (
                   <motion.li
-                    key={p.name}
+                    key={row.name}
                     initial={{ opacity: 0, x: -8 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.35, delay: 0.55 + i * 0.08 }}
-                    className="border-b border-white/5 px-4 py-2.5 last:border-b-0"
+                    className="flex items-center gap-2 border-b border-white/5 px-4 py-2 font-mono text-[11px] last:border-b-0"
                   >
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-[12px] font-semibold text-white">
-                        {p.name}
-                      </span>
-                      <span className="ml-auto font-mono text-[10px] text-white/50">
-                        ↓ {p.installs}
-                      </span>
-                      <span className="font-mono text-[10px] text-fuchsia-200">
-                        ★ {p.stars}
-                      </span>
-                    </div>
-                    <p className="mt-0.5 text-[11px] leading-snug text-white/60">{p.desc}</p>
-                    <div className="mt-1 flex gap-1">
-                      {p.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-md border border-purple-400/25 bg-purple-500/10 px-1.5 py-[1px] text-[9px] font-medium text-purple-200"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                    <span className="text-white/85">{row.name}</span>
+                    <span className="rounded-md border border-white/10 bg-white/[0.04] px-1.5 py-0.5 text-[10px] text-white/70">
+                      {row.version}
+                    </span>
+                    <span className="ml-auto flex items-center gap-1 text-[10px] text-fuchsia-200">
+                      <GitCommit className="h-3 w-3" aria-hidden />
+                      {row.sha}
+                    </span>
                   </motion.li>
                 ))}
               </ul>
@@ -419,6 +312,52 @@ export default function PromptShowcase() {
           </div>
         </div>
       </section>
+
+      {/* Under the hood */}
+      <motion.section
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.7 }}
+        className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:mt-10 sm:p-5"
+      >
+        <div className="flex items-center gap-2">
+          <Layers className="h-4 w-4 text-purple-300" aria-hidden />
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-purple-200 sm:text-[11px] sm:tracking-[0.22em]">
+            Under the hood · what makes it work
+          </p>
+        </div>
+        <p className="mt-3 max-w-3xl text-[12.5px] leading-snug text-white/70 sm:text-[13px]">
+          Rather than building a Git-syncing engine from scratch, Prompt sits on Google's{" "}
+          <span className="font-mono text-white/90">repo</span> tool — the same multi-repo manager
+          that clones the entire Android Open Source Project. Battle-tested since 2008, quietly
+          doing the heavy lifting underneath a friendly CLI.
+        </p>
+        <p className="mt-3 max-w-3xl text-[12.5px] leading-snug text-white/60">
+          Two small layers on top are what make it feel like a modern package manager:
+        </p>
+        <div className="mt-3 grid grid-cols-1 gap-3 sm:mt-4 sm:grid-cols-2 sm:gap-4">
+          <div className="rounded-xl border border-white/10 bg-black/30 p-3.5">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-fuchsia-200">
+              Portable manifests
+            </p>
+            <p className="mt-1.5 text-[12px] leading-snug text-white/70">
+              Variables like{" "}
+              <span className="font-mono text-white/90">{"${GITBASE}"}</span> let a manifest work
+              across orgs — one team's Bitbucket, another's GitHub — without rewriting URLs.
+            </p>
+          </div>
+          <div className="rounded-xl border border-white/10 bg-black/30 p-3.5">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-fuchsia-200">
+              Flexible versions
+            </p>
+            <p className="mt-1.5 text-[12px] leading-snug text-white/70">
+              Say <span className="font-mono text-white/90">~=1.2.0</span> ("compatible with
+              1.2") instead of pinning an exact commit. The tool resolves it; the lockfile pins
+              the SHA.
+            </p>
+          </div>
+        </div>
+      </motion.section>
 
       {/* Distribution loop */}
       <motion.section
@@ -432,29 +371,28 @@ export default function PromptShowcase() {
         </p>
         <div className="mt-3 flex flex-wrap items-center gap-1.5 text-[11px] text-white/85 sm:mt-4 sm:gap-2 sm:text-[12px]">
           <span className="rounded-lg border border-white/10 bg-black/40 px-2.5 py-1.5 font-mono">
-            someone builds a skill
+            someone updates a skill
           </span>
           <ChevronRight className="h-3 w-3 text-purple-300" aria-hidden />
           <span className="rounded-lg border border-white/10 bg-black/40 px-2.5 py-1.5 font-mono">
-            prompt publish
+            commit to git
           </span>
           <ChevronRight className="h-3 w-3 text-purple-300" aria-hidden />
           <span className="rounded-lg border border-white/10 bg-black/40 px-2.5 py-1.5 font-mono">
-            registry updates
+            bump version in .prompt
           </span>
           <ChevronRight className="h-3 w-3 text-purple-300" aria-hidden />
           <span className="rounded-lg border border-white/10 bg-black/40 px-2.5 py-1.5 font-mono">
-            team runs prompt update
+            team runs prompt install
           </span>
           <ChevronRight className="h-3 w-3 text-purple-300" aria-hidden />
           <span className="rounded-lg border border-purple-400/40 bg-purple-500/20 px-2.5 py-1.5 font-mono">
-            everyone on the latest
+            everyone reproducibly in sync
           </span>
         </div>
         <p className="mt-3 max-w-3xl text-[12px] leading-snug text-white/60">
-          Skill drift is measured in hours, not sprints. Every dev on the client is running the
-          same, best version of the toolkit, every day. Public packs also open the door for the
-          community to iterate together.
+          Skill drift is measured in hours, not sprints. Every dev is running the same version of
+          the toolkit, every day — and if there's ever a question, the lockfile is the receipt.
         </p>
       </motion.section>
 
@@ -470,8 +408,8 @@ export default function PromptShowcase() {
             Real impact · shipped by me as PM
           </p>
           <p className="mt-2 text-[13.5px] leading-snug text-white/80">
-            First rollout: 20+ engineers on the same skill baseline, same day. Zero
-            "wait, which version are you on?" in retro. Now expanding across client teams.
+            First rollout: 20+ engineers on the same skill baseline, same day. Zero "wait, which
+            version are you on?" in retro. Now expanding across client teams.
           </p>
         </motion.div>
         <motion.div
@@ -484,10 +422,10 @@ export default function PromptShowcase() {
             What it manages
           </p>
           <ul className="mt-2 space-y-1 text-[12.5px] text-white/80">
-            <li>· Skill definitions (SKILL.md + templates)</li>
-            <li>· Cross-tool wiring (Claude Code + Cursor)</li>
+            <li>· Skills (SKILL.md + templates)</li>
             <li>· Rules, prompts, and rulesets</li>
             <li>· MCP recipes and connector configs</li>
+            <li>· Anything living in a Git repo, really</li>
           </ul>
         </motion.div>
         <motion.div
@@ -500,7 +438,7 @@ export default function PromptShowcase() {
             Where it's headed
           </p>
           <ul className="mt-2 space-y-1 text-[12.5px] text-white/80">
-            <li>· Registry-hosted skill previews</li>
+            <li>· A hosted registry for discovery</li>
             <li>· Usage analytics per skill</li>
             <li>· Automatic skill-quality scoring</li>
             <li>· One-click roll-back on regressions</li>
@@ -516,7 +454,7 @@ export default function PromptShowcase() {
       >
         <span className="inline-flex items-center gap-1.5">
           <FolderTree className="h-3 w-3" aria-hidden />
-          .claude/ · .cursor/ · .codex/ · .gemini/ · one source, many surfaces
+          .claude/ · .cursor/ · .codex/ · one config, many surfaces
         </span>
       </motion.div>
     </SubPageShell>

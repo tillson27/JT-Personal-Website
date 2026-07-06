@@ -95,7 +95,7 @@ export const gettingStartedSlide: Slide = {
     <SlideShell eyebrow="Getting started · The first four weeks">
       <Stagger gap={0.08} fill>
         <FadeUp>
-          <h2 className="text-[34px] font-semibold leading-[1.1] tracking-tight text-white">
+          <h2 className="text-[36px] font-semibold leading-[1.1] tracking-tight text-white">
             The first thing we do is{" "}
             <GradientText>not build anything.</GradientText>
           </h2>

@@ -160,7 +160,7 @@ export const prdSlide: Slide = {
                 <div className="flex items-start gap-2">
                   <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-emerald-300" aria-hidden />
                   <span className="text-white/90">
-                    Resell, refurbish, or liquidate, with a person confirming
+                    Resell, outlet, refurbish, or liquidate, with a person confirming
                   </span>
                 </div>
                 <div className="flex items-start gap-2">

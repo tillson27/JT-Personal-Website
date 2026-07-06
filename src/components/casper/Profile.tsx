@@ -77,7 +77,7 @@ const RECENT_ROLES: ReadonlyArray<{
   {
     period: "2021",
     role: "Product Manager",
-    org: "RBC",
+    org: "Royal Bank of Canada",
     detail:
       "Product management on internal digital-banking platforms.",
   },
@@ -86,7 +86,7 @@ const RECENT_ROLES: ReadonlyArray<{
     role: "Founder",
     org: "Unbreakable Run",
     detail:
-      "Founded and ran a community running brand: coaching, group events, and audience building on social.",
+      "Founder and two-time Director of a youth empowerment program with an annual 5km run/walk, raising over $20,000 in year one and bringing together 500+ people in support of youth mental health.",
   },
 ];
 

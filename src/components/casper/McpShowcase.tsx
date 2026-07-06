@@ -8,6 +8,7 @@ import {
   Layers,
   MessageSquare,
   Sparkles,
+  Users,
   Zap,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -43,7 +44,7 @@ const MAPPINGS: ReadonlyArray<MappingRow> = [
     source: "loan.rate_type",
     target: "LOAN/AMORTIZATION/AmortizationType",
     transform: "enum(FIXED→Fixed, VAR→AdjustableRate)",
-    note: "Documented enum in mismo v3.5",
+    note: "Documented enum in mismo v3",
   },
 ];
 
@@ -108,7 +109,7 @@ export default function McpShowcase() {
         <p className="mt-3 max-w-3xl text-[13.5px] leading-snug text-white/70 sm:mt-4 sm:text-[15px] lg:text-[17px]">
           A recent AI product I owned end-to-end as an AI Forward Deployed Product Manager. A
           mortgage-servicer client was translating a proprietary loan-origination data model to{" "}
-          <span className="font-semibold text-white">MISMO v3.5</span>, with thousands of fields
+          <span className="font-semibold text-white">MISMO v3</span>, with thousands of fields
           discovered, mapped, transformed, and validated by hand. I scoped the opportunity,
           wrote the PRD, and shipped an MCP that exposes source and target models with JSON query
           logic so the agent doing the work has full context at every step.
@@ -308,14 +309,34 @@ export default function McpShowcase() {
             ))}
             <div className="flex items-center justify-between border-t border-white/10 bg-white/[0.02] px-4 py-2 text-[10px] text-white/40">
               <span className="uppercase tracking-[0.2em]">4 of 1,842 mappings</span>
-              <span className="font-mono">mismo v3.5</span>
+              <span className="font-mono">mismo v3</span>
             </div>
           </div>
         </div>
       </section>
 
       {/* Why it matters */}
-      <section className="mt-10 grid grid-cols-1 gap-3 sm:mt-12 sm:gap-4 md:grid-cols-3">
+      {/* Downstream ripple */}
+      <motion.section
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.35 }}
+        className="mt-10 rounded-2xl border border-purple-400/30 bg-gradient-to-br from-purple-500/10 via-fuchsia-500/5 to-transparent p-4 sm:mt-12 sm:p-6"
+      >
+        <div className="flex flex-wrap items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-purple-200 sm:text-[11px] sm:tracking-[0.24em]">
+          <Users className="h-3.5 w-3.5" aria-hidden />
+          Beyond the mapping team
+        </div>
+        <p className="mt-2 text-[13px] leading-snug text-white/85 sm:mt-3 sm:text-[14.5px]">
+          The MISMO-shaped output wasn't the finish line, it was the handoff. Downstream teams
+          rewriting queries, reports, and integrations to consume the new model needed the same
+          field-level truth the mapping agent had. The MCP became that shared source: one place to
+          answer "what does this field become, and how do I query it now?" — no more Slack pings
+          asking for the latest tab of the mapping spreadsheet.
+        </p>
+      </motion.section>
+
+      <section className="mt-6 grid grid-cols-1 gap-3 sm:mt-8 sm:gap-4 md:grid-cols-3">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}

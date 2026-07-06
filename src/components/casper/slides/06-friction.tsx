@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { Slide } from "../_shell";
-import { SlideShell } from "../_shell";
+import { SlideShell, SourceLine } from "../_shell";
 import { FadeUp, GradientText, Stagger } from "./_helpers";
 
 function FrictionCard({
@@ -93,28 +93,28 @@ export const frictionSlide: Slide = {
             icon={EyeOff}
             title="Missing information"
             detail="The worker cannot see which channel would pay the most for this exact item, right now."
-            impact="Loses 5 to 10 cents on the dollar per item"
+            impact="Est. 5-10¢ on the dollar per item¹"
             delay={0.3}
           />
           <FrictionCard
             icon={Repeat}
             title="Inconsistent calls"
             detail="Two workers can inspect the same item and send it to two different places. Same item, different result."
-            impact="Uneven outcomes, hard to audit later"
+            impact="Grading variance is a known reverse-logistics failure mode²"
             delay={0.4}
           />
           <FrictionCard
             icon={Gauge}
             title="Speed over quality"
             detail="When volume is high, workers pick the fastest option. That is almost always liquidate or markdown."
-            impact="Higher-value options quietly get skipped"
+            impact="Manual dispositioning defaults to the fastest path²"
             delay={0.5}
           />
           <FrictionCard
             icon={Waves}
             title="Peak overload"
             detail="Holiday and season-change spikes flood the desk. The manual process cannot keep up."
-            impact="Items age for weeks and lose more value"
+            impact="Q4 return volume peaks 30%+ above baseline³"
             delay={0.6}
           />
         </div>
@@ -122,23 +122,23 @@ export const frictionSlide: Slide = {
         <div className="mt-5 grid min-h-0 flex-1 grid-cols-[1.15fr_1fr] gap-4">
           {/* Baseline metrics */}
           <FadeUp className="min-h-0">
-            <div className="flex h-full min-h-0 flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-              <div className="mb-3.5 flex items-center gap-2">
+            <div className="flex h-full min-h-0 flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-5 pb-6">
+              <div className="mb-1.5 flex items-center gap-2">
                 <AlertCircle className="h-4 w-4 text-purple-300" aria-hidden />
                 <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-purple-300">
                   Numbers a returns manager already tracks
                 </p>
               </div>
+              <p className="mb-3 text-[11.5px] leading-snug text-white/55">
+                AI's job is to move all four in the right direction — with recovery
+                rate as the one we point at.
+              </p>
               <div className="grid grid-cols-2 gap-2.5">
                 <MetricPill label="Main goal" value="Recovery rate" />
                 <MetricPill label="Quality" value="% resold at full price" />
                 <MetricPill label="Speed" value="Seconds per item" />
                 <MetricPill label="Consistency" value="Rework and reversals" />
               </div>
-              <p className="mt-auto pt-4 text-[12px] leading-snug text-white/55">
-                AI's job is to move all four in the right direction, with recovery rate
-                as the number we point at.
-              </p>
             </div>
           </FadeUp>
 
@@ -171,6 +171,15 @@ export const frictionSlide: Slide = {
             </div>
           </FadeUp>
         </div>
+
+        <SourceLine>
+          ¹ PM estimate, anchored to Optoro's public claim of 10-30% recovery lift
+          from AI-driven dispositioning vs. traditional routing (optoro.com,
+          SmartDisposition). ² Tompkins Solutions, "Returns Management in Modern
+          Warehouses" — inconsistent grading and default-to-fastest disposition are
+          named failure modes. ³ NRF × Happy Returns, "2024 Consumer Returns in the
+          Retail Industry" — Q4 concentration of returns volume.
+        </SourceLine>
       </Stagger>
     </SlideShell>
   ),

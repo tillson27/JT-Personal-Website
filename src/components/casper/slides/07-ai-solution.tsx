@@ -56,7 +56,7 @@ export const aiSolutionSlide: Slide = {
     <SlideShell eyebrow="Solution · A recommendation, not a report">
       <Stagger gap={0.08}>
         <FadeUp>
-          <h2 className="text-[34px] font-semibold leading-[1.1] tracking-tight text-white">
+          <h2 className="text-[36px] font-semibold leading-[1.1] tracking-tight text-white">
             The recommendation starts the moment the customer{" "}
             <GradientText>hits "return",</GradientText> not when the box arrives at
             the warehouse.

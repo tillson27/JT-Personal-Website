@@ -4,6 +4,7 @@ import {
   Camera,
   CheckCircle2,
   Clock,
+  ExternalLink,
   Loader2,
   Maximize2,
   MousePointer2,
@@ -13,6 +14,7 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import type { Slide } from "../_shell";
 import { SlideShell } from "../_shell";
 import { FadeUp, GradientText, Stagger } from "./_helpers";
@@ -76,7 +78,7 @@ function WireframeView() {
         <FadeUp>
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h2 className="text-[32px] font-semibold leading-[1.1] tracking-tight text-white">
+              <h2 className="text-[36px] font-semibold leading-[1.1] tracking-tight text-white">
                 One screen, <GradientText>four moments.</GradientText> That is the whole flow.
               </h2>
               <p className="mt-2 max-w-3xl text-[12.5px] text-white/60">
@@ -84,17 +86,34 @@ function WireframeView() {
                 on the right for a higher-fidelity mockup of the live dashboard.
               </p>
             </div>
-            <motion.button
-              type="button"
-              onClick={() => setShowDashboard(true)}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.35 }}
-              className="group inline-flex flex-shrink-0 items-center gap-2 rounded-xl border border-fuchsia-400/50 bg-gradient-to-br from-fuchsia-500/25 to-purple-500/20 px-4 py-2.5 text-[12px] font-semibold uppercase tracking-[0.18em] text-fuchsia-100 shadow-[0_12px_40px_-14px_rgba(217,70,239,0.6)] transition hover:brightness-110"
-            >
-              <Maximize2 className="h-4 w-4" aria-hidden />
-              See the live dashboard
-            </motion.button>
+            <div className="flex flex-shrink-0 flex-col items-end gap-2">
+              <motion.button
+                type="button"
+                onClick={() => setShowDashboard(true)}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.35 }}
+                className="group inline-flex items-center gap-2 rounded-xl border border-fuchsia-400/50 bg-gradient-to-br from-fuchsia-500/25 to-purple-500/20 px-4 py-2.5 text-[12px] font-semibold uppercase tracking-[0.18em] text-fuchsia-100 shadow-[0_12px_40px_-14px_rgba(217,70,239,0.6)] transition hover:brightness-110"
+              >
+                <Maximize2 className="h-4 w-4" aria-hidden />
+                See the live dashboard
+              </motion.button>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.45 }}
+              >
+                <Link
+                  to="/casper/mockup"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 rounded-xl border border-purple-400/40 bg-white/[0.04] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-purple-100 transition hover:border-purple-300/60 hover:bg-purple-500/15"
+                >
+                  <ExternalLink className="h-3.5 w-3.5" aria-hidden />
+                  Bonus · See it inside Oracle RMS
+                </Link>
+              </motion.div>
+            </div>
           </div>
         </FadeUp>
 

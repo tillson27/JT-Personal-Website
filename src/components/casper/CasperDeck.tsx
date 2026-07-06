@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import {
+  BookOpen,
   ChevronLeft,
   ChevronRight,
   ClipboardList,
@@ -514,15 +515,17 @@ const SECTION_ICONS: Record<SlideSectionKey, LucideIcon> = {
   prd: ClipboardList,
   execution: Wrench,
   close: Flag,
+  appendix: BookOpen,
 };
 
 const SECTION_SHORT: Record<SlideSectionKey, string> = {
-  intro: "Kickoff",
-  discovery: "Problem",
-  solution: "Solution",
-  prd: "The Plan",
-  execution: "Build",
-  close: "Next Steps",
+  intro: "Intro",
+  discovery: "Discovery",
+  solution: "Approach",
+  prd: "PRD",
+  execution: "Feature",
+  close: "Kickoff",
+  appendix: "Appendix",
 };
 
 const SECTION_ACTIVE_ICONS: Partial<Record<SlideSectionKey, LucideIcon>> = {

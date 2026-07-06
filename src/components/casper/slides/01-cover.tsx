@@ -3,6 +3,19 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import type { Slide } from "../_shell";
 import { CountUp, FadeUp, GradientText, Stagger } from "./_helpers";
 
+type Deliverable = {
+  label: string;
+  slides: string;
+};
+
+const DELIVERABLES: ReadonlyArray<Deliverable> = [
+  { label: "Discovery / current state", slides: "4 – 7" },
+  { label: "PRD (problem · JTBD · MVP · risks · metrics)", slides: "8 – 10" },
+  { label: "AI evaluation plan", slides: "11" },
+  { label: "Linear-style tickets · one feature", slides: "12" },
+  { label: "Wireframes", slides: "13" },
+];
+
 export const coverSlide: Slide = {
   id: "cover",
   title: "Cover · A case study",
@@ -86,8 +99,8 @@ export const coverSlide: Slide = {
         </Stagger>
       </div>
 
-      {/* RIGHT: teaser stat card */}
-      <div className="relative flex w-[38%] items-center justify-center pr-16">
+      {/* RIGHT: teaser stat card + deliverable map */}
+      <div className="relative flex w-[38%] flex-col items-center justify-center gap-5 pr-16">
         <motion.div
           initial={{ opacity: 0, x: 40, rotate: 4 }}
           animate={{ opacity: 1, x: 0, rotate: 3 }}
@@ -103,24 +116,48 @@ export const coverSlide: Slide = {
               <Sparkles className="h-3 w-3" aria-hidden />
               The number behind the case
             </div>
-            <div className="mt-5 flex items-baseline gap-1">
+            <div className="mt-4 flex items-baseline gap-1">
               <CountUp
                 to={52}
                 suffix="%"
                 duration={2.2}
-                className="text-[92px] font-semibold leading-none tracking-[-0.03em] text-white"
+                className="text-[76px] font-semibold leading-none tracking-[-0.03em] text-white"
               />
             </div>
-            <p className="mt-4 text-[13px] leading-snug text-white/75">
+            <p className="mt-3 text-[12.5px] leading-snug text-white/75">
               of returned apparel is <span className="font-semibold text-white">not</span> resold
               at full price. That gap is worth billions each year, and it is the gap this
               case aims at.
             </p>
-            <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4 text-[10px] uppercase tracking-[0.22em] text-white/40">
+            <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3 text-[10px] uppercase tracking-[0.22em] text-white/40">
               <span>Recovery gap</span>
               <span className="text-purple-300">Eightx · NRF · 2025</span>
             </div>
           </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          className="relative w-[320px] rounded-2xl border border-white/12 bg-black/30 p-4 backdrop-blur"
+        >
+          <p className="mb-2 text-[9.5px] font-semibold uppercase tracking-[0.24em] text-purple-200/80">
+            What Casper asked for · where it lives
+          </p>
+          <ul className="space-y-1.5">
+            {DELIVERABLES.map((d) => (
+              <li
+                key={d.label}
+                className="flex items-baseline justify-between gap-3 text-[10.5px]"
+              >
+                <span className="truncate text-white/80">{d.label}</span>
+                <span className="flex-shrink-0 font-mono font-semibold text-purple-200">
+                  {d.slides}
+                </span>
+              </li>
+            ))}
+          </ul>
         </motion.div>
       </div>
 

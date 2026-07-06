@@ -46,7 +46,7 @@ const experiences = [
   {
     period: "2021",
     role: "Product Manager",
-    company: "RBC",
+    company: "Royal Bank of Canada",
     description:
       "Product management on internal digital banking platforms.",
   },

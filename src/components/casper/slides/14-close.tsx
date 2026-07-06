@@ -58,15 +58,14 @@ export const closeSlide: Slide = {
               <br />
               <GradientText>Returns are where the money is,</GradientText>
               <br />
-              and they are the easier half to fix.
+              and where AI closes the loop fastest.
             </h1>
           </FadeUp>
 
           <FadeUp>
             <p className="mt-4 max-w-2xl text-[14px] leading-snug text-white/70">
-              Five points of extra recovery is $5 more back on every $100 item. At the
-              scale of a mid-size apparel retailer, that is around $25M a year, without
-              touching marketing spend or stockout risk.
+              +5 pts of recovery on ~5M items a year at ~$80 average retail is around
+              $20M — before any premium-mix or seasonal upside.
             </p>
           </FadeUp>
 
@@ -134,7 +133,7 @@ export const closeSlide: Slide = {
                 tillson27@gmail.com
               </a>
               <span className="text-white/25">·</span>
-              <span>Loom walkthrough attached in the submission email.</span>
+              <span>Video walkthrough attached in the submission email.</span>
             </div>
           </FadeUp>
         </Stagger>

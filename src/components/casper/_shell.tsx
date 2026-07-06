@@ -6,7 +6,8 @@ export type SlideSectionKey =
   | "solution"
   | "prd"
   | "execution"
-  | "close";
+  | "close"
+  | "appendix";
 
 export type Slide = {
   id: string;
@@ -22,6 +23,7 @@ export const slideSections: ReadonlyArray<{ key: SlideSectionKey; label: string 
   { key: "prd", label: "PRD" },
   { key: "execution", label: "Execution" },
   { key: "close", label: "Close" },
+  { key: "appendix", label: "Appendix" },
 ];
 
 export const CANVAS_WIDTH = 1280;

@@ -26,7 +26,7 @@ const RECENT_ROLES: ReadonlyArray<{
   { period: "2023 – 24", role: "Senior Systems Analyst", org: "Fraser Health" },
   { period: "2022 – 23", role: "Technical Program Manager", org: "Microsoft" },
   { period: "2021 – 22", role: "Tech Strategy Consultant", org: "KPMG" },
-  { period: "2021", role: "Product Manager", org: "RBC" },
+  { period: "2021", role: "Product Manager", org: "Royal Bank of Canada" },
   { period: "2016 – 20", role: "Founder", org: "Unbreakable Run" },
 ];
 
