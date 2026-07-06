@@ -15,6 +15,7 @@ import { wireframeSlide } from "./12-wireframe";
 import { risksSlide } from "./13-risks";
 import { gettingStartedSlide } from "./13b-getting-started";
 import { closeSlide } from "./14-close";
+import { upliftCaseSlide } from "./14b-uplift-case";
 
 export const slides: ReadonlyArray<Slide> = [
   coverSlide,
@@ -33,4 +34,5 @@ export const slides: ReadonlyArray<Slide> = [
   gettingStartedSlide,
   closeSlide,
   proofSlide,
+  upliftCaseSlide,
 ];

@@ -83,16 +83,16 @@ export const coverSlide: Slide = {
           </FadeUp>
 
           <FadeUp>
-            <div className="mt-10 flex items-center gap-4 text-[12px] text-white/60">
+            <div className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-3 text-[12px] text-white/60">
               <span className="rounded-full border border-white/15 bg-white/[0.04] px-3 py-1 font-mono">
                 Prepared by Josh Tillson
               </span>
               <span className="rounded-full border border-white/15 bg-white/[0.04] px-3 py-1 font-mono">
                 For Casper Studios
               </span>
-              <span className="rounded-full border border-purple-400/40 bg-purple-500/15 px-3 py-1 font-semibold uppercase tracking-[0.22em] text-purple-200">
-                <ArrowRight className="mr-1 inline-block h-3 w-3" aria-hidden />
-                Press → to begin
+              <span className="inline-flex items-center gap-1.5 text-[10.5px] italic tracking-wide text-white/45">
+                <ArrowRight className="h-3 w-3 text-purple-300/70" aria-hidden />
+                press the right-arrow key to begin
               </span>
             </div>
           </FadeUp>

@@ -128,6 +128,17 @@ function Deck({
     return () => document.removeEventListener("fullscreenchange", handler);
   }, []);
 
+  useEffect(() => {
+    const handler = (event: Event) => {
+      const detail = (event as CustomEvent<{ slideIndex: number }>).detail;
+      if (typeof detail?.slideIndex === "number") {
+        goTo(detail.slideIndex);
+      }
+    };
+    window.addEventListener("casper:deck:goto", handler);
+    return () => window.removeEventListener("casper:deck:goto", handler);
+  }, [goTo]);
+
   const handleToggleFullscreen = useCallback(() => {
     const node = containerRef.current;
     if (!node) return;
@@ -597,7 +608,7 @@ function SupplyChainBreadcrumb({
               onClick={() => onSelect(stop.start)}
               aria-label={`Jump to ${stop.label} section`}
               aria-current={isActive ? "true" : undefined}
-              className="group flex flex-shrink-0 items-center gap-1.5 outline-none"
+              className="group flex flex-shrink-0 items-center justify-start gap-1.5 outline-none sm:min-w-[92px]"
             >
               <IconToRender
                 className={`h-3.5 w-3.5 transition ${

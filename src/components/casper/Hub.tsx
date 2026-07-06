@@ -2,6 +2,7 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import {
   ArrowRight,
   Blocks,
+  FileText,
   Presentation,
   Sparkles,
   Terminal,
@@ -29,7 +30,7 @@ const TOP_ROW: ReadonlyArray<Destination> = [
     label: "The case",
     title: "The Casper PM Challenge deck",
     description:
-      "16 slides, live and interactive. The quieter, more solvable half of the apparel supply-chain story.",
+      "17 slides, live and interactive. The quieter, more solvable half of the apparel supply-chain story.",
     icon: Presentation,
     featured: true,
     chip: "Main event",
@@ -530,7 +531,7 @@ export default function Hub() {
               You made it.
             </span>
           </h1>
-          <p className="mt-2 max-w-2xl text-[12px] leading-snug text-white/65 sm:text-[14px]">
+          <p className="mt-2 text-[12px] leading-snug text-white/65 sm:text-[14px]">
             The case is the main event, plus two AI-native products I recently scoped, built, and
             shipped on client engagements as an AI Forward Deployed Product Manager. Case studies
             for the role.
@@ -538,6 +539,44 @@ export default function Hub() {
               (Click "Boo." for a surprise.)
             </span>
           </p>
+
+          {/* Executive PDF companion. Kept as an inline P.S. so the deck
+              stays the star. */}
+          <motion.a
+            href="/casper-writeup.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ y: -1 }}
+            transition={{ duration: 0.5, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="group relative mt-3 inline-flex max-w-2xl items-center gap-1.5 rounded-lg border border-purple-400/25 bg-gradient-to-r from-purple-500/[0.09] via-fuchsia-500/[0.06] to-transparent px-2 py-1 backdrop-blur transition-colors hover:border-fuchsia-300/50 hover:from-purple-500/[0.14] sm:gap-3 sm:rounded-xl sm:px-3 sm:py-2"
+            aria-label="Open the executive PDF companion in a new tab"
+          >
+            {/* Sweep on hover */}
+            <motion.span
+              aria-hidden
+              className="pointer-events-none absolute inset-y-0 -left-[30%] w-[25%] rotate-12 bg-gradient-to-r from-transparent via-white/[0.06] to-transparent opacity-0 group-hover:opacity-100"
+              initial={false}
+              whileHover={{ x: ["0%", "400%"] }}
+              transition={{ duration: 0.9, ease: "easeOut" }}
+            />
+            <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded border border-purple-400/30 bg-gradient-to-br from-purple-500/25 to-fuchsia-500/20 text-purple-100 sm:h-9 sm:w-9 sm:rounded-lg">
+              <FileText className="h-3 w-3 sm:h-4 sm:w-4" aria-hidden />
+            </span>
+            <div className="flex min-w-0 flex-col text-left">
+              <span className="text-[10px] font-semibold leading-tight text-white sm:text-[13px]">
+                P.S. There's also an executive PDF companion
+              </span>
+              <span className="mt-0.5 text-[8.5px] leading-snug text-white/55 sm:text-[11px]">
+                6 pages · discovery, PRD, eval plan, and tickets.
+              </span>
+            </div>
+            <ArrowRight
+              className="ml-auto h-2.5 w-2.5 flex-shrink-0 text-purple-200 transition-transform group-hover:translate-x-0.5 sm:h-3.5 sm:w-3.5"
+              aria-hidden
+            />
+          </motion.a>
         </div>
       </motion.div>
 

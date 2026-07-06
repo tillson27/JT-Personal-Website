@@ -152,7 +152,21 @@ export const risksSlide: Slide = {
               </ul>
               <div className="mt-auto pt-4 text-[11px] leading-snug text-purple-200/75">
                 Week one of any real engagement is a discovery sprint — see the
-                four-week plan on slide 14.
+                four-week plan on{" "}
+                <button
+                  type="button"
+                  onClick={() =>
+                    window.dispatchEvent(
+                      new CustomEvent("casper:deck:goto", {
+                        detail: { slideIndex: 13 },
+                      }),
+                    )
+                  }
+                  className="font-semibold text-fuchsia-200 underline decoration-fuchsia-300/40 decoration-dotted underline-offset-4 outline-none transition hover:text-fuchsia-100 hover:decoration-fuchsia-200 focus-visible:decoration-solid"
+                >
+                  slide 14
+                </button>
+                .
               </div>
             </div>
           </FadeUp>

@@ -1,11 +1,16 @@
 import { motion } from "framer-motion";
 import {
+  ArrowRight,
+  Brain,
   Camera,
   CheckCircle2,
   DollarSign,
+  Hand,
   Leaf,
   MessageSquare,
+  RefreshCw,
   Sparkles,
+  Tag,
   TrendingUp,
   Truck,
   User,
@@ -226,12 +231,42 @@ export const aiSolutionSlide: Slide = {
         </div>
 
         <FadeUp>
-          <div className="mt-3 rounded-xl border border-purple-400/30 bg-purple-500/10 px-4 py-2.5">
-            <p className="text-[12.5px] leading-snug text-white/85">
-              <span className="font-semibold text-purple-200">The worker is not replaced.</span>{" "}
-              They make the final call. When they override us, we learn from it. That is
-              how the model gets better every week.
-            </p>
+          <div className="mt-3 overflow-hidden rounded-2xl border border-fuchsia-400/45 bg-gradient-to-r from-fuchsia-500/[0.12] via-purple-500/[0.14] to-fuchsia-500/[0.12] p-3 shadow-[0_10px_40px_-16px_rgba(217,70,239,0.5)]">
+            <div className="flex items-center gap-3">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-fuchsia-300/50 bg-fuchsia-500/25 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.22em] text-fuchsia-100">
+                <Sparkles className="h-3 w-3" aria-hidden />
+                Key feature · human in the loop
+              </span>
+              <p className="text-[12px] leading-snug text-white/85">
+                <span className="font-semibold text-white">The worker is not replaced.</span>{" "}
+                Every override becomes labelled training data — the model bends to each
+                warehouse's reality within weeks.
+              </p>
+            </div>
+            <div className="mt-2.5 flex flex-wrap items-center gap-1.5 text-[10.5px] text-white/80">
+              <span className="inline-flex items-center gap-1.5 rounded-lg border border-fuchsia-300/40 bg-black/30 px-2 py-1">
+                <Hand className="h-3 w-3 text-fuchsia-200" aria-hidden />
+                Worker overrides
+              </span>
+              <ArrowRight className="h-3 w-3 text-fuchsia-200/70" aria-hidden />
+              <span className="inline-flex items-center gap-1.5 rounded-lg border border-purple-300/40 bg-black/30 px-2 py-1">
+                <Tag className="h-3 w-3 text-purple-200" aria-hidden />
+                Structured reason + snapshot
+              </span>
+              <ArrowRight className="h-3 w-3 text-purple-200/70" aria-hidden />
+              <span className="inline-flex items-center gap-1.5 rounded-lg border border-purple-300/40 bg-black/30 px-2 py-1">
+                <Brain className="h-3 w-3 text-purple-200" aria-hidden />
+                Next model
+              </span>
+              <ArrowRight className="h-3 w-3 text-fuchsia-200/70" aria-hidden />
+              <span className="inline-flex items-center gap-1.5 rounded-lg border border-fuchsia-300/40 bg-black/30 px-2 py-1">
+                <RefreshCw className="h-3 w-3 text-fuchsia-200" aria-hidden />
+                Retrained on {"<"}90-day cycles
+              </span>
+              <span className="ml-auto text-[10px] italic text-fuchsia-200/80">
+                This is the flexibility. It ships once, then adapts.
+              </span>
+            </div>
           </div>
         </FadeUp>
       </Stagger>

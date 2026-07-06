@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Circle, User } from "lucide-react";
+import { Circle, Star, User } from "lucide-react";
 import { useState } from "react";
 import type { Slide } from "../_shell";
 import { SlideShell } from "../_shell";
@@ -254,8 +254,14 @@ function TicketRow({
       <span className="font-mono text-[10px] font-semibold uppercase tracking-widest text-white/50">
         {ticket.id}
       </span>
-      <span className="flex-1 truncate text-[12.5px] font-medium text-white">
-        {ticket.title}
+      <span className="flex flex-1 items-center gap-1.5 truncate text-[12.5px] font-medium text-white">
+        {ticket.featured ? (
+          <Star
+            className="h-3 w-3 flex-shrink-0 fill-fuchsia-300 text-fuchsia-300"
+            aria-label="MVP core"
+          />
+        ) : null}
+        <span className="truncate">{ticket.title}</span>
       </span>
       <span
         className={`rounded-md px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] ${statusColor[ticket.status]}`}

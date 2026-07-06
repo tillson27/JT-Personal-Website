@@ -141,8 +141,8 @@ export const statsSlide: Slide = {
                 liquidators, or destroyed.
               </>
             }
-            sourceLabel="Eightx · reverse logistics analysis"
-            sourceHref="https://eightx.co/blog/reverse-logistics"
+            sourceLabel="Eightx · ecommerce return-rate benchmarks"
+            sourceHref="https://eightx.co/blog/average-ecommerce-return-rate"
             delay={0.3}
             primary
           />
@@ -155,8 +155,8 @@ export const statsSlide: Slide = {
                 processing the return (labour, inspection, restock, shipping).
               </>
             }
-            sourceLabel="Eightx · 20–30% range cited"
-            sourceHref="https://eightx.co/blog/reverse-logistics"
+            sourceLabel="Eightx · $10–65 per-return processing cost"
+            sourceHref="https://eightx.co/blog/average-ecommerce-return-rate"
             delay={0.45}
           />
           <AnchorStat
@@ -170,7 +170,7 @@ export const statsSlide: Slide = {
               </>
             }
             sourceLabel="Optoro · reverse-ops benchmarks"
-            sourceHref="https://www.optoro.com/resource/"
+            sourceHref="https://www.optoro.com"
             delay={0.6}
           />
         </div>
@@ -212,8 +212,8 @@ export const statsSlide: Slide = {
                 />
               </div>
               <p className="mt-auto pt-2 text-[9.5px] leading-snug text-white/40">
-                <SourceLink href="https://www.richpanel.com/blog/ecommerce-return-rates">
-                  Richpanel · Eightx category benchmarks (2025)
+                <SourceLink href="https://eightx.co/blog/average-ecommerce-return-rate">
+                  Eightx · category return-rate benchmarks
                 </SourceLink>
               </p>
             </div>
@@ -275,11 +275,11 @@ export const statsSlide: Slide = {
                   NRF 2024
                 </SourceLink>
                 {" · "}
-                <SourceLink href="https://www.theindustry.fashion/">
-                  TheIndustry.fashion 2025
+                <SourceLink href="https://eightx.co/blog/average-ecommerce-return-rate">
+                  Eightx 2026
                 </SourceLink>
                 {" · "}
-                <SourceLink href="https://www.optoro.com/">
+                <SourceLink href="https://www.optoro.com">
                   Optoro benchmarks
                 </SourceLink>
                 {" · "}
