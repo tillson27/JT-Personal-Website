@@ -3,6 +3,7 @@ import {
   ArrowRight,
   Blocks,
   FileText,
+  PlayCircle,
   Presentation,
   Sparkles,
   Terminal,
@@ -540,43 +541,77 @@ export default function Hub() {
             </span>
           </p>
 
-          {/* Executive PDF companion. Kept as an inline P.S. so the deck
-              stays the star. */}
-          <motion.a
-            href="/casper-writeup.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            whileHover={{ y: -1 }}
-            transition={{ duration: 0.5, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="group relative mt-3 inline-flex max-w-2xl items-center gap-1.5 rounded-lg border border-purple-400/25 bg-gradient-to-r from-purple-500/[0.09] via-fuchsia-500/[0.06] to-transparent px-2 py-1 backdrop-blur transition-colors hover:border-fuchsia-300/50 hover:from-purple-500/[0.14] sm:gap-3 sm:rounded-xl sm:px-3 sm:py-2"
-            aria-label="Open the executive PDF companion in a new tab"
-          >
-            {/* Sweep on hover */}
-            <motion.span
-              aria-hidden
-              className="pointer-events-none absolute inset-y-0 -left-[30%] w-[25%] rotate-12 bg-gradient-to-r from-transparent via-white/[0.06] to-transparent opacity-0 group-hover:opacity-100"
-              initial={false}
-              whileHover={{ x: ["0%", "400%"] }}
-              transition={{ duration: 0.9, ease: "easeOut" }}
-            />
-            <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded border border-purple-400/30 bg-gradient-to-br from-purple-500/25 to-fuchsia-500/20 text-purple-100 sm:h-9 sm:w-9 sm:rounded-lg">
-              <FileText className="h-3 w-3 sm:h-4 sm:w-4" aria-hidden />
-            </span>
-            <div className="flex min-w-0 flex-col text-left">
-              <span className="text-[10px] font-semibold leading-tight text-white sm:text-[13px]">
-                P.S. There's also an executive PDF companion
+          {/* Executive PDF companion + video walkthrough. Kept as inline P.S.
+              cards so the deck stays the star. Pills on mobile, richer cards on desktop. */}
+          <div className="mt-2.5 flex max-w-3xl flex-wrap items-center gap-1.5 sm:mt-3 sm:items-stretch sm:gap-2.5">
+            <motion.a
+              href="/Josh%20Tillson%20-%20Casper%20PM%20Challenge.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -1 }}
+              transition={{ duration: 0.5, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="group relative flex items-center gap-1.5 rounded-full border border-purple-400/30 bg-purple-500/[0.12] px-2.5 py-1 backdrop-blur transition-colors hover:border-fuchsia-300/50 hover:bg-purple-500/[0.18] sm:min-w-0 sm:flex-1 sm:gap-3 sm:rounded-xl sm:border-purple-400/25 sm:bg-gradient-to-r sm:from-purple-500/[0.09] sm:via-fuchsia-500/[0.06] sm:to-transparent sm:px-3 sm:py-2 sm:hover:from-purple-500/[0.14]"
+              aria-label="Open the executive PDF companion in a new tab"
+            >
+              {/* Sweep on hover */}
+              <motion.span
+                aria-hidden
+                className="pointer-events-none absolute inset-y-0 -left-[30%] w-[25%] rotate-12 bg-gradient-to-r from-transparent via-white/[0.06] to-transparent opacity-0 group-hover:opacity-100"
+                initial={false}
+                whileHover={{ x: ["0%", "400%"] }}
+                transition={{ duration: 0.9, ease: "easeOut" }}
+              />
+              <span className="flex flex-shrink-0 items-center justify-center text-purple-200 sm:h-9 sm:w-9 sm:rounded-lg sm:border sm:border-purple-400/30 sm:bg-gradient-to-br sm:from-purple-500/25 sm:to-fuchsia-500/20 sm:text-purple-100">
+                <FileText className="h-3 w-3 sm:h-4 sm:w-4" aria-hidden />
               </span>
-              <span className="mt-0.5 text-[8.5px] leading-snug text-white/55 sm:text-[11px]">
-                6 pages · discovery, PRD, eval plan, and tickets.
-              </span>
-            </div>
-            <ArrowRight
-              className="ml-auto h-2.5 w-2.5 flex-shrink-0 text-purple-200 transition-transform group-hover:translate-x-0.5 sm:h-3.5 sm:w-3.5"
-              aria-hidden
-            />
-          </motion.a>
+              <div className="flex min-w-0 flex-col text-left">
+                <span className="text-[10px] font-semibold leading-none text-white sm:text-[13px] sm:leading-tight">
+                  <span className="sm:hidden">Executive PDF</span>
+                  <span className="hidden sm:inline">P.S. There's also an executive PDF companion</span>
+                </span>
+                <span className="mt-0.5 hidden text-[11px] leading-snug text-white/55 sm:block">
+                  6 pages · discovery, PRD, eval plan, and tickets.
+                </span>
+              </div>
+              <ArrowRight
+                className="ml-0.5 h-2.5 w-2.5 flex-shrink-0 text-purple-200 transition-transform group-hover:translate-x-0.5 sm:ml-auto sm:h-3.5 sm:w-3.5"
+                aria-hidden
+              />
+            </motion.a>
+
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -1 }}
+              transition={{ duration: 0.5, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="flex"
+            >
+              <Link
+                to="/casper/walkthrough"
+                className="group relative flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.05] px-2.5 py-1 backdrop-blur transition-colors hover:border-purple-400/40 hover:bg-white/[0.08] sm:gap-2.5 sm:rounded-xl sm:border-white/10 sm:bg-white/[0.03] sm:px-3 sm:py-2 sm:hover:border-purple-400/30 sm:hover:bg-purple-500/[0.06]"
+                aria-label="Watch the video walkthrough"
+              >
+                <span className="flex flex-shrink-0 items-center justify-center text-white/70 group-hover:text-purple-100 sm:h-9 sm:w-9 sm:rounded-lg sm:border sm:border-white/10 sm:bg-white/[0.06]">
+                  <PlayCircle className="h-3 w-3 sm:h-4 sm:w-4" aria-hidden />
+                </span>
+                <div className="flex min-w-0 flex-col text-left">
+                  <span className="text-[10px] font-semibold leading-none text-white/85 sm:text-[13px] sm:leading-tight sm:text-white/80">
+                    <span className="sm:hidden">Walkthrough</span>
+                    <span className="hidden sm:inline">Or watch the walkthrough</span>
+                  </span>
+                  <span className="mt-0.5 hidden text-[11px] leading-snug text-white/40 sm:block">
+                    Video · guided tour of the deck.
+                  </span>
+                </div>
+                <ArrowRight
+                  className="ml-0.5 h-2.5 w-2.5 flex-shrink-0 text-white/50 transition-transform group-hover:translate-x-0.5 group-hover:text-purple-200 sm:ml-1.5 sm:h-3.5 sm:w-3.5"
+                  aria-hidden
+                />
+              </Link>
+            </motion.div>
+          </div>
         </div>
       </motion.div>
 

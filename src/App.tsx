@@ -11,6 +11,7 @@ import PromptShowcase from "./components/casper/PromptShowcase";
 import McpShowcase from "./components/casper/McpShowcase";
 import OracleRmsMockup from "./components/casper/OracleRmsMockup";
 import Profile from "./components/casper/Profile";
+import Walkthrough from "./components/casper/Walkthrough";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="mcp" element={<McpShowcase />} />
             <Route path="mockup" element={<OracleRmsMockup />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="walkthrough" element={<Walkthrough />} />
           </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
