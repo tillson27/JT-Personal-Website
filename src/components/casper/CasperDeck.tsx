@@ -32,6 +32,7 @@ import { Link } from "react-router-dom";
 import type { Slide, SlideSectionKey } from "./_shell";
 import { CANVAS_HEIGHT, CANVAS_WIDTH, slideSections } from "./_shell";
 import { slides } from "./slides";
+import posthog from "@/lib/posthog";
 
 export default function CasperDeck() {
   return <Deck slides={slides} sections={slideSections} />;
@@ -63,6 +64,7 @@ function Deck({
 
   const handleExportPdf = useCallback(() => {
     setIsPrinting(true);
+    posthog.capture("casper pdf exported");
     // Let the portal mount + framer-motion enter animations settle before printing.
     window.setTimeout(() => {
       window.print();
@@ -82,10 +84,21 @@ function Deck({
       setActiveIndex((cur) => {
         if (clamped === cur) return cur;
         setDirection(clamped > cur ? 1 : -1);
+        const slide = slides[clamped];
+        posthog.capture("casper slide navigated", {
+          slide_index: clamped + 1,
+          slide_id: slide?.id,
+          slide_title: slide?.title,
+          slide_section: slide?.section,
+          total_slides: total,
+        });
+        if (clamped === total - 1) {
+          posthog.capture("casper deck completed");
+        }
         return clamped;
       });
     },
-    [total],
+    [total, slides],
   );
 
   const goNext = useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo]);
@@ -242,7 +255,7 @@ function Deck({
           </span>
           <button
             type="button"
-            onClick={() => setIsTocOpen(true)}
+            onClick={() => { setIsTocOpen(true); posthog.capture("casper toc opened"); }}
             aria-label="Open sections"
             className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-1.5 text-xs font-medium text-white/85 backdrop-blur transition hover:bg-white/10"
           >
@@ -605,7 +618,10 @@ function SupplyChainBreadcrumb({
           >
             <button
               type="button"
-              onClick={() => onSelect(stop.start)}
+              onClick={() => {
+                onSelect(stop.start);
+                posthog.capture("casper section jumped", { section: stop.key, section_label: stop.label, slide_index: stop.start + 1 });
+              }}
               aria-label={`Jump to ${stop.label} section`}
               aria-current={isActive ? "true" : undefined}
               className="group flex flex-shrink-0 items-center justify-start gap-1.5 outline-none sm:min-w-[92px]"

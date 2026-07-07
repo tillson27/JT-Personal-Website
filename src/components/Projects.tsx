@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import posthog from "@/lib/posthog";
 
 const projects = [
   {
@@ -50,6 +51,7 @@ const Projects = () => {
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => posthog.capture("project link clicked", { project: project.title, url: project.link })}
                   className="group block"
                 >
                   <div className="flex items-center gap-1.5 mb-1">

@@ -14,6 +14,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CasperMark from "./CasperMark";
 import casperLogo from "@/assets/casper/casper-logo.png";
+import posthog from "@/lib/posthog";
 
 type Destination = {
   to: string;
@@ -223,6 +224,7 @@ function DestinationCard({
           onFocusHover?.();
         }}
         onMouseLeave={onLeave}
+        onClick={() => posthog.capture("casper hub card clicked", { destination: dest.to, label: dest.label, title: dest.title })}
         data-focused={focused ? "true" : undefined}
         className="group relative block h-full min-h-0 outline-none focus-visible:ring-2 focus-visible:ring-purple-400/60"
       >
@@ -548,6 +550,7 @@ export default function Hub() {
               href="/Josh%20Tillson%20-%20Casper%20PM%20Challenge.pdf"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => posthog.capture("casper executive pdf opened")}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               whileHover={{ y: -1 }}
@@ -590,6 +593,7 @@ export default function Hub() {
             >
               <Link
                 to="/casper/walkthrough"
+                onClick={() => posthog.capture("casper walkthrough opened")}
                 className="group relative flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.05] px-2.5 py-1 backdrop-blur transition-colors hover:border-purple-400/40 hover:bg-white/[0.08] sm:gap-2.5 sm:rounded-xl sm:border-white/10 sm:bg-white/[0.03] sm:px-3 sm:py-2 sm:hover:border-purple-400/30 sm:hover:bg-purple-500/[0.06]"
                 aria-label="Watch the video walkthrough"
               >

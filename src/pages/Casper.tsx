@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import PasswordGate from "@/components/casper/PasswordGate";
 import { isAuthenticated as checkAuth, persistAuth } from "@/components/casper/auth";
+import posthog from "@/lib/posthog";
 
 const Casper = () => {
   const [authed, setAuthed] = useState<boolean>(() => checkAuth());
@@ -18,6 +19,7 @@ const Casper = () => {
   const handleAuthenticated = useCallback(() => {
     persistAuth();
     setAuthed(true);
+    posthog.capture("casper access granted");
   }, []);
 
   if (!authed) {

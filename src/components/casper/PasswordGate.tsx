@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { CASPER_PASSWORD } from "./auth";
 import CasperMark from "./CasperMark";
 import casperLogo from "@/assets/casper/casper-logo.png";
+import posthog from "@/lib/posthog";
 
 export default function PasswordGate({
   onAuthenticated,
@@ -22,6 +23,7 @@ export default function PasswordGate({
     }
     setError(true);
     setShakeKey((k) => k + 1);
+    posthog.capture("casper access denied");
   };
 
   return (

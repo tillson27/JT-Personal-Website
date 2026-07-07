@@ -1,6 +1,7 @@
 import { motion, Easing } from "framer-motion";
 import { Github, Linkedin, Mail, ChevronDown } from "lucide-react";
 import SoundWave from "./SoundWave";
+import posthog from "@/lib/posthog";
 
 const Hero = () => {
   const easeOut: Easing = [0.16, 1, 0.3, 1];
@@ -96,6 +97,7 @@ const Hero = () => {
             href="https://www.linkedin.com/in/joshtillson/"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => posthog.capture("social link clicked", { platform: "linkedin" })}
             className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="LinkedIn"
             whileHover={{ scale: 1.1 }}
@@ -107,6 +109,7 @@ const Hero = () => {
             href="https://github.com/tillson27"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => posthog.capture("social link clicked", { platform: "github" })}
             className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="GitHub"
             whileHover={{ scale: 1.1 }}
@@ -116,6 +119,7 @@ const Hero = () => {
           </motion.a>
           <motion.a
             href="mailto:tillson27@gmail.com"
+            onClick={() => posthog.capture("social link clicked", { platform: "email" })}
             className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="Email"
             whileHover={{ scale: 1.1 }}
