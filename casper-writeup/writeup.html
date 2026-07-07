@@ -1,0 +1,1657 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Casper Studios · PM Challenge · Written Submission</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #0f0a1a;
+        --ink-soft: #382a4a;
+        --muted: #6b6383;
+        --line: #e4dff0;
+        --line-soft: #f1eef7;
+        --paper: #ffffff;
+        --paper-tint: #faf7ff;
+        --purple: #7c3aed;
+        --purple-deep: #5b21b6;
+        --fuchsia: #c026d3;
+        --purple-tint: #f4efff;
+        --fuchsia-tint: #fbeeff;
+        --amber: #b45309;
+        --red: #b91c1c;
+        --emerald: #047857;
+      }
+
+      @page {
+        size: letter;
+        margin: 0.5in 0.6in 0.7in 0.6in;
+        @bottom-left {
+          content: "Josh Tillson · Casper Studios PM Challenge · Written Companion";
+          font-family: "Inter", -apple-system, sans-serif;
+          font-size: 6.8pt;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: #6b6383;
+          padding-top: 6pt;
+          border-top: 0.5pt solid #e4dff0;
+          vertical-align: top;
+          width: 100%;
+        }
+        @bottom-right {
+          content: counter(page) " / " counter(pages);
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-size: 6.8pt;
+          letter-spacing: 0.16em;
+          color: #7c3aed;
+          padding-top: 6pt;
+          border-top: 0.5pt solid #e4dff0;
+          vertical-align: top;
+          font-weight: 600;
+          white-space: nowrap;
+          min-width: 0.7in;
+          text-align: right;
+        }
+      }
+      @page :first {
+        @bottom-left { content: ""; border: none; }
+        @bottom-right { content: ""; border: none; }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 9.5pt;
+        line-height: 1.36;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .mono {
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      .page-break {
+        page-break-after: always;
+        break-after: page;
+      }
+
+      /* .flex-spacer intentionally does nothing in natural flow — kept as a
+         hook so any future page can force fill. Page-level footer is pinned
+         via the @page bottom-left / bottom-right rules above. */
+      section.doc-section > .flex-spacer {
+        display: none;
+      }
+
+      /* ---------- Cover ---------- */
+      .cover {
+        min-height: 9.4in;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 28px;
+      }
+      .cover-top {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 8.5pt;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--purple);
+        font-weight: 600;
+      }
+      .cover-top .rule {
+        flex: none;
+        width: 42px;
+        height: 1px;
+        background: var(--purple);
+        opacity: 0.6;
+      }
+      .cover-title {
+        font-size: 44pt;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        line-height: 0.95;
+        margin: 28px 0 8px;
+      }
+      .cover-title em {
+        font-style: italic;
+        color: var(--purple);
+        background: none;
+      }
+      .cover-sub {
+        font-size: 12.5pt;
+        color: var(--ink-soft);
+        max-width: 5.4in;
+        line-height: 1.45;
+        margin-top: 10px;
+      }
+      .cover-meta {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 26px;
+      }
+      .cover-chip {
+        border: 1px solid var(--line);
+        background: var(--paper-tint);
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 8.5pt;
+        letter-spacing: 0.06em;
+        color: var(--ink-soft);
+      }
+      .cover-chip.accent {
+        border-color: var(--purple);
+        color: var(--purple);
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .cover-toc {
+        border-top: 1px solid var(--line);
+        padding-top: 18px;
+        margin-top: auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px 28px;
+      }
+      .cover-toc h4 {
+        font-size: 8.5pt;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: var(--purple);
+        margin: 0 0 4px;
+        font-weight: 600;
+      }
+      .cover-toc p {
+        margin: 0;
+        color: var(--ink-soft);
+        font-size: 10pt;
+        line-height: 1.4;
+      }
+      .cover-footer {
+        margin-top: 18px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 8pt;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      /* ---------- Section headings ---------- */
+      .section-header {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        padding-bottom: 7px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 10px;
+      }
+      .section-header .num {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9pt;
+        color: var(--purple);
+        font-weight: 600;
+        letter-spacing: 0.14em;
+      }
+      .section-header h1 {
+        font-size: 18pt;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        margin: 0;
+        line-height: 1.05;
+      }
+      .section-header .tag {
+        margin-left: auto;
+        font-size: 7.5pt;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .lede {
+        color: var(--ink-soft);
+        font-size: 9.5pt;
+        margin: 0 0 10px;
+        max-width: 6.6in;
+      }
+
+      h2 {
+        font-size: 9.5pt;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--purple);
+        margin: 10px 0 5px;
+      }
+      h3 {
+        font-size: 10pt;
+        font-weight: 600;
+        margin: 4px 0 3px;
+        color: var(--ink);
+      }
+
+      p {
+        margin: 0 0 5px;
+      }
+
+      ul,
+      ol {
+        margin: 3px 0 6px;
+        padding-left: 16px;
+      }
+      li {
+        margin-bottom: 2px;
+      }
+
+      strong {
+        color: var(--ink);
+      }
+
+      /* ---------- Card layouts ---------- */
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px;
+      }
+      .grid-4 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+      }
+
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 7px 10px;
+        background: var(--paper);
+        break-inside: avoid;
+      }
+      .card.tint {
+        background: var(--paper-tint);
+      }
+      .card.purple {
+        border-color: rgba(124, 58, 237, 0.35);
+        background: var(--purple-tint);
+      }
+      .card.fuchsia {
+        border-color: rgba(192, 38, 211, 0.35);
+        background: var(--fuchsia-tint);
+      }
+      .card .kicker {
+        font-size: 7pt;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--purple);
+        margin: 0 0 3px;
+      }
+      .card.fuchsia .kicker {
+        color: var(--fuchsia);
+      }
+      .card .kicker.muted {
+        color: var(--muted);
+      }
+      .card h3 {
+        margin: 0 0 3px;
+        font-size: 9.5pt;
+      }
+      .card p {
+        margin: 0;
+        font-size: 8.5pt;
+        color: var(--ink-soft);
+        line-height: 1.35;
+      }
+
+      /* ---------- Stat strip ---------- */
+      .stat-strip {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+        margin: 6px 0 8px;
+      }
+      .stat {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 7px 10px;
+        background: var(--paper-tint);
+        break-inside: avoid;
+      }
+      .stat .value {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 17pt;
+        font-weight: 600;
+        color: var(--purple);
+        line-height: 1;
+        letter-spacing: -0.02em;
+      }
+      .stat .label {
+        margin-top: 3px;
+        font-size: 7.5pt;
+        color: var(--ink-soft);
+        line-height: 1.3;
+      }
+      .stat .source {
+        margin-top: 3px;
+        font-size: 6.8pt;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      /* ---------- Flow diagram ---------- */
+      .flow {
+        margin: 6px 0 6px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 8px;
+        background: var(--paper-tint);
+        break-inside: avoid;
+      }
+      .flow-row {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 5px;
+        align-items: stretch;
+      }
+      .flow-step {
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--paper);
+        padding: 6px 8px;
+        text-align: center;
+      }
+      .flow-step .n {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 7pt;
+        color: var(--purple);
+        font-weight: 600;
+        letter-spacing: 0.1em;
+      }
+      .flow-step .actor {
+        font-size: 6.8pt;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 1px 0;
+      }
+      .flow-step .title {
+        font-size: 8.5pt;
+        font-weight: 600;
+        color: var(--ink);
+        line-height: 1.25;
+      }
+      .flow-step.decision {
+        background: linear-gradient(135deg, #f4efff, #fbeeff);
+        border-color: var(--fuchsia);
+      }
+      .flow-step.decision .n,
+      .flow-step.decision .actor {
+        color: var(--fuchsia);
+      }
+
+      /* ---------- Persona/role card ---------- */
+      .persona {
+        border-left: 3px solid var(--purple);
+        background: var(--paper-tint);
+        padding: 6px 9px;
+        border-radius: 4px;
+      }
+      .persona .who {
+        font-size: 7.5pt;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--purple);
+        font-weight: 600;
+      }
+      .persona .job {
+        margin-top: 2px;
+        font-size: 9pt;
+        color: var(--ink);
+        line-height: 1.35;
+      }
+      .persona.fuchsia {
+        border-color: var(--fuchsia);
+      }
+      .persona.fuchsia .who {
+        color: var(--fuchsia);
+      }
+
+      /* ---------- In/Out ---------- */
+      .inout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .inout h4 {
+        font-size: 7.5pt;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        margin: 0 0 4px;
+        font-weight: 600;
+      }
+      .inout .in h4 {
+        color: var(--emerald);
+      }
+      .inout .out h4 {
+        color: var(--red);
+      }
+      .inout ul {
+        margin: 0;
+        padding-left: 14px;
+      }
+      .inout li {
+        font-size: 8.5pt;
+        margin-bottom: 2px;
+        line-height: 1.35;
+      }
+
+      /* ---------- Risks & questions ---------- */
+      .risk-row {
+        display: grid;
+        grid-template-columns: 22px 1fr;
+        gap: 8px;
+        padding: 5px 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .risk-row:last-child {
+        border-bottom: none;
+      }
+      .risk-row .id {
+        font-family: "JetBrains Mono", monospace;
+        color: var(--red);
+        font-weight: 600;
+        font-size: 8.5pt;
+      }
+      .risk-row.question .id {
+        color: var(--purple);
+      }
+      .risk-row .head {
+        font-size: 9pt;
+        font-weight: 600;
+        color: var(--ink);
+      }
+      .risk-row .body {
+        margin-top: 1px;
+        font-size: 8.5pt;
+        color: var(--ink-soft);
+        line-height: 1.35;
+      }
+      .risk-row .mit {
+        margin-top: 2px;
+        font-size: 8pt;
+        color: var(--emerald);
+        line-height: 1.35;
+      }
+      .risk-row .mit .lbl {
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-weight: 600;
+      }
+
+      /* ---------- Metrics table ---------- */
+      table.metrics {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 3px 0 6px;
+      }
+      table.metrics th,
+      table.metrics td {
+        text-align: left;
+        padding: 5px 7px;
+        border-bottom: 1px solid var(--line);
+        font-size: 8.5pt;
+        line-height: 1.35;
+      }
+      table.metrics th {
+        background: var(--paper-tint);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 7pt;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      table.metrics .role {
+        display: inline-block;
+        padding: 1px 5px;
+        border-radius: 999px;
+        font-size: 6.8pt;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+      .role.driver {
+        background: var(--purple-tint);
+        color: var(--purple);
+      }
+      .role.guardrail {
+        background: var(--paper-tint);
+        color: var(--muted);
+      }
+
+      /* ---------- Ticket ---------- */
+      .ticket {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 7px 10px;
+        margin-bottom: 6px;
+        background: var(--paper);
+        break-inside: avoid;
+      }
+      .ticket.featured {
+        border-color: var(--fuchsia);
+        background: var(--fuchsia-tint);
+      }
+      .ticket-head {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .ticket-id {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 8pt;
+        color: var(--purple);
+        font-weight: 600;
+        letter-spacing: 0.1em;
+      }
+      .ticket-title {
+        font-size: 9.5pt;
+        font-weight: 600;
+        color: var(--ink);
+        line-height: 1.25;
+        flex: 1 1 auto;
+        min-width: 55%;
+      }
+      .ticket-tags {
+        margin-left: auto;
+        display: flex;
+        gap: 3px;
+        flex-wrap: wrap;
+      }
+      .ticket-tag {
+        font-size: 6.8pt;
+        border: 1px solid var(--line);
+        background: var(--paper-tint);
+        border-radius: 4px;
+        padding: 1px 5px;
+        color: var(--ink-soft);
+        letter-spacing: 0.06em;
+      }
+      .ticket-tag.pri-urgent {
+        color: var(--red);
+        border-color: var(--red);
+      }
+      .ticket-tag.pri-high {
+        color: var(--amber);
+        border-color: var(--amber);
+      }
+      .ticket-tag.pri-medium {
+        color: var(--purple);
+        border-color: var(--purple);
+      }
+      .ticket-tag.est {
+        font-family: "JetBrains Mono", monospace;
+      }
+      .ticket-tag.core {
+        color: var(--fuchsia);
+        border-color: var(--fuchsia);
+        font-weight: 600;
+      }
+      .ticket-story {
+        margin: 5px 0 4px;
+        font-size: 8.5pt;
+        color: var(--ink);
+        border-left: 3px solid var(--purple);
+        padding: 3px 9px;
+        background: var(--paper-tint);
+        line-height: 1.35;
+      }
+      .ticket-story em {
+        font-style: normal;
+        color: var(--muted);
+      }
+      .ticket-desc {
+        font-size: 8pt;
+        color: var(--ink-soft);
+        margin: 3px 0 4px;
+        line-height: 1.35;
+      }
+      .ticket-ac-head {
+        font-size: 7pt;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--purple);
+        font-weight: 600;
+        margin-bottom: 2px;
+      }
+      .ticket-ac {
+        margin: 0;
+        padding-left: 14px;
+      }
+      .ticket-ac li {
+        font-size: 8pt;
+        color: var(--ink);
+        margin-bottom: 1px;
+        line-height: 1.32;
+      }
+
+      /* Compact ticket variant — fit all on one page */
+      .ticket.compact {
+        padding: 6px 9px;
+        margin-bottom: 5px;
+      }
+      .ticket.compact .ticket-head {
+        gap: 5px;
+      }
+      .ticket.compact .ticket-title {
+        font-size: 9pt;
+      }
+      .ticket.compact .ticket-story-inline {
+        margin: 3px 0 3px;
+        font-size: 7.8pt;
+        color: var(--ink-soft);
+        border-left: 2px solid var(--purple);
+        padding: 1px 8px;
+        background: var(--paper-tint);
+        line-height: 1.32;
+      }
+      .ticket.compact .ticket-story-inline em {
+        font-style: normal;
+        color: var(--muted);
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+      .ticket.compact .ticket-ac-head {
+        display: inline;
+        margin-right: 4px;
+      }
+      .ticket.compact .ac-inline {
+        font-size: 7.8pt;
+        color: var(--ink);
+        line-height: 1.36;
+        margin: 0;
+      }
+      .ticket.compact .ac-inline .bul {
+        color: var(--purple);
+        margin: 0 4px 0 6px;
+      }
+
+      /* ---------- Callout ---------- */
+      .callout {
+        border-left: 3px solid var(--fuchsia);
+        background: var(--fuchsia-tint);
+        padding: 6px 10px;
+        border-radius: 4px;
+        margin: 6px 0;
+        font-size: 8.5pt;
+        line-height: 1.35;
+        color: var(--ink);
+      }
+      .callout.purple {
+        border-color: var(--purple);
+        background: var(--purple-tint);
+      }
+      .callout .lbl {
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--fuchsia);
+        font-size: 8pt;
+        margin-right: 6px;
+      }
+      .callout.purple .lbl {
+        color: var(--purple);
+      }
+
+      /* ---------- Rhythm ---------- */
+      .rhythm {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+        margin: 5px 0 6px;
+      }
+      .rhythm .cell {
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 6px 8px;
+        background: var(--paper);
+      }
+      .rhythm .when {
+        font-size: 6.8pt;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--fuchsia);
+        font-weight: 600;
+      }
+      .rhythm .act {
+        margin-top: 2px;
+        font-size: 9pt;
+        font-weight: 600;
+        color: var(--ink);
+      }
+      .rhythm .det {
+        margin-top: 2px;
+        font-size: 7.5pt;
+        color: var(--ink-soft);
+        line-height: 1.32;
+      }
+
+      /* ---------- Footer ---------- */
+      .doc-footer {
+        margin-top: 8px;
+        padding-top: 5px;
+        border-top: 1px solid var(--line);
+        display: flex;
+        justify-content: space-between;
+        font-size: 6.8pt;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      /* Print-specific */
+      @media print {
+        .card,
+        .ticket,
+        .stat,
+        .flow,
+        .rhythm .cell {
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- =========================================================== -->
+    <!-- COVER -->
+    <!-- =========================================================== -->
+    <section class="cover">
+      <div>
+        <div class="cover-top">
+          <span class="rule"></span>
+          <span>Casper Studios · PM Challenge · Written Submission</span>
+        </div>
+        <h1 class="cover-title">
+          Where each returned
+          <br />
+          item <em>should go.</em>
+        </h1>
+        <p class="cover-sub">
+          A short written companion to the deck. Discovery, PRD, evaluation
+          plan, and one feature broken into engineering-ready tickets — all in
+          one document, so you can skim it, mark it up, or send it around.
+        </p>
+        <div class="cover-meta">
+          <span class="cover-chip">Prepared by Josh Tillson</span>
+          <span class="cover-chip">For Casper Studios · 2026</span>
+          <span class="cover-chip accent">Written companion · v1</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="cover-toc">
+          <div>
+            <h4>01 · Discovery</h4>
+            <p>How returns disposition works today, the pain points, baseline metrics, and where AI delivers the step change.</p>
+          </div>
+          <div>
+            <h4>02 · Product Requirements</h4>
+            <p>Problem, users, jobs-to-be-done, MVP scope, metrics, risks and the open questions discovery must answer.</p>
+          </div>
+          <div>
+            <h4>03 · AI Evaluation Plan</h4>
+            <p>Four lifecycle checkpoints and a fixed rhythm to keep the model honest after launch.</p>
+          </div>
+          <div>
+            <h4>04 · Tickets</h4>
+            <p>The disposition-recommendation feature decomposed into six engineering-ready Linear-style tickets.</p>
+          </div>
+        </div>
+        <div class="cover-footer">
+          <span>Josh Tillson · Product Manager · Caylent</span>
+          <span>Confidential · For evaluation</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="page-break"></div>
+
+    <!-- =========================================================== -->
+    <!-- 01 · DISCOVERY -->
+    <!-- =========================================================== -->
+    <section class="doc-section">
+      <div class="section-header">
+        <span class="num">01</span>
+        <h1>Discovery · Current-state assessment</h1>
+        <span class="tag">~1 page</span>
+      </div>
+
+      <p class="lede">
+        Empty shelves make the news. Returns lose more money, and no one is
+        watching. This section maps how returns disposition operates at an
+        apparel distribution centre today, names the friction, sets baseline
+        metrics a returns manager already tracks, and points at where AI
+        delivers step-change improvement.
+      </p>
+
+      <h2>The workflow, five steps</h2>
+      <div class="flow">
+        <div class="flow-row">
+          <div class="flow-step">
+            <div class="n">01</div>
+            <div class="actor">Customer</div>
+            <div class="title">Return started online or in store</div>
+          </div>
+          <div class="flow-step">
+            <div class="n">02</div>
+            <div class="actor">Worker</div>
+            <div class="title">Receive &amp; inspect (sight and touch)</div>
+          </div>
+          <div class="flow-step">
+            <div class="n">03</div>
+            <div class="actor">System</div>
+            <div class="title">Look up item · inventory basics only</div>
+          </div>
+          <div class="flow-step decision">
+            <div class="n">04 · The call</div>
+            <div class="actor">Worker</div>
+            <div class="title">Manual disposition · gut feel, seconds</div>
+          </div>
+          <div class="flow-step">
+            <div class="n">05</div>
+            <div class="actor">System</div>
+            <div class="title">Log the decision, update inventory</div>
+          </div>
+        </div>
+        <p style="margin-top: 8px; font-size: 8.5pt; color: var(--muted);">
+          Step 4 is one of six paths — <strong>resell as new · outlet ·
+          refurbish · liquidate · donate · destroy</strong> — chosen by a
+          worker in under a minute, without the data to pick the best one.
+        </p>
+      </div>
+
+      <h2>Baseline metrics · what a returns manager already tracks</h2>
+      <div class="stat-strip">
+        <div class="stat">
+          <div class="value">52%</div>
+          <div class="label">
+            of returned apparel is <strong>not</strong> resold at full price
+          </div>
+          <div class="source">Eightx · reverse logistics</div>
+        </div>
+        <div class="stat">
+          <div class="value">20–30%</div>
+          <div class="label">
+            of an item's original value eaten by the work of processing the
+            return
+          </div>
+          <div class="source">Eightx</div>
+        </div>
+        <div class="stat">
+          <div class="value">45s</div>
+          <div class="label">
+            average time a worker takes to decide where a single item should go
+          </div>
+          <div class="source">Optoro reverse-ops benchmarks</div>
+        </div>
+        <div class="stat">
+          <div class="value">$890B</div>
+          <div class="label">
+            US returns expected 2025 — 16.9% of sales, ~24.5% online; apparel
+            leads
+          </div>
+          <div class="source">NRF 2024</div>
+        </div>
+      </div>
+
+      <h2>Where the friction lives</h2>
+      <div class="grid-4">
+        <div class="card purple">
+          <p class="kicker">Missing information</p>
+          <p>
+            The worker cannot see what each channel would pay for this exact
+            item, right now.
+          </p>
+        </div>
+        <div class="card purple">
+          <p class="kicker">Inconsistent calls</p>
+          <p>
+            Two workers can inspect the same item and route it differently. Same
+            item, different result.
+          </p>
+        </div>
+        <div class="card purple">
+          <p class="kicker">Speed over quality</p>
+          <p>
+            When volume is high, workers pick the fastest option. That is
+            almost always liquidate or markdown.
+          </p>
+        </div>
+        <div class="card purple">
+          <p class="kicker">Peak overload</p>
+          <p>
+            Holiday and season-change spikes flood the desk. Manual grading
+            cannot keep up.
+          </p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <span class="lbl">Field quote</span>
+        “By 2pm I stop reading tags. If it looks worn, it goes to liquidation.
+        I'll take the hit on value over falling behind.” — composite,
+        apparel returns floor lead
+      </div>
+
+      <h2>Where AI delivers step-change improvement</h2>
+      <p style="font-size: 8.8pt; color: var(--ink-soft); margin-bottom: 6px;">
+        Traditional software gives the worker a checklist; rules engines route by SKU.
+        Neither closes the gap between the fastest call and the most valuable one, because
+        the right answer depends on live signals that change hourly. AI is the only
+        approach that can do all three of these things at once:
+      </p>
+      <div class="grid-3">
+        <div class="card fuchsia">
+          <p class="kicker">01 · Score</p>
+          <h3>All six channels in one second</h3>
+          <p>
+            Using signals that were fresh 15 minutes ago — channel price,
+            capacity, refurb cost, demand — not last week's assumptions.
+          </p>
+        </div>
+        <div class="card fuchsia">
+          <p class="kicker">02 · Explain</p>
+          <h3>Every call in plain English</h3>
+          <p>
+            “Outlet demand up 18%, refurb is expensive, main store full.” The
+            worker trusts what they can read, and overrides what they can't.
+          </p>
+        </div>
+        <div class="card fuchsia">
+          <p class="kicker">03 · Learn</p>
+          <h3>From every override, every shift</h3>
+          <p>
+            Each override is a labelled disagreement — the tightest feedback
+            loop in reverse logistics, compounding week over week.
+          </p>
+        </div>
+      </div>
+      <p style="font-size: 8.5pt; color: var(--ink-soft); margin-top: 8px; text-align: center;">
+        <strong style="color: var(--purple);">Optoro already proves the math:</strong>
+        10–30% recovery lift, 100M+ items routed at Fortune-500 scale (IKEA, Best Buy, Staples).
+        The question is not <em>does this work</em> — it is where we run it and how we go further.
+      </p>
+      <div class="flex-spacer"></div>
+    </section>
+
+    <div class="page-break"></div>
+
+    <!-- =========================================================== -->
+    <!-- 02 · PRD (page 1 of 2) -->
+    <!-- =========================================================== -->
+    <section class="doc-section">
+      <div class="section-header">
+        <span class="num">02</span>
+        <h1>Product Requirements Document</h1>
+        <span class="tag">~2 pages</span>
+      </div>
+
+      <h2>Problem statement</h2>
+      <p>
+        Apparel returns get routed by workers who cannot see what each channel
+        would pay for this exact item, right now. Money leaks quietly, at
+        scale, thousands of times a day, because the highest-value step in the
+        entire reverse-logistics flow is made in seconds using gut feel and old
+        rules. Fix that step and recovery rate — the number returns managers
+        already care about — moves for the whole warehouse.
+      </p>
+
+      <h2>Users &amp; jobs-to-be-done</h2>
+      <div class="grid-3">
+        <div class="persona">
+          <div class="who">Warehouse worker</div>
+          <div class="job">
+            “Tell me where this item makes the most money, without slowing me
+            down. I'll make the call.”
+          </div>
+        </div>
+        <div class="persona fuchsia">
+          <div class="who">Returns manager</div>
+          <div class="job">
+            “Recover more value, stay on the right side of the rules, and keep
+            the line moving during peak.”
+          </div>
+        </div>
+        <div class="persona">
+          <div class="who">Planning &amp; buying</div>
+          <div class="job">
+            “Show me returned inventory I can actually reuse, not something I
+            find out about weeks late.”
+          </div>
+        </div>
+      </div>
+
+      <h2>Solution · a recommendation, not a report</h2>
+      <p>
+        The recommendation starts the moment the customer hits “return”, not
+        when the box arrives. Two phases:
+      </p>
+      <div class="grid-2">
+        <div class="card purple">
+          <p class="kicker">Phase 1 · When the return is started online</p>
+          <h3>First-guess recommendation, before the box ships</h3>
+          <p>
+            Uses the reason, the item, the customer's history, a photo if
+            attached, and how the item is selling right now. Result: a starting
+            state (e.g. <em>“Likely outlet · 71% confident · pending
+            inspection”</em>) attached to the return record days before it
+            arrives.
+          </p>
+        </div>
+        <div class="card fuchsia">
+          <p class="kicker">Phase 2 · When the item lands at the DC</p>
+          <h3>Final call, sharpened with condition and live channel numbers</h3>
+          <p>
+            The worker scans, grades condition (A/B/C/D), and the same monitor
+            shows a ranked list, plain-English reason, and one-tap confirm or
+            override. Under 400ms end-to-end. The worker keeps the final call.
+          </p>
+        </div>
+      </div>
+
+      <h2>Scope of version one</h2>
+      <div class="inout">
+        <div class="in">
+          <h4>In v1</h4>
+          <ul>
+            <li>One busy warehouse, one product category (apparel)</li>
+            <li>First guess from the online return, sharpened at the DC</li>
+            <li>Six channels: resell, outlet, refurbish, liquidate, donate, destroy</li>
+            <li>Human confirms every call; overrides logged with a reason</li>
+            <li>Analytics wired from day one — every decision + input snapshot lands in the warehouse within 24h</li>
+          </ul>
+        </div>
+        <div class="out">
+          <h4>Not in v1</h4>
+          <ul>
+            <li>Auto-action with no person in the loop</li>
+            <li>Multiple warehouses or categories at once</li>
+            <li>Condition grading from a photo alone (photos assist, do not decide)</li>
+            <li>New hardware — same scanner, same monitor</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>Metrics · what we move and what we protect</h2>
+      <table class="metrics">
+        <thead>
+          <tr>
+            <th style="width: 22%">Metric</th>
+            <th style="width: 34%">Definition</th>
+            <th style="width: 22%">Target</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Recovery rate</strong><br /><span class="mono" style="font-size:8.5pt;color:var(--muted)">= value recovered ÷ retail price</span></td>
+            <td>How much of the original retail price we get back after a return, no matter which channel it ended up in.</td>
+            <td class="mono"><strong>+5 pts vs. baseline</strong><br />90 days after launch</td>
+            <td><span class="role driver">North star</span></td>
+          </tr>
+          <tr>
+            <td>% resold at full price</td>
+            <td>Items put back on the shelf and sold at full price within 30 days.</td>
+            <td class="mono">+3 pts</td>
+            <td><span class="role driver">Driver</span></td>
+          </tr>
+          <tr>
+            <td>Override rate</td>
+            <td>How often the worker picks a different option than we suggest.</td>
+            <td class="mono">≤ 25%, trending down</td>
+            <td><span class="role driver">Trust driver</span></td>
+          </tr>
+          <tr>
+            <td>Seconds per item</td>
+            <td>Time from scan to confirmed disposition.</td>
+            <td class="mono">No slower than today</td>
+            <td><span class="role guardrail">Guardrail</span></td>
+          </tr>
+          <tr>
+            <td>Items per hour, per worker</td>
+            <td>Throughput at the inspection station.</td>
+            <td class="mono">Same or +5%</td>
+            <td><span class="role guardrail">Guardrail</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout purple">
+        <span class="lbl">Why %</span>
+        A $30 tee and a $650 Arc'teryx jacket both get “+5 pts of recovery”,
+        but the dollars back look very different. Recovery rate scales with
+        item value, so the metric holds across categories and price points.
+      </div>
+      <div class="flex-spacer"></div>
+    </section>
+
+    <div class="page-break"></div>
+
+    <!-- =========================================================== -->
+    <!-- 02 · PRD (page 2 of 2) -->
+    <!-- =========================================================== -->
+    <section class="doc-section">
+      <div class="section-header">
+        <span class="num">02</span>
+        <h1>Product Requirements Document · continued</h1>
+        <span class="tag">Risks · Questions · Value</span>
+      </div>
+
+      <h2>Value logic</h2>
+      <p>
+        Sizing at 5M returned apparel items per year at ~$80 average retail,
+        recovery-rate lift of +5 points is roughly <strong>~$20M / yr</strong>
+        in extra recovered value. That's $1.50 on a $30 tee, $32.50 on a $650
+        jacket — the metric scales with item value automatically. This lands
+        squarely inside Optoro's public 10–30% recovery-lift band; the +5
+        point target is the floor, not the ceiling.
+      </p>
+
+      <h2>Key risks</h2>
+      <div class="risk-row">
+        <div class="id">R1</div>
+        <div>
+          <div class="head">Data may not be there.</div>
+          <div class="body">
+            Live channel prices are the highest-value input and the hardest to
+            guarantee.
+          </div>
+          <div class="mit"><span class="lbl">Mitigation ·</span> Fall back to last-known + confidence penalty; flag stale bundles.</div>
+        </div>
+      </div>
+      <div class="risk-row">
+        <div class="id">R2</div>
+        <div>
+          <div class="head">Workers have to trust it.</div>
+          <div class="body">
+            Trust is earned by knowing when to say “ask a person” and
+            explaining every call in plain English.
+          </div>
+          <div class="mit"><span class="lbl">Mitigation ·</span> Confidence-gated UI, plain-English reasons, override always in one tap.</div>
+        </div>
+      </div>
+      <div class="risk-row">
+        <div class="id">R3</div>
+        <div>
+          <div class="head">New items lack history.</div>
+          <div class="body">
+            Cold-start SKUs have no signal for recovered-$ predictions.
+          </div>
+          <div class="mit"><span class="lbl">Mitigation ·</span> Category-level priors + human review queue until history builds.</div>
+        </div>
+      </div>
+      <div class="risk-row">
+        <div class="id">R4</div>
+        <div>
+          <div class="head">Integration is real work.</div>
+          <div class="body">
+            Real-time reads on warehouse + inventory systems are hard. Wrong
+            first partner slows launch.
+          </div>
+          <div class="mit"><span class="lbl">Mitigation ·</span> Pick pilot on integration readiness first, volume second.</div>
+        </div>
+      </div>
+
+      <h2>Open questions · discovery answers these</h2>
+      <div class="risk-row question">
+        <div class="id">Q1</div>
+        <div>
+          <div class="head">Pricing signal quality</div>
+          <div class="body">
+            How do we price each channel accurately enough for the model to
+            trust and learn from? Which upstream systems own that number, and
+            how fresh do we need it?
+          </div>
+        </div>
+      </div>
+      <div class="risk-row question">
+        <div class="id">Q2</div>
+        <div>
+          <div class="head">Unusual items</div>
+          <div class="body">
+            Separate process, or safe default recommendation? Long-tail SKUs
+            will exist forever; we need to decide whether they get a rules
+            fallback or a “skip to human” path.
+          </div>
+        </div>
+      </div>
+      <div class="risk-row question">
+        <div class="id">Q3</div>
+        <div>
+          <div class="head">Photo-based condition grading in v1, or wait for v2?</div>
+          <div class="body">
+            Photos as an assist are cheap. Photos as the deciding signal are a
+            different product — accuracy, false-positive tolerance, and
+            regulatory implications all shift. My default is v2, but this is
+            open.
+          </div>
+        </div>
+      </div>
+      <div class="risk-row question">
+        <div class="id">Q4</div>
+        <div>
+          <div class="head">Retrain trigger</div>
+          <div class="body">
+            At what override rate do we call a category stale and retrain? My
+            starting threshold is 30% weekly override in a category, but the
+            right number will come from the first month of live data.
+          </div>
+        </div>
+      </div>
+
+      <h2>Not the easy path · thought-process notes</h2>
+      <p style="font-size: 8.8pt; color: var(--ink-soft); margin-bottom: 8px;">
+        Three sexier alternatives I turned down, and why. Each of them shows the tradeoff
+        v1 makes explicit — so future scope conversations start from a shared baseline.
+      </p>
+      <div class="grid-3">
+        <div class="card purple">
+          <p class="kicker">Path not taken · 01</p>
+          <h3>Condition grading from a photo</h3>
+          <p>
+            Sexier demo, worse product. Without live channel economics the
+            recommendation is still uninformed. Condition grading is deferred;
+            the channel-pricing service (DIS-102) is the highest-leverage
+            backend piece to build first.
+          </p>
+        </div>
+        <div class="card purple">
+          <p class="kicker">Path not taken · 02</p>
+          <h3>Fully automated call, no human</h3>
+          <p>
+            A v3 and a compliance conversation. Every removed human-in-the-loop
+            costs trust and traceability. Overrides are also our best training
+            signal — cutting them off ends the learning loop.
+          </p>
+        </div>
+        <div class="card purple">
+          <p class="kicker">Path not taken · 03</p>
+          <h3>Multi-warehouse launch</h3>
+          <p>
+            Faster claim to scale, worse feedback signal. One busy DC gives us
+            a clean A/B and enough volume to move the metric within 90 days.
+            Integration risk drops from N-ways to one-way.
+          </p>
+        </div>
+      </div>
+      <div class="flex-spacer"></div>
+    </section>
+
+    <div class="page-break"></div>
+
+    <!-- =========================================================== -->
+    <!-- 03 · AI EVAL PLAN -->
+    <!-- =========================================================== -->
+    <section class="doc-section">
+      <div class="section-header">
+        <span class="num">03</span>
+        <h1>AI evaluation plan</h1>
+        <span class="tag">How we know it is working</span>
+      </div>
+
+      <p class="lede">
+        An AI product decays without a watcher. This plan sits on top of the
+        PRD metrics and defines the checkpoints across the lifecycle plus the
+        rhythm to keep improving the model after launch. It answers three
+        questions: is the model right, is it fair to the worker, and is it
+        drifting.
+      </p>
+
+      <h2>Four lifecycle checkpoints</h2>
+      <div class="grid-4">
+        <div class="card purple">
+          <p class="kicker">Before we launch</p>
+          <h3>Backtest on history</h3>
+          <p>
+            Replay 6 months of returns with known outcomes. The model must
+            beat the human baseline on recovered $ before we ship anything to
+            a live station.
+          </p>
+        </div>
+        <div class="card fuchsia">
+          <p class="kicker">At launch</p>
+          <h3>Live A/B</h3>
+          <p>
+            50/50 split across shifts. Recovery-rate lift is the primary
+            metric; guardrails: no worse on seconds-per-item or throughput.
+          </p>
+        </div>
+        <div class="card purple">
+          <p class="kicker">Ongoing</p>
+          <h3>Watch every day</h3>
+          <p>
+            Override rate and prediction accuracy, per category and warehouse.
+            Weekly review with the returns manager on the same dashboard.
+          </p>
+        </div>
+        <div class="card purple">
+          <p class="kicker">Safety net</p>
+          <h3>Catch the bad calls</h3>
+          <p>
+            Alerts on destroy-vs-sellable, sustainability rule breaks, drift
+            over threshold, and stale live-data bundles. Fires within 5
+            minutes with a link to the offending decision.
+          </p>
+        </div>
+      </div>
+
+      <h2>What we measure — one table</h2>
+      <table class="metrics">
+        <thead>
+          <tr>
+            <th style="width: 24%">Signal</th>
+            <th>How we measure it</th>
+            <th style="width: 26%">Threshold / target</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Recovery-$ lift</strong></td>
+            <td>Predicted vs. realized dollars, joined via the settlement
+              back-fill. Primary A/B metric.</td>
+            <td class="mono">+5 pts recovery rate at 90 days</td>
+          </tr>
+          <tr>
+            <td>Prediction accuracy</td>
+            <td>MAE between predicted recovered $ and settled $, per
+              category, per warehouse.</td>
+            <td class="mono">≤ 15% MAE per category</td>
+          </tr>
+          <tr>
+            <td>Override rate</td>
+            <td>Share of recommendations the worker changes; broken down by
+              category and reason code.</td>
+            <td class="mono">Global ≤ 25%, any category ≤ 30% weekly</td>
+          </tr>
+          <tr>
+            <td>Safety events</td>
+            <td>Count of destroy-vs-sellable mismatches, sustainability
+              rule breaks, stale-data bundles served.</td>
+            <td class="mono">Zero destroy-vs-sellable per week</td>
+          </tr>
+          <tr>
+            <td>Worker adoption</td>
+            <td>% of shifts running through the tool at each station.</td>
+            <td class="mono">≥ 90% by day 45</td>
+          </tr>
+          <tr>
+            <td>Latency</td>
+            <td>Time from scan to on-screen recommendation, p95 and p99.</td>
+            <td class="mono">p95 ≤ 400ms · p99 ≤ 800ms</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>How we measure it · plumbing</h2>
+      <ul>
+        <li>
+          <strong>Every decision persists with its input snapshot</strong>
+          (recommendation, confirmed action, override reason, condition, data
+          bundle) — ticket DIS-105, non-negotiable from day one.
+        </li>
+        <li>
+          <strong>Realized $ back-fills from settlements</strong> (outlet POS,
+          refurb resale, liquidator invoice) — DIS-106. Recovery rate reflects
+          settled, not intent.
+        </li>
+        <li>
+          <strong>Dashboards + alerts</strong> filterable by warehouse and
+          category — DIS-108. Safety-net alerts fire in 5 min; drift breach
+          auto-triggers a shadow retrain.
+        </li>
+      </ul>
+
+      <h2>Rhythm · how we make it better</h2>
+      <div class="rhythm">
+        <div class="cell">
+          <div class="when">Weekly</div>
+          <div class="act">Review overrides</div>
+          <div class="det">
+            Any category over 30% overrides in a week hits the retrain
+            shortlist. Reviewed with the returns manager.
+          </div>
+        </div>
+        <div class="cell">
+          <div class="when">Every two weeks</div>
+          <div class="act">Prune features</div>
+          <div class="det">
+            Drop signals that stopped moving the call. Add new ones that do.
+            Keep the model lean and legible.
+          </div>
+        </div>
+        <div class="cell">
+          <div class="when">Monthly</div>
+          <div class="act">Label the hard ones</div>
+          <div class="det">
+            Low-confidence items go to a human review queue. Their labels
+            become the next training set.
+          </div>
+        </div>
+        <div class="cell">
+          <div class="when">Quarterly</div>
+          <div class="act">Retrain &amp; shadow-test</div>
+          <div class="det">
+            Retrain on last 90 days. Ship only if the candidate clearly beats
+            the champion on the offline gates.
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <span class="lbl">Highest-value signal</span>
+        Overrides are our best training data — every “no” comes with a reason,
+        and that closes the loop between what the model thinks and what
+        actually works on the floor. Everything about the UI, the reason
+        picker, and the persistence schema is designed to protect that signal.
+      </div>
+      <div class="flex-spacer"></div>
+    </section>
+
+    <div class="page-break"></div>
+
+    <!-- =========================================================== -->
+    <!-- 04 · TICKETS (continuous — 2 natural pages) -->
+    <!-- =========================================================== -->
+    <section class="doc-section">
+      <div class="section-header">
+        <span class="num">04</span>
+        <h1>Tickets · one feature decomposed</h1>
+        <span class="tag">Linear-style · engineering-ready</span>
+      </div>
+
+      <p class="lede">
+        <strong>Feature:</strong> AI disposition recommendation at the
+        inspection station (v1). The six tickets below cover the complete
+        loop — from the first-guess call when a customer starts a return
+        online, through the worker's confirm-or-override at the warehouse, to
+        the decision log that feeds the next retrain. They ship as one release
+        so v1 launches with its learning loop already wired.
+        <strong style="color: var(--fuchsia);">★</strong> marks the MVP core;
+        priority, story points, and tags sit on the right of each ticket.
+      </p>
+
+      <!-- DIS-100 -->
+      <div class="ticket compact">
+        <div class="ticket-head">
+          <span class="ticket-id">DIS-100</span>
+          <span class="ticket-title">First-guess recommendation from the online return form</span>
+          <span class="ticket-tags">
+            <span class="ticket-tag pri-urgent">Urgent</span>
+            <span class="ticket-tag est">5 pt</span>
+            <span class="ticket-tag">backend · ml</span>
+          </span>
+        </div>
+        <div class="ticket-story-inline">
+          <em>As a</em> returns lead, <em>I want</em> a first-guess disposition on every
+          online return, <em>so that</em> workers walk up to each item with a starting
+          point, not a blank slate.
+        </div>
+        <p class="ac-inline">
+          <span class="ticket-ac-head">AC:</span>
+          <span class="bul">•</span> First-guess saved to return record within 30 s
+          <span class="bul">•</span> Includes channel, confidence, expected $, and a short reason
+          <span class="bul">•</span> Missing data lowers confidence rather than failing the call
+          <span class="bul">•</span> Delta shown at inspection once condition is captured.
+        </p>
+      </div>
+
+      <!-- DIS-101 -->
+      <div class="ticket compact">
+        <div class="ticket-head">
+          <span class="ticket-id">DIS-101</span>
+          <span class="ticket-title">Capture condition at the warehouse &amp; trigger the final call</span>
+          <span class="ticket-tags">
+            <span class="ticket-tag pri-high">High</span>
+            <span class="ticket-tag est">3 pt</span>
+            <span class="ticket-tag">frontend</span>
+          </span>
+        </div>
+        <div class="ticket-story-inline">
+          <em>As a</em> worker at the inspection station, <em>I want</em> to scan, grade,
+          and see the routing recommendation on the same screen, <em>so that</em> I never
+          re-enter anything between inspection and decision.
+        </div>
+        <p class="ac-inline">
+          <span class="ticket-ac-head">AC:</span>
+          <span class="bul">•</span> Confirming a condition grade fires the final recommendation call
+          <span class="bul">•</span> Photo attach is optional and async — never blocks the recommendation
+          <span class="bul">•</span> Failed scan falls back to typed item ID with confirm dialog
+          <span class="bul">•</span> Walk-ins with no online return still work.
+        </p>
+      </div>
+
+      <!-- DIS-102 -->
+      <div class="ticket compact">
+        <div class="ticket-head">
+          <span class="ticket-id">DIS-102</span>
+          <span class="ticket-title">Live-data service · per-channel price, capacity, cost, demand</span>
+          <span class="ticket-tags">
+            <span class="ticket-tag pri-urgent">Urgent</span>
+            <span class="ticket-tag est">5 pt</span>
+            <span class="ticket-tag">backend · integration</span>
+          </span>
+        </div>
+        <div class="ticket-story-inline">
+          <em>As a</em> worker relying on the recommendation, <em>I want</em> every call to
+          reflect the last 15 minutes of channel prices, capacity, and demand, <em>so
+          that</em> the tool never routes toward a full or stale-priced channel.
+        </div>
+        <p class="ac-inline">
+          <span class="ticket-ac-head">AC:</span>
+          <span class="bul">•</span> Bundle returns &lt; 200 ms p95, &lt; 500 ms p99
+          <span class="bul">•</span> Missing pieces surfaced so the model can lower confidence rather than error
+          <span class="bul">•</span> Demand data &lt; 15 min old; older is flagged
+          <span class="bul">•</span> Bundle shape versioned; breaking changes fail the build.
+        </p>
+      </div>
+
+      <!-- DIS-103 featured -->
+      <div class="ticket compact featured">
+        <div class="ticket-head">
+          <span class="ticket-id">DIS-103</span>
+          <span class="ticket-title">Generate the ranked recommendation with plain-English reason &amp; confidence</span>
+          <span class="ticket-tags">
+            <span class="ticket-tag pri-urgent">Urgent</span>
+            <span class="ticket-tag est">8 pt</span>
+            <span class="ticket-tag core">★ MVP core</span>
+          </span>
+        </div>
+        <div class="ticket-story-inline">
+          <em>As a</em> worker at the moment of decision, <em>I want</em> the top
+          recommendation on-screen within 400 ms of scanning with a reason I can trust,
+          <em>so that</em> I confirm the call in flow instead of falling back to gut feel.
+        </div>
+        <p class="ac-inline">
+          <span class="ticket-ac-head">AC:</span>
+          <span class="bul">•</span> Ranked list of all 6 channels with reason, confidence, $ estimate; alternates pre-fetched for one-tap override
+          <span class="bul">•</span> Top rec renders in &lt; 400 ms p95
+          <span class="bul">•</span> Below 60% confidence, amber "ask a person" state with alternates expanded
+          <span class="bul">•</span> Reason names ≥ 2 data points in plain English.
+        </p>
+      </div>
+
+      <!-- DIS-104 -->
+      <div class="ticket compact">
+        <div class="ticket-head">
+          <span class="ticket-id">DIS-104</span>
+          <span class="ticket-title">Confirm or override with a reason we can learn from</span>
+          <span class="ticket-tags">
+            <span class="ticket-tag pri-high">High</span>
+            <span class="ticket-tag est">3 pt</span>
+            <span class="ticket-tag">frontend · feedback-loop</span>
+          </span>
+        </div>
+        <div class="ticket-story-inline">
+          <em>As a</em> worker who knows this item better than the model does, <em>I want</em>
+          to confirm with one tap or pick a different option and briefly say why, <em>so
+          that</em> my expertise trains the next version without adding paperwork.
+        </div>
+        <p class="ac-inline">
+          <span class="ticket-ac-head">AC:</span>
+          <span class="bul">•</span> Top recommendation confirms with one tap or Enter
+          <span class="bul">•</span> Overrides require selecting a reason (fixed list of 7)
+          <span class="bul">•</span> Both original rec and new choice logged with the data snapshot
+          <span class="bul">•</span> Reasons config-driven — a warehouse can add one without a deploy.
+        </p>
+      </div>
+
+      <!-- DIS-105 -->
+      <div class="ticket compact">
+        <div class="ticket-head">
+          <span class="ticket-id">DIS-105</span>
+          <span class="ticket-title">Persist every decision with its input snapshot</span>
+          <span class="ticket-tags">
+            <span class="ticket-tag pri-medium">Medium</span>
+            <span class="ticket-tag est">3 pt</span>
+            <span class="ticket-tag">backend · analytics</span>
+          </span>
+        </div>
+        <div class="ticket-story-inline">
+          <em>As a</em> returns lead reviewing performance weekly, <em>I want</em> every
+          decision — recommended, confirmed, overridden — in analytics within 24 h, <em>so
+          that</em> reviews and retrains run on trustworthy data from day one.
+        </div>
+        <p class="ac-inline">
+          <span class="ticket-ac-head">AC:</span>
+          <span class="bul">•</span> Each decision stored with rec, confirmed action, reason, and input snapshot
+          <span class="bul">•</span> Lands in the analytics warehouse within 24 h
+          <span class="bul">•</span> Breakdown by warehouse, category, condition, override reason from day one
+          <span class="bul">•</span> Schema versioned; breaking changes fail downstream builds.
+        </p>
+      </div>
+      <div class="flex-spacer"></div>
+    </section>
+  </body>
+</html>
