@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowLeft, LogOut, Target } from "lucide-react";
+import { ArrowLeft, ChevronDown, LogOut, Target } from "lucide-react";
 import WorkoutsGate from "@/components/workouts/WorkoutsGate";
 import DayCard from "@/components/workouts/DayCard";
 import {
@@ -13,6 +13,8 @@ import { weeks, paceReference, goals, principles } from "@/lib/workouts";
 import posthog from "@/lib/posthog";
 
 const LAST_WEEK_KEY = "workouts:lastWeek:v1";
+const COMPLETED_KEY = "workouts:completed:v1";
+const GOALS_OPEN_KEY = "workouts:goalsOpen:v1";
 const BLOCK_YEAR = 2026;
 
 // Map "Aug 4" style date strings to actual Date objects (assumes BLOCK_YEAR).
@@ -60,6 +62,22 @@ export default function Workouts() {
     return detectCurrentWeek();
   });
 
+  const [completed, setCompleted] = useState<Set<string>>(() => {
+    if (typeof window === "undefined") return new Set();
+    try {
+      const raw = window.localStorage.getItem(COMPLETED_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return new Set(Array.isArray(parsed) ? parsed : []);
+    } catch {
+      return new Set();
+    }
+  });
+
+  const [goalsOpen, setGoalsOpen] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return window.localStorage.getItem(GOALS_OPEN_KEY) === "1";
+  });
+
   useEffect(() => {
     document.title = "Josh Tillson – Training";
     const prevBg = document.body.style.background;
@@ -75,6 +93,10 @@ export default function Workouts() {
     }
   }, [selected, authed]);
 
+  useEffect(() => {
+    window.localStorage.setItem(GOALS_OPEN_KEY, goalsOpen ? "1" : "0");
+  }, [goalsOpen]);
+
   const handleAuthenticated = useCallback(() => {
     persistAuth();
     setAuthed(true);
@@ -87,9 +109,31 @@ export default function Workouts() {
     setAuthed(false);
   }, []);
 
+  const toggleCompleted = useCallback((date: string) => {
+    setCompleted((prev) => {
+      const next = new Set(prev);
+      if (next.has(date)) next.delete(date);
+      else next.add(date);
+      window.localStorage.setItem(COMPLETED_KEY, JSON.stringify([...next]));
+      return next;
+    });
+  }, []);
+
   const currentWeekIdx = useMemo(() => detectCurrentWeek(), []);
   const today = useMemo(() => todayLabel(), []);
   const week = weeks[selected];
+
+  const todayRef = useRef<HTMLDivElement | null>(null);
+  const scrolledToTodayRef = useRef(false);
+
+  useEffect(() => {
+    if (!authed) return;
+    if (scrolledToTodayRef.current) return;
+    if (selected !== currentWeekIdx) return;
+    if (!todayRef.current) return;
+    todayRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    scrolledToTodayRef.current = true;
+  }, [authed, selected, currentWeekIdx]);
 
   if (!authed) {
     return <WorkoutsGate onAuthenticated={handleAuthenticated} />;
@@ -123,39 +167,59 @@ export default function Workouts() {
           </button>
         </div>
 
-        {/* Goals strip */}
+        {/* Goals strip (collapsible) */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="mb-10 rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.04] to-transparent p-5 sm:p-6"
+          className="mb-8 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.04] to-transparent"
         >
-          <div className="flex items-center gap-2 mb-4">
-            <Target size={13} className="text-red-400" />
-            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-white/50 font-mono">
-              December Goals
-            </p>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-3">
-            <div>
-              <p className="text-[10px] uppercase tracking-widest text-white/40 font-mono mb-1">
-                Hyrox
+          <button
+            type="button"
+            onClick={() => setGoalsOpen((v) => !v)}
+            aria-expanded={goalsOpen}
+            className="flex w-full items-center justify-between gap-3 px-5 py-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white/20 sm:px-6"
+          >
+            <div className="flex min-w-0 items-center gap-3">
+              <Target size={13} className="shrink-0 text-red-400" />
+              <p className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/50 font-mono">
+                December Goals
               </p>
-              <p className="text-base font-medium">{goals.hyrox}</p>
+              {!goalsOpen ? (
+                <p className="hidden truncate text-xs text-white/60 sm:block">
+                  Sub-60 Hyrox · 1:18 Half
+                </p>
+              ) : null}
             </div>
-            <div>
-              <p className="text-[10px] uppercase tracking-widest text-white/40 font-mono mb-1">
-                Half Marathon
-              </p>
-              <p className="text-base font-medium">{goals.half}</p>
+            <ChevronDown
+              size={14}
+              className={`shrink-0 text-white/40 transition-transform duration-200 ${goalsOpen ? "rotate-180" : ""}`}
+            />
+          </button>
+          {goalsOpen ? (
+            <div className="px-5 pb-5 sm:px-6 sm:pb-6">
+              <div className="grid gap-4 sm:grid-cols-3">
+                <div>
+                  <p className="text-[10px] uppercase tracking-widest text-white/40 font-mono mb-1">
+                    Hyrox
+                  </p>
+                  <p className="text-base font-medium">{goals.hyrox}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase tracking-widest text-white/40 font-mono mb-1">
+                    Half Marathon
+                  </p>
+                  <p className="text-base font-medium">{goals.half}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase tracking-widest text-white/40 font-mono mb-1">
+                    This Block
+                  </p>
+                  <p className="text-sm text-white/70 leading-snug">{goals.block}</p>
+                </div>
+              </div>
             </div>
-            <div>
-              <p className="text-[10px] uppercase tracking-widest text-white/40 font-mono mb-1">
-                This Block
-              </p>
-              <p className="text-sm text-white/70 leading-snug">{goals.block}</p>
-            </div>
-          </div>
+          ) : null}
         </motion.div>
 
         {/* Week tabs */}
@@ -219,9 +283,19 @@ export default function Workouts() {
 
         {/* Days */}
         <div className="space-y-4">
-          {week.days.map((day) => (
-            <DayCard key={day.day} day={day} isToday={day.date === today && selected === currentWeekIdx} />
-          ))}
+          {week.days.map((day) => {
+            const isToday = day.date === today && selected === currentWeekIdx;
+            return (
+              <div key={day.day} ref={isToday ? todayRef : undefined}>
+                <DayCard
+                  day={day}
+                  isToday={isToday}
+                  completed={completed.has(day.date)}
+                  onToggleComplete={() => toggleCompleted(day.date)}
+                />
+              </div>
+            );
+          })}
         </div>
 
         {/* Pace reference */}

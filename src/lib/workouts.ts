@@ -6,6 +6,12 @@ export interface Exercise {
   notes?: string;
 }
 
+export interface Finisher {
+  label: string;
+  exercises: Exercise[];
+  notes?: string;
+}
+
 export interface Session {
   kind: SessionKind;
   title: string;
@@ -15,6 +21,7 @@ export interface Session {
   rpe?: string;
   intervals?: string;
   exercises?: Exercise[];
+  finisher?: Finisher;
   notes?: string;
 }
 
@@ -50,11 +57,11 @@ export const paceReference = {
 export const goals = {
   hyrox: "Sub-60:00 Pro (early-to-mid December)",
   half: "1:18 half marathon",
-  block: "8-week base + engine build (Aug 4 → Sep 28). Sharpening block follows.",
+  block: "8-week base + engine build (Aug 4 → Sep 28). Ramps to a 60 km peak in Week 7. Sharpening block follows.",
 };
 
 /* -------------------------------------------------------------------------- */
-/* Exercise blocks (reused across weeks)                                      */
+/* Core / accessory blocks                                                    */
 /* -------------------------------------------------------------------------- */
 
 const CORE_A: Exercise[] = [
@@ -81,6 +88,63 @@ const CORE_E: Exercise[] = [
   { name: "Ab wheel rollout", sets: "3 × 8", notes: "Slow eccentric — protect low back" },
   { name: "L-sit hold (bar or parallettes)", sets: "3 × 20s" },
 ];
+
+/* -------------------------------------------------------------------------- */
+/* Hyrox finishers — 4–8 min blocks appended to every lift                    */
+/* -------------------------------------------------------------------------- */
+
+const FIN_PUSH_A: Finisher = {
+  label: "SkiErg engine",
+  exercises: [
+    { name: "SkiErg", sets: "3 × 400m @ RPE 8", notes: "60s rest. Race the last one." },
+  ],
+  notes: "Station #1 on already-taxed shoulders and lats — the highest-transfer finisher for pressing days.",
+};
+
+const FIN_PUSH_B: Finisher = {
+  label: "Wall ball ladder",
+  exercises: [
+    { name: "Wall balls (9kg)", sets: "3 × 20", notes: "60s rest. Full ROM every rep — no cheating depth." },
+  ],
+  notes: "Squat-throw rhythm for station #5 — most people leak 30–60s here on race day.",
+};
+
+const FIN_PULL_A: Finisher = {
+  label: "Sled push burst",
+  exercises: [
+    { name: "Sled push", sets: "4 × 20m (moderate-heavy)", notes: "Walk-back rest (~60s)." },
+  ],
+  notes: "Total-body power on a taxed posterior chain — direct carryover to station #3.",
+};
+
+const FIN_PULL_B: Finisher = {
+  label: "Farmer carry + row",
+  exercises: [
+    { name: "Farmer carry (2 × 24kg)", sets: "3 × 40m", notes: "45s rest. Tall posture, don't lean." },
+    { name: "Row", sets: "1 × 500m easy", notes: "Cool-down piece — station #4 pattern." },
+  ],
+  notes: "Grip + posture endurance for the late-race farmer carry when your hands are gone.",
+};
+
+const FIN_LEGS: Finisher = {
+  label: "Sandbag lunges",
+  exercises: [
+    { name: "Sandbag lunge (20kg)", sets: "3 × 20m", notes: "Brace hard on every step. 60s rest." },
+  ],
+  notes: "Station #8 in a controlled setting — the most brutal transfer after front squats.",
+};
+
+const FIN_DELOAD: Finisher = {
+  label: "Light SkiErg",
+  exercises: [
+    { name: "SkiErg", sets: "2 × 300m @ RPE 6", notes: "Movement quality only." },
+  ],
+  notes: "Keep the pattern alive without loading the deload week.",
+};
+
+/* -------------------------------------------------------------------------- */
+/* Lift day blocks                                                            */
+/* -------------------------------------------------------------------------- */
 
 const PUSH_A: Exercise[] = [
   { name: "Bench press", sets: "4 × 6 @ RPE 7" },
@@ -122,8 +186,8 @@ const LEGS: Exercise[] = [
   { name: "Front squat", sets: "4 × 5 @ RPE 7", notes: "Front > back squat given lower-back caution" },
   { name: "Bulgarian split squat", sets: "3 × 8 / leg" },
   { name: "Nordic curl (or seated leg curl)", sets: "3 × 8" },
-  { name: "Standing calf raise", sets: "3 × 15", notes: "Build slowly — shin splints watch" },
-  { name: "Tibialis raise", sets: "2 × 20", notes: "Direct shin-splint prehab" },
+  { name: "Standing calf raise", sets: "3 × 15" },
+  { name: "Tibialis raise", sets: "2 × 20", notes: "Insurance for the shins — daily habit" },
   ...CORE_B,
 ];
 
@@ -133,7 +197,7 @@ const HYROX_STATIONS: Exercise[] = [
   { name: "Sled pull (rope or harness)", sets: "4 × 25m" },
   { name: "Farmer carry (2 × 24kg)", sets: "4 × 50m" },
   { name: "Wall balls (9kg)", sets: "3 × 30" },
-  { name: "Sandbag lunges (20kg)", sets: "3 × 20m", notes: "Careful with back — brace hard" },
+  { name: "Sandbag lunges (20kg)", sets: "3 × 20m", notes: "Brace hard on every step" },
 ];
 
 const HYROX_SIM_SHORT: Exercise[] = [
@@ -172,13 +236,22 @@ const DELOAD_LEGS: Exercise[] = [
 /* Session helpers                                                            */
 /* -------------------------------------------------------------------------- */
 
-const easyRun = (km: number): Session => ({
+const easyRun = (km: number, notes?: string): Session => ({
   kind: "run",
   title: "Easy Z2 run",
   distance: `${km} km`,
   zone: paceReference.easyZ2,
   duration: `${Math.round(km * 5.5)} min`,
-  notes: "Nose-breathing pace. If you can't hold a conversation, slow down.",
+  notes: notes ?? "Nose-breathing pace. Conversational or slower — this is not where fitness is built, it's where it's absorbed.",
+});
+
+const stridesRun = (km: number, strides = 4): Session => ({
+  kind: "run",
+  title: `Easy Z2 + ${strides} strides`,
+  distance: `${km} km`,
+  zone: paceReference.easyZ2,
+  duration: `${Math.round(km * 5.5)} min`,
+  notes: `Easy pace, then ${strides} × 20s strides on grass or track — build to ~5k pace, full walk recovery. Wakes up leg speed without loading the shins.`,
 });
 
 const shakeoutRun = (km: number): Session => ({
@@ -195,7 +268,7 @@ const recoveryCardio = (mins: number): Session => ({
   title: "Recovery cardio",
   duration: `${mins} min`,
   zone: "Z1 (very easy)",
-  notes: "Bike, ski erg, or easy walk. Should feel restorative, not depleting. Add 10 min mobility after.",
+  notes: "Bike, ski erg, or easy walk. Restorative, not depleting. Add 10 min mobility after.",
 });
 
 const ergIntervals = (label: string, intervals: string, notes?: string): Session => ({
@@ -203,27 +276,33 @@ const ergIntervals = (label: string, intervals: string, notes?: string): Session
   title: label,
   duration: "40–50 min",
   intervals,
-  notes: notes ?? "Sub for run intensity — protects shins while training the engine. Rower, ski erg, or bike — rotate weekly.",
+  notes: notes ?? "Engine work — pairs with the run intensity on Tue/Thu, doesn't replace it. Ski erg preferred for hyrox carryover; rotate row/bike weekly.",
 });
 
-const liftSession = (title: string, exercises: Exercise[], duration = "60 min"): Session => ({
+const liftSession = (
+  title: string,
+  exercises: Exercise[],
+  opts?: { duration?: string; finisher?: Finisher },
+): Session => ({
   kind: "lift",
   title,
-  duration,
+  duration: opts?.duration ?? "60 min",
   exercises,
+  finisher: opts?.finisher,
 });
 
-const hyroxSession = (title: string, duration: string, exercises: Exercise[], notes?: string): Session => ({
+const hyroxSession = (
+  title: string,
+  duration: string,
+  exercises: Exercise[],
+  notes?: string,
+): Session => ({
   kind: "hyrox",
   title,
   duration,
   exercises,
   notes,
 });
-
-/* -------------------------------------------------------------------------- */
-/* Weekly template (weeks 2–3, then variants)                                 */
-/* -------------------------------------------------------------------------- */
 
 const longRun = (km: number, addStations = true): Session => ({
   kind: "run",
@@ -232,9 +311,56 @@ const longRun = (km: number, addStations = true): Session => ({
   zone: paceReference.easyZ2,
   duration: `${Math.round(km * 5.5)} min + ${addStations ? "25–30" : "10"} min stations/mobility`,
   notes: addStations
-    ? "Long run FIRST (fresh legs, aerobic focus). Fuel with 30g carbs/hr after 60 min. Take a snack + 10 min break, then hit 25–30 min of stations at moderate effort — deliberately practicing hyrox work on tired legs."
+    ? "Long run FIRST (fresh legs, aerobic focus). Fuel with 30g carbs/hr after 60 min. Take a snack + 10 min break, then hit 25–30 min of stations at moderate effort — hyrox work on tired legs."
     : "Just the long run today. Cool down + full mobility routine.",
 });
+
+/* -------------------------------------------------------------------------- */
+/* Run quality helpers                                                        */
+/* -------------------------------------------------------------------------- */
+
+const tempoRun = (
+  totalKm: number,
+  blockKm: number,
+  wuKm = 2,
+  cdKm = 2,
+  notes?: string,
+): Session => ({
+  kind: "run",
+  title: "Tempo run",
+  distance: `${totalKm} km`,
+  intervals: `${wuKm} km WU · ${blockKm} km @ threshold · ${cdKm} km CD`,
+  zone: paceReference.threshold,
+  duration: `${Math.round(totalKm * 5)} min`,
+  notes:
+    notes ??
+    "Comfortably hard — 3 words at a time. Run it on grass, dirt, or track where you can; keep the pounding down while the legs re-adapt to intensity.",
+});
+
+const kmRepeats = (
+  reps: number,
+  targetPace: "threshold" | "vo2" = "threshold",
+  notes?: string,
+): Session => {
+  const workKm = reps;
+  const jogKm = Math.round(0.4 * (reps - 1) * 10) / 10;
+  const wuCd = 4;
+  const total = Math.round(workKm + jogKm + wuCd);
+  const paceLabel = targetPace === "threshold" ? paceReference.threshold : paceReference.vo2;
+  const paceTarget = targetPace === "threshold" ? "~4:20/km" : "~3:55/km";
+  const paceName = targetPace === "threshold" ? "threshold" : "5k pace";
+  return {
+    kind: "run",
+    title: `${reps} × 1 km repeats`,
+    distance: `~${total} km`,
+    intervals: `2 km WU · ${reps} × 1000 m @ ${paceName} / 400 m jog · 2 km CD`,
+    zone: paceLabel,
+    duration: `${Math.round(total * 5)} min`,
+    notes:
+      notes ??
+      `Even splits — target ${paceTarget}. Track or grass loop if you can find one. If anything sharp shows up in the shin during warm-up, abort and swap to ski erg intervals for the same time.`,
+  };
+};
 
 /* -------------------------------------------------------------------------- */
 /* Weeks                                                                       */
@@ -245,10 +371,10 @@ export const weeks: Week[] = [
   {
     number: 1,
     dateRange: "Aug 4 – Aug 10",
-    mileage: "30 km",
-    focus: "Foundation · protect shins · all run intensity on erg",
+    mileage: "32 km",
+    focus: "Foundation · lift + engine rotation locks in",
     notes:
-      "Partial week (no Monday). All running Z2 only. Intensity comes from the erg session on Wed — this is deliberate: your shins get to adapt to volume without the pounding of speed. Ease into lifting loads.",
+      "Partial week (no Monday). Runs stay Z2 while the body remembers what daily work feels like. First hyrox finishers attached to each lift — small dose, disproportionate transfer. Thursday adds strides on grass to wake up leg speed without loading intensity.",
     days: [
       {
         day: "Mon",
@@ -260,39 +386,39 @@ export const weeks: Week[] = [
         day: "Tue",
         date: "Aug 4",
         focus: "AM Pull · PM Easy Z2",
-        am: liftSession("Pull A", PULL_A),
+        am: liftSession("Pull A", PULL_A, { finisher: FIN_PULL_A }),
         pm: easyRun(6),
       },
       {
         day: "Wed",
         date: "Aug 5",
         focus: "AM Legs · PM Erg engine",
-        am: liftSession("Legs + Core", LEGS),
+        am: liftSession("Legs + Core", LEGS, { finisher: FIN_LEGS }),
         pm: ergIntervals(
           "Erg intervals (ski or row)",
           "10 min WU · 6 × 3 min @ RPE 8 / 90s easy · 10 min CD",
-          "This is your first quality piece. Ski erg preferred (hyrox carryover). Pull hard but controlled."
+          "First quality piece. Ski erg preferred (hyrox carryover). Pull hard but controlled.",
         ),
       },
       {
         day: "Thu",
         date: "Aug 6",
-        focus: "AM Push · PM Easy Z2",
-        am: liftSession("Push A", PUSH_A),
-        pm: easyRun(6),
+        focus: "AM Push · PM Easy + strides",
+        am: liftSession("Push A", PUSH_A, { finisher: FIN_PUSH_A }),
+        pm: stridesRun(6, 4),
       },
       {
         day: "Fri",
         date: "Aug 7",
         focus: "AM Pull · PM Shakeout",
-        am: liftSession("Pull B", PULL_B),
+        am: liftSession("Pull B", PULL_B, { finisher: FIN_PULL_B }),
         pm: shakeoutRun(5),
       },
       {
         day: "Sat",
         date: "Aug 8",
         focus: "Long run + stations (anchor session)",
-        am: longRun(13),
+        am: longRun(15),
       },
       {
         day: "Sun",
@@ -307,55 +433,61 @@ export const weeks: Week[] = [
   {
     number: 2,
     dateRange: "Aug 11 – Aug 17",
-    mileage: "34 km",
-    focus: "Base building · Push/Pull/Legs rotation locked in",
+    mileage: "38 km",
+    focus: "Base building · first tempo on the road",
     notes:
-      "First full week. Same structure as Week 1 with an added Monday session. Runs stay Z2 — resist the urge to push. Add 5 kg to your main lifts vs last week if RPE was ≤ 7.",
+      "First full week. Tuesday PM introduces a short tempo — 3 km continuous at threshold. Keep it on grass or track if the option exists; road is fine if not. Add ~5 kg to your main lifts vs Week 1 if RPE was ≤ 7. Hyrox finishers stay after every lift.",
     days: [
       {
         day: "Mon",
         date: "Aug 11",
         focus: "AM Push · PM Easy Z2",
-        am: liftSession("Push A", PUSH_A),
+        am: liftSession("Push A", PUSH_A, { finisher: FIN_PUSH_A }),
         pm: easyRun(5),
       },
       {
         day: "Tue",
         date: "Aug 12",
-        focus: "AM Pull · PM Easy Z2",
-        am: liftSession("Pull A", PULL_A),
-        pm: easyRun(6),
+        focus: "AM Pull · PM TEMPO (short)",
+        am: liftSession("Pull A", PULL_A, { finisher: FIN_PULL_A }),
+        pm: tempoRun(
+          6,
+          3,
+          1,
+          2,
+          "First tempo of the block — 3 km at ~4:20/km. Should feel controlled, not race effort. Grass, track, or dirt if you can pick it.",
+        ),
       },
       {
         day: "Wed",
         date: "Aug 13",
         focus: "AM Legs · PM Erg engine",
-        am: liftSession("Legs + Core", LEGS),
+        am: liftSession("Legs + Core", LEGS, { finisher: FIN_LEGS }),
         pm: ergIntervals(
           "Bike intervals",
           "10 min WU · 5 × 4 min @ RPE 8 / 2 min easy · 10 min CD",
-          "Longer intervals this week. Assault bike or road bike trainer — cadence 85+."
+          "Longer intervals this week. Assault bike or road trainer — cadence 85+.",
         ),
       },
       {
         day: "Thu",
         date: "Aug 14",
         focus: "AM Push · PM Easy Z2",
-        am: liftSession("Push B", PUSH_B, "45 min"),
-        pm: easyRun(5),
+        am: liftSession("Push B", PUSH_B, { duration: "45 min", finisher: FIN_PUSH_B }),
+        pm: easyRun(6),
       },
       {
         day: "Fri",
         date: "Aug 15",
         focus: "AM Pull · PM Shakeout",
-        am: liftSession("Pull B", PULL_B),
+        am: liftSession("Pull B", PULL_B, { finisher: FIN_PULL_B }),
         pm: shakeoutRun(4),
       },
       {
         day: "Sat",
         date: "Aug 16",
         focus: "Long run + stations",
-        am: longRun(14),
+        am: longRun(17),
       },
       {
         day: "Sun",
@@ -370,55 +502,59 @@ export const weeks: Week[] = [
   {
     number: 3,
     dateRange: "Aug 18 – Aug 24",
-    mileage: "38 km",
-    focus: "Volume build · last week before deload",
+    mileage: "44 km",
+    focus: "Volume build · first km repeats · last week before deload",
     notes:
-      "Peak volume of the first sub-block. Shins will feel it — do 10 min of calf/soleus + tib work every evening. If pain moves from 'awareness' to sharp/localized, cut Friday's shakeout and swap Saturday stations for full rest.",
+      "Peak of the first sub-block. Tuesday steps up to 4 × 1 km repeats at threshold — the first true 'workout' pace on foot. Do them on grass or a track if possible. Add tib raises + calf/soleus work in the evenings; this is where the extra volume is most felt.",
     days: [
       {
         day: "Mon",
         date: "Aug 18",
         focus: "AM Push · PM Easy Z2",
-        am: liftSession("Push A", PUSH_A),
+        am: liftSession("Push A", PUSH_A, { finisher: FIN_PUSH_A }),
         pm: easyRun(6),
       },
       {
         day: "Tue",
         date: "Aug 19",
-        focus: "AM Pull · PM Easy Z2",
-        am: liftSession("Pull A", PULL_A),
-        pm: easyRun(6),
+        focus: "AM Pull · PM KM REPEATS",
+        am: liftSession("Pull A", PULL_A, { finisher: FIN_PULL_A }),
+        pm: kmRepeats(
+          4,
+          "threshold",
+          "4 × 1 km at threshold (~4:20/km) with 400 m jog rest. Even splits — this is the workout that reintroduces run intensity. Soft surface if you can, road if not.",
+        ),
       },
       {
         day: "Wed",
         date: "Aug 20",
         focus: "AM Legs · PM Ski erg pyramid",
-        am: liftSession("Legs + Core", LEGS),
+        am: liftSession("Legs + Core", LEGS, { finisher: FIN_LEGS }),
         pm: ergIntervals(
           "Ski erg pyramid",
           "10 min WU · 200/400/600/800/600/400/200 m @ RPE 8 · equal rest · 10 min CD",
-          "Ski erg specifically — this maps directly to hyrox station #1. Grip and pace like race day."
+          "Ski erg specifically — maps directly to hyrox station #1. Grip and pace like race day.",
         ),
       },
       {
         day: "Thu",
         date: "Aug 21",
         focus: "AM Push · PM Easy Z2",
-        am: liftSession("Push B", PUSH_B, "45 min"),
+        am: liftSession("Push B", PUSH_B, { duration: "45 min", finisher: FIN_PUSH_B }),
         pm: easyRun(6),
       },
       {
         day: "Fri",
         date: "Aug 22",
         focus: "AM Pull · PM Shakeout",
-        am: liftSession("Pull B", PULL_B),
+        am: liftSession("Pull B", PULL_B, { finisher: FIN_PULL_B }),
         pm: shakeoutRun(4),
       },
       {
         day: "Sat",
         date: "Aug 23",
         focus: "Long run + stations",
-        am: longRun(16),
+        am: longRun(20),
       },
       {
         day: "Sun",
@@ -433,37 +569,37 @@ export const weeks: Week[] = [
   {
     number: 4,
     dateRange: "Aug 25 – Aug 31",
-    mileage: "32 km",
-    focus: "DELOAD · shin reset · lifts drop to RPE 6",
+    mileage: "36 km",
+    focus: "DELOAD · reset · lifts drop to RPE 6",
     notes:
-      "Planned deload. Reduce all lift loads by ~15% or drop to RPE 6. Runs stay short and easy. Purpose is to let connective tissue catch up so weeks 5–8 can push harder. Don't skip the deload just because you feel good.",
+      "Planned deload. Reduce all lift loads ~15% or drop to RPE 6. Finishers stay in but go light (one set). Runs stay short and easy. Purpose is to let connective tissue catch up so Weeks 5–8 can push. Don't skip the deload because you feel good — that's exactly when it does its job.",
     days: [
       {
         day: "Mon",
         date: "Aug 25",
         focus: "AM Push (deload) · PM Easy Z2",
-        am: liftSession("Push (deload)", DELOAD_PUSH, "45 min"),
+        am: liftSession("Push (deload)", DELOAD_PUSH, { duration: "45 min", finisher: FIN_DELOAD }),
         pm: easyRun(5),
       },
       {
         day: "Tue",
         date: "Aug 26",
         focus: "AM Pull (deload) · PM Easy Z2",
-        am: liftSession("Pull (deload)", DELOAD_PULL, "45 min"),
+        am: liftSession("Pull (deload)", DELOAD_PULL, { duration: "45 min", finisher: FIN_DELOAD }),
         pm: easyRun(5),
       },
       {
         day: "Wed",
         date: "Aug 27",
         focus: "AM Legs (deload) · PM Easy bike",
-        am: liftSession("Legs (deload)", DELOAD_LEGS, "45 min"),
+        am: liftSession("Legs (deload)", DELOAD_LEGS, { duration: "45 min", finisher: FIN_DELOAD }),
         pm: recoveryCardio(40),
       },
       {
         day: "Thu",
         date: "Aug 28",
         focus: "AM Push (deload) · PM Easy Z2",
-        am: liftSession("Push (deload)", DELOAD_PUSH, "45 min"),
+        am: liftSession("Push (deload)", DELOAD_PUSH, { duration: "45 min", finisher: FIN_DELOAD }),
         pm: easyRun(5),
       },
       {
@@ -482,7 +618,7 @@ export const weeks: Week[] = [
         day: "Sat",
         date: "Aug 30",
         focus: "Moderate long run (no stations)",
-        am: longRun(14, false),
+        am: longRun(18, false),
       },
       {
         day: "Sun",
@@ -497,62 +633,61 @@ export const weeks: Week[] = [
   {
     number: 5,
     dateRange: "Sep 1 – Sep 7",
-    mileage: "40 km",
-    focus: "Reintroduce run quality · first tempo",
+    mileage: "48 km",
+    focus: "Post-deload push · continuous tempo",
     notes:
-      "Shins should have adapted. This week you get the first tempo run — on grass or track if possible to keep it soft. If any sharp shin pain returns during warm-up, abort and do the session on the erg instead. Lifts back to RPE 7.",
+      "Loads back to RPE 7. Tuesday tempo stretches to 5 km continuous at threshold — the half-marathon pace piece. Saturday long climbs to 22 km. If both quality days feel too much in the same week, keep Tuesday and downgrade Saturday's stations rather than dropping the run.",
     days: [
       {
         day: "Mon",
         date: "Sep 1",
         focus: "AM Push · PM Easy Z2",
-        am: liftSession("Push A", PUSH_A),
+        am: liftSession("Push A", PUSH_A, { finisher: FIN_PUSH_A }),
         pm: easyRun(5),
       },
       {
         day: "Tue",
         date: "Sep 2",
-        focus: "AM Pull · PM TEMPO",
-        am: liftSession("Pull A", PULL_A),
-        pm: {
-          kind: "run",
-          title: "Tempo run",
-          distance: "8 km",
-          intervals: "2 km WU · 4 km @ threshold · 2 km CD",
-          zone: paceReference.threshold,
-          notes: "First run-based quality piece. Target ~4:20/km on the 4 km block. Should feel 'comfortably hard' — you could speak 3 words at a time.",
-        },
+        focus: "AM Pull · PM TEMPO (5k)",
+        am: liftSession("Pull A", PULL_A, { finisher: FIN_PULL_A }),
+        pm: tempoRun(
+          9,
+          5,
+          2,
+          2,
+          "5 km continuous at threshold (~4:20/km). Money workout for the 1:18 half — practice the patience. Grass or track ideal, road fine if not.",
+        ),
       },
       {
         day: "Wed",
         date: "Sep 3",
         focus: "AM Legs · PM Cross-training",
-        am: liftSession("Legs + Core", LEGS),
+        am: liftSession("Legs + Core", LEGS, { finisher: FIN_LEGS }),
         pm: ergIntervals(
           "Mixed cardio",
           "45 min: 15 min bike + 15 min ski erg + 15 min row · all Z2/Z3",
-          "Aerobic maintenance — no impact. Recovery from Tuesday tempo."
+          "Aerobic maintenance — recovery from Tuesday tempo. No impact.",
         ),
       },
       {
         day: "Thu",
         date: "Sep 4",
         focus: "AM Push · PM Easy Z2",
-        am: liftSession("Push B", PUSH_B, "45 min"),
-        pm: easyRun(6),
+        am: liftSession("Push B", PUSH_B, { duration: "45 min", finisher: FIN_PUSH_B }),
+        pm: easyRun(7),
       },
       {
         day: "Fri",
         date: "Sep 5",
         focus: "AM Pull · PM Shakeout",
-        am: liftSession("Pull B", PULL_B),
-        pm: shakeoutRun(4),
+        am: liftSession("Pull B", PULL_B, { finisher: FIN_PULL_B }),
+        pm: shakeoutRun(5),
       },
       {
         day: "Sat",
         date: "Sep 6",
         focus: "Long run + stations",
-        am: longRun(17),
+        am: longRun(22),
       },
       {
         day: "Sun",
@@ -567,62 +702,64 @@ export const weeks: Week[] = [
   {
     number: 6,
     dateRange: "Sep 8 – Sep 14",
-    mileage: "45 km",
-    focus: "First intervals · hyrox specificity ramps",
+    mileage: "54 km",
+    focus: "VO2 800s · hyrox specificity ramps",
     notes:
-      "First true VO2 session — 800s at 5k pace. This is the pace you'll need for half marathon negative splits and the running legs of hyrox. Saturday's station work bumps to 30 min compromised.",
+      "First true VO2 session — 800s at 5k pace. This is the pace you need for hyrox running legs and negative-splitting the half. Track or flat road only. Saturday's long climbs to 25 km with 30 min of compromised stations to close.",
     days: [
       {
         day: "Mon",
         date: "Sep 8",
         focus: "AM Push · PM Easy Z2",
-        am: liftSession("Push A", PUSH_A),
+        am: liftSession("Push A", PUSH_A, { finisher: FIN_PUSH_A }),
         pm: easyRun(6),
       },
       {
         day: "Tue",
         date: "Sep 9",
-        focus: "AM Pull · PM INTERVALS",
-        am: liftSession("Pull A", PULL_A),
+        focus: "AM Pull · PM VO2 800s",
+        am: liftSession("Pull A", PULL_A, { finisher: FIN_PULL_A }),
         pm: {
           kind: "run",
           title: "VO2 intervals",
           distance: "10 km",
           intervals: "2 km WU · 6 × 800 m @ 5k pace / 400 m jog · 2 km CD",
           zone: paceReference.vo2,
-          notes: "Target ~3:55/km on the reps. This is HARD. Consistent splits > blowing out the first rep. Track or flat road only.",
+          duration: "55 min",
+          notes:
+            "Target ~3:55/km on the reps. Consistent splits beat blowing out the first rep. Track or grass — hard surface only if there's no other option.",
         },
       },
       {
         day: "Wed",
         date: "Sep 10",
         focus: "AM Legs · PM Erg engine",
-        am: liftSession("Legs + Core", LEGS),
+        am: liftSession("Legs + Core", LEGS, { finisher: FIN_LEGS }),
         pm: ergIntervals(
           "Ski erg + row combo",
           "10 min WU · 4 × (500 m ski / 500 m row) @ RPE 8 · 2 min rest between rounds · 10 min CD",
-          "Alternates the hyrox stations — teaches transitions."
+          "Alternates two hyrox stations — teaches transitions under fatigue.",
         ),
       },
       {
         day: "Thu",
         date: "Sep 11",
         focus: "AM Push · PM Easy Z2",
-        am: liftSession("Push B", PUSH_B, "45 min"),
-        pm: easyRun(6),
+        am: liftSession("Push B", PUSH_B, { duration: "45 min", finisher: FIN_PUSH_B }),
+        pm: easyRun(8),
       },
       {
         day: "Fri",
         date: "Sep 12",
         focus: "AM Pull · PM Shakeout",
-        am: liftSession("Pull B", PULL_B),
+        am: liftSession("Pull B", PULL_B, { finisher: FIN_PULL_B }),
         pm: shakeoutRun(5),
       },
       {
         day: "Sat",
         date: "Sep 13",
         focus: "Long run + stations",
-        am: longRun(18),
+        am: longRun(25),
       },
       {
         day: "Sun",
@@ -637,65 +774,61 @@ export const weeks: Week[] = [
   {
     number: 7,
     dateRange: "Sep 15 – Sep 21",
-    mileage: "49 km",
-    focus: "Peak volume · two quality run days",
+    mileage: "60 km",
+    focus: "PEAK · 60 km · two run quality days",
     notes:
-      "Biggest week of the block. Two run quality sessions — mind the recovery between them (Wed erg is genuinely easy). If shins flare, keep Tuesday intervals and swap Thursday for compromised erg + stations. Sleep is non-negotiable — 8+ hrs.",
+      "Biggest week of the block — 60 km. Two run quality sessions (5 × 1 km VO2 Tuesday, 2 × 4 km threshold Thursday) with Wednesday sitting fully easy between them. Sleep is non-negotiable — 8+ hrs. If either quality piece feels off in the warm-up, drop reps rather than pace.",
     days: [
       {
         day: "Mon",
         date: "Sep 15",
         focus: "AM Push · PM Easy Z2",
-        am: liftSession("Push A", PUSH_A),
+        am: liftSession("Push A", PUSH_A, { finisher: FIN_PUSH_A }),
         pm: easyRun(6),
       },
       {
         day: "Tue",
         date: "Sep 16",
-        focus: "AM Pull · PM 1k INTERVALS",
-        am: liftSession("Pull A", PULL_A),
-        pm: {
-          kind: "run",
-          title: "VO2 intervals",
-          distance: "10 km",
-          intervals: "2 km WU · 5 × 1000 m @ 5k pace / 400 m jog · 2 km CD",
-          zone: paceReference.vo2,
-          notes: "Same pace as last week's 800s, longer reps. ~3:55/km. Even splits — should feel controlled for reps 1–3, ugly for 4–5.",
-        },
+        focus: "AM Pull · PM VO2 1k repeats",
+        am: liftSession("Pull A", PULL_A, { finisher: FIN_PULL_A }),
+        pm: kmRepeats(
+          5,
+          "vo2",
+          "5 × 1 km at 5k pace (~3:55/km), 400 m jog rest. Same pace as last week's 800s over longer reps. Feels controlled for reps 1–3, ugly on 4–5. Track only.",
+        ),
       },
       {
         day: "Wed",
         date: "Sep 17",
         focus: "AM Legs · PM Easy bike",
-        am: liftSession("Legs + Core", LEGS),
+        am: liftSession("Legs + Core", LEGS, { finisher: FIN_LEGS }),
         pm: recoveryCardio(50),
       },
       {
         day: "Thu",
         date: "Sep 18",
-        focus: "AM Push (lighter) · PM THRESHOLD",
-        am: liftSession("Push B (lighter)", PUSH_B, "40 min"),
-        pm: {
-          kind: "run",
-          title: "Threshold intervals",
-          distance: "10 km",
-          intervals: "2 km WU · 2 × 3 km @ threshold / 3 min jog · 2 km CD",
-          zone: paceReference.threshold,
-          notes: "Half marathon pace effort. This is the money workout for your 1:18 goal. Nail the pace — don't run the first rep faster than the second.",
-        },
+        focus: "AM Push (lighter) · PM THRESHOLD 2×4k",
+        am: liftSession("Push B (lighter)", PUSH_B, { duration: "40 min", finisher: FIN_PUSH_B }),
+        pm: tempoRun(
+          12,
+          8,
+          2,
+          2,
+          "2 × 4 km at threshold (~4:20/km), 3 min jog between. Half-marathon pace piece. Don't run rep 1 faster than rep 2.",
+        ),
       },
       {
         day: "Fri",
         date: "Sep 19",
         focus: "AM Pull · PM Shakeout",
-        am: liftSession("Pull B", PULL_B),
-        pm: shakeoutRun(4),
+        am: liftSession("Pull B", PULL_B, { finisher: FIN_PULL_B }),
+        pm: shakeoutRun(5),
       },
       {
         day: "Sat",
         date: "Sep 20",
         focus: "Peak long run + stations",
-        am: longRun(19),
+        am: longRun(26),
       },
       {
         day: "Sun",
@@ -710,37 +843,36 @@ export const weeks: Week[] = [
   {
     number: 8,
     dateRange: "Sep 22 – Sep 28",
-    mileage: "42 km",
+    mileage: "50 km",
     focus: "Transition · hyrox SIM · fitness check",
     notes:
-      "Volume drops, intensity stays. Wednesday is a hyrox mini-sim to check current fitness against your sub-60 goal. Saturday's long run is easier — you finish this block healthy and ready for the sharpening/peak block that leads into December.",
+      "Volume backs off, intensity stays. Wednesday is a hyrox mini-sim — time it against sub-60. You finish this block healthy, sharp, and ready for the sharpening/peak block leading into December.",
     days: [
       {
         day: "Mon",
         date: "Sep 22",
-        focus: "AM Push (lighter) · PM Easy Z2",
-        am: liftSession("Push A (moderate)", PUSH_A),
+        focus: "AM Push (moderate) · PM Easy Z2",
+        am: liftSession("Push A (moderate)", PUSH_A, { finisher: FIN_PUSH_A }),
         pm: easyRun(6),
       },
       {
         day: "Tue",
         date: "Sep 23",
-        focus: "AM Pull · PM TEMPO",
-        am: liftSession("Pull A", PULL_A),
-        pm: {
-          kind: "run",
-          title: "Extended tempo",
-          distance: "10 km",
-          intervals: "2 km WU · 5 km @ threshold · 3 km CD",
-          zone: paceReference.threshold,
-          notes: "Longer continuous tempo. Target ~4:20/km. Practices race-effort mental patience.",
-        },
+        focus: "AM Pull · PM Extended tempo",
+        am: liftSession("Pull A", PULL_A, { finisher: FIN_PULL_A }),
+        pm: tempoRun(
+          12,
+          6,
+          2,
+          4,
+          "6 km continuous tempo at ~4:20/km. Longer than Week 7 — practise race-effort patience. Grass or dirt if possible.",
+        ),
       },
       {
         day: "Wed",
         date: "Sep 24",
         focus: "AM Legs (lighter) · PM HYROX SIM",
-        am: liftSession("Legs (moderate)", LEGS, "45 min"),
+        am: liftSession("Legs (moderate)", LEGS, { duration: "45 min", finisher: FIN_LEGS }),
         pm: hyroxSession(
           "Hyrox mini-sim",
           "45–55 min",
@@ -755,28 +887,28 @@ export const weeks: Week[] = [
             { name: "Burpee broad jump over", sets: "40 reps" },
             { name: "1 km run", sets: "@ race pace" },
           ],
-          "Half a hyrox. Time it. This is your fitness benchmark going into the sharpening block. Aim for ~28–30 min total."
+          "Half a hyrox. Time it. This is your fitness benchmark going into the sharpening block. Aim for ~28–30 min total.",
         ),
       },
       {
         day: "Thu",
         date: "Sep 25",
         focus: "AM Push · PM Easy Z2",
-        am: liftSession("Push B", PUSH_B, "40 min"),
-        pm: easyRun(6),
+        am: liftSession("Push B", PUSH_B, { duration: "40 min", finisher: FIN_PUSH_B }),
+        pm: easyRun(7),
       },
       {
         day: "Fri",
         date: "Sep 26",
         focus: "AM Pull · PM Shakeout",
-        am: liftSession("Pull B", PULL_B),
-        pm: shakeoutRun(4),
+        am: liftSession("Pull B", PULL_B, { finisher: FIN_PULL_B }),
+        pm: shakeoutRun(5),
       },
       {
         day: "Sat",
         date: "Sep 27",
         focus: "Moderate long run",
-        am: longRun(16),
+        am: longRun(20),
       },
       {
         day: "Sun",
@@ -804,11 +936,15 @@ export const stationReference = {
 export const principles = [
   {
     title: "Lift AM · Run PM",
-    body: "Preserves running quality. Minimum 6 hrs between the two. Eat 40g carbs + 20g protein within 30 min of the lift.",
+    body: "Preserves running quality. Minimum 6 hrs between the two. 40g carbs + 20g protein within 30 min of the lift.",
   },
   {
-    title: "Shin splint protocol",
-    body: "Tib raises + calf/soleus work daily. All run intensity in weeks 1–4 goes on the erg/bike. If sharp localized pain during warm-up → abort run, sub with bike Z2.",
+    title: "Shin care (post-flare, not paranoia)",
+    body: "The flare has cleared and it was a first-time event — treat it as data, not a diagnosis. Keep run intensity in the plan but front-load it on grass, track, or dirt through Week 5. Tib raises + calf/soleus daily as insurance. Only pull back to erg-only if sharp, localized pain returns during a warm-up.",
+  },
+  {
+    title: "Hyrox finishers after every lift",
+    body: "4–8 min at the end of each lift trains a station on already-fatigued muscle. Small dose, high transfer — this is what closes the gap between 'strong' and 'strong at hyrox' without adding another full session.",
   },
   {
     title: "Back protocol",
@@ -816,14 +952,14 @@ export const principles = [
   },
   {
     title: "Recovery discipline",
-    body: "8+ hrs sleep or the plan doesn't work. Sunday is truly easy — Z1 only. If Monday feels heavy, extend the recovery not push through.",
+    body: "8+ hrs sleep or the plan doesn't work. Sunday is truly easy — Z1 only. If Monday feels heavy, extend recovery rather than push through.",
   },
   {
     title: "Fueling on long runs",
-    body: "30g carbs/hr after the first hour. Water + electrolytes always. Underfueling long runs is the #1 way to blunt this block.",
+    body: "30g carbs/hr after the first hour. Water + electrolytes always. Underfueling long runs is the fastest way to blunt this block.",
   },
   {
-    title: "Deload weeks matter",
-    body: "Week 4 deload is not optional. Skipping it is the fastest way to arrive at the sharpening block already fried.",
+    title: "Deload week is not optional",
+    body: "Week 4 lets connective tissue catch up to what muscles and lungs can already do. Skipping it is the fastest path to arriving at the sharpening block already fried.",
   },
 ];
