@@ -8,13 +8,14 @@ const experiences = [
     description:
       "Leading development of an integration interface for a $100B+ mortgage servicer commercializing their loan servicing platform into a multi-tenant SaaS product.",
   },
-  {
-    period: "2026 — Present",
-    role: "Founder",
-    company: "emlyai",
-    description:
-      "Building an AI voice receptionist platform serving 50+ businesses across real estate, home services, and healthcare with 24/7 call handling and CRM integration.",
-  },
+  // Temporarily hidden — re-enable to restore emlyai founder role
+  // {
+  //   period: "2026 — Present",
+  //   role: "Founder",
+  //   company: "emlyai",
+  //   description:
+  //     "Building an AI voice receptionist platform serving 50+ businesses across real estate, home services, and healthcare with 24/7 call handling and CRM integration.",
+  // },
   {
     period: "2024 — 2025",
     role: "Technology Strategy Consultant",

@@ -86,8 +86,9 @@ const About = () => {
             </p>
             <p>
               Now at Caylent, leading an integration platform for a $100B+ mortgage
-              servicer commercializing their loan-servicing software as SaaS. On the
-              side, building{" "}
+              servicer commercializing their loan-servicing software as SaaS.
+              {/* Temporarily hidden — re-enable emlyai mention
+              {" "}On the side, building{" "}
               <a
                 href="https://emlyai.ca"
                 target="_blank"
@@ -98,6 +99,7 @@ const About = () => {
               </a>
               , an AI voice receptionist serving 50+ real estate, home services, and
               healthcare businesses.
+              */}
             </p>
           </div>
         </motion.div>

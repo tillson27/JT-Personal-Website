@@ -76,8 +76,9 @@ const Hero = () => {
             className="text-foreground hover:text-accent transition-colors"
           >
             Caylent
-          </a>{" "}
-          and Founder at{" "}
+          </a>
+          {/* Temporarily hidden — re-enable to restore emlyai founder mention
+          {" "}and Founder at{" "}
           <a
             href="https://emlyai.ca"
             target="_blank"
@@ -86,7 +87,9 @@ const Hero = () => {
           >
             emlyai
           </a>
-          . I help companies build and modernize technology systems, and I'm building AI voice receptionists for service businesses.
+          */}
+          . I help companies build and modernize technology systems.
+          {/* Temporarily hidden — re-enable when emlyai is restored: , and I'm building AI voice receptionists for service businesses */}
         </motion.p>
 
         <motion.div

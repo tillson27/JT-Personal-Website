@@ -3,12 +3,13 @@ import { ArrowUpRight } from "lucide-react";
 import posthog from "@/lib/posthog";
 
 const projects = [
-  {
-    title: "emlyai",
-    description:
-      "AI-powered platform helping real estate professionals create compelling property listings and marketing materials.",
-    link: "https://emlyai.ca",
-  },
+  // Temporarily hidden — re-enable to restore emlyai project entry
+  // {
+  //   title: "emlyai",
+  //   description:
+  //     "AI-powered platform helping real estate professionals create compelling property listings and marketing materials.",
+  //   link: "https://emlyai.ca",
+  // },
   {
     title: "Unbreakable Run",
     description:
