@@ -155,7 +155,7 @@ export default function Workouts() {
               Training Log
             </h1>
             <p className="mt-1 text-sm text-white/50">
-              Hyrox + Half Marathon build · 8 weeks
+              Hyrox build · aerobic base → threshold → race · 14 weeks
             </p>
           </div>
           <button
@@ -187,7 +187,7 @@ export default function Workouts() {
               </p>
               {!goalsOpen ? (
                 <p className="hidden truncate text-xs text-white/60 sm:block">
-                  Sub-60 Hyrox · 1:18 Half
+                  Sub-60 Hyrox Dec 18 · 1:18 Half
                 </p>
               ) : null}
             </div>
