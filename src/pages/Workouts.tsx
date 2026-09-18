@@ -307,7 +307,7 @@ export default function Workouts() {
           className="mt-12 rounded-2xl border border-white/10 bg-white/[0.02] p-6"
         >
           <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/50 font-mono">
-            Pace Reference · calibrated to 1:25–1:32 half fitness
+            Pace Reference · calibrated to 18:00 5k baseline · Sep 2026
           </p>
           <div className="grid gap-3 sm:grid-cols-2 text-sm">
             {Object.entries({

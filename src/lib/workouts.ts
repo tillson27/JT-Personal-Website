@@ -47,11 +47,11 @@ export interface Week {
 /* -------------------------------------------------------------------------- */
 
 export const paceReference = {
-  easyZ2: "5:15 – 5:40 /km",
-  steady: "4:50 – 5:05 /km",
-  threshold: "4:15 – 4:30 /km",
-  vo2: "3:50 – 4:05 /km",
-  hyroxRunGoal: "≤ 4:15 /km fresh · ≤ 4:30 /km compromised",
+  easyZ2: "5:00 – 5:20 /km",
+  steady: "4:20 – 4:40 /km",
+  threshold: "4:00 – 4:15 /km",
+  vo2: "3:35 – 3:50 /km",
+  hyroxRunGoal: "< 4:00 /km fresh · < 4:15 /km compromised",
 };
 
 export const goals = {
@@ -351,7 +351,7 @@ const kmRepeats = (
   const wuCd = 4;
   const total = Math.round(workKm + jogKm + wuCd);
   const paceLabel = targetPace === "threshold" ? paceReference.threshold : paceReference.vo2;
-  const paceTarget = targetPace === "threshold" ? "~4:20/km" : "~3:55/km";
+  const paceTarget = targetPace === "threshold" ? "~4:05/km" : "~3:40/km";
   const paceName = targetPace === "threshold" ? "threshold" : "5k pace";
   return {
     kind: "run",
@@ -1099,10 +1099,10 @@ export const weeks: Week[] = [
           kind: "run",
           title: "Hyrox run pace · 6 × 1 km",
           distance: "~10 km",
-          intervals: "2 km WU · 6 × 1 km @ hyrox run pace (4:10–4:20/km) / 90s jog · 2 km CD",
+          intervals: "2 km WU · 6 × 1 km @ hyrox run pace (sub-4:00/km) / 90s jog · 2 km CD",
           zone: paceReference.hyroxRunGoal,
           duration: "55 min",
-          notes: "This is race pace on fresh legs — you'll be doing this on legs that have already done 8 km of running between stations. Build familiarity with it. Track or flat road.",
+          notes: "This is race pace on fresh legs — you'll be doing this on legs that have already done 8 km of running between stations. Sub-4:00/km here; expect ~4:10–4:15 on race day after stations. Track or flat road.",
         },
       },
       {
@@ -1173,10 +1173,10 @@ export const weeks: Week[] = [
           kind: "run",
           title: "Race-pace intervals · 5 × 1 km",
           distance: "~9 km",
-          intervals: "2 km WU · 5 × 1 km @ 4:10–4:20/km / 90s jog · 2 km CD",
+          intervals: "2 km WU · 5 × 1 km @ sub-4:00/km / 90s jog · 2 km CD",
           zone: paceReference.hyroxRunGoal,
           duration: "50 min",
-          notes: "These should feel crisper than Week 11. You're sharper now. If the pace feels easier, resist going faster — race-pace is race-pace.",
+          notes: "These should feel crisper than Week 11. You're sharper now. Lock into sub-4:00/km — if it feels easier, hold the pace anyway. Race-pace is race-pace.",
         },
       },
       {
@@ -1188,7 +1188,7 @@ export const weeks: Week[] = [
           "Hyrox mini-sim — benchmark",
           "45–55 min",
           [
-            { name: "1 km run", sets: "@ race pace (~4:15/km)" },
+            { name: "1 km run", sets: "@ race pace (sub-4:00/km)" },
             { name: "SkiErg", sets: "1000 m @ race pace" },
             { name: "1 km run", sets: "@ race pace" },
             { name: "Sled push", sets: "50 m (race load)" },
@@ -1224,9 +1224,9 @@ export const weeks: Week[] = [
           title: "Long run with race-pace middle",
           distance: "18 km",
           zone: paceReference.easyZ2,
-          intervals: "7 km Z2 easy · 4 km @ race pace (4:15/km) · 7 km Z2 easy",
+          intervals: "7 km Z2 easy · 4 km @ race pace (sub-4:00/km) · 7 km Z2 easy",
           duration: "95 min",
-          notes: "Insert a 4 km block at hyrox run pace in the middle. This teaches you to run fast on tired legs and then recover aerobically — exactly what happens in a race.",
+          notes: "Insert a 4 km block at hyrox run pace in the middle — aim sub-4:00/km. This teaches you to run fast on tired legs and then recover aerobically, exactly what happens in a race.",
         },
       },
       {
